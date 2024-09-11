@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+}
+
+body {
+  font-family: 'Baskerville', serif;
+  background-color: #fff;
+  padding: 0;
+  margin: 0;
+}
+
+p {
+  font-size: 1.6rem;
+  line-height: 1.5;
+  color: theme('colors.primaryDark');
+}
+
+@layer utilities {
+  .nav-link {
+    @apply relative text-primary text-lg;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -1px;
+    width: 0;
+    height: 2px;
+    background-color: theme('colors.primary');
+    transition: width 0.4s ease, left 0.4s ease;
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
+    left: 0;
+  }
+
+  .nav-link-active::after {
+    width: 100%;
+    left: 0;
+  }
+}
