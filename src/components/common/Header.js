@@ -3,10 +3,15 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import useTranslations from '@/hooks/useTranslations';
+import { useLanguage } from '@/context/LanguageContext';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const Header = () => {
+  const { lang } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const t = useTranslations(lang, 'header');
 
   return (
     <header className="border-b-[0.5px] sticky top-0 bg-white z-50">
@@ -21,7 +26,7 @@ const Header = () => {
               pathname === '/about' ? 'nav-link-active' : ''
             }`}
           >
-            About Us
+            {t.about_us}
           </Link>
           <Link
             href="/how-it-works"
@@ -29,7 +34,7 @@ const Header = () => {
               pathname === '/how-it-works' ? 'nav-link-active' : ''
             }`}
           >
-            How it Works
+            {t.how_it_works}
           </Link>
           <Link
             href="/measurement-guide"
@@ -37,12 +42,13 @@ const Header = () => {
               pathname === '/measurement-guide' ? 'nav-link-active' : ''
             }`}
           >
-            Measurement Guide
+            {t.measurement_guide}
           </Link>
         </nav>
-        <div className="hidden md:flex">
+        <div className="hidden md:flex items-center space-x-4">
+          <LanguageSwitcher currentLang={lang} />{' '}
           <button className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-white hover:text-primary hover:border hover:border-primary">
-            Order Now
+            {t.order_now}
           </button>
         </div>
         <div className="md:hidden flex items-center">
@@ -76,7 +82,7 @@ const Header = () => {
                 pathname === '/about' ? 'nav-link-active' : ''
               }`}
             >
-              About Us
+              {t.about_us}
             </Link>
             <Link
               href="/how-it-works"
@@ -84,7 +90,7 @@ const Header = () => {
                 pathname === '/how-it-works' ? 'nav-link-active' : ''
               }`}
             >
-              How it Works
+              {t.how_it_works}
             </Link>
             <Link
               href="/measurement-guide"
@@ -92,12 +98,12 @@ const Header = () => {
                 pathname === '/measurement-guide' ? 'nav-link-active' : ''
               }`}
             >
-              Measurement Guide
+              {t.measurement_guide}
             </Link>
           </nav>
           <div className="md:hidden p-2 mt-2">
             <button className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-white hover:text-primary hover:border hover:border-primary">
-              Order Now
+              {t.order_now}
             </button>
           </div>
         </div>

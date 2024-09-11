@@ -1,0 +1,26 @@
+{
+  "header": {
+    "price_list": "Hintalista",
+    "how_it_works": "Kuinka se toimii",
+    "measurement_guide": "Mittausopas",
+    "order_now": "Tilaa nyt"
+  },
+  "footer": {
+    "address": "Osoite",
+    "location": "Helsinki, Suomi",
+    "price_list": "Hintalista",
+    "measurement_guide": "Mittausopas",
+    "how_it_works": "Kuinka se toimii",
+    "contact_us": "Ota yhteyttä",
+    "terms_and_conditions": "Käyttöehdot",
+    "privacy_policy": "Tietosuojaseloste",
+    "copyright": "© 2021 ShelfCare. Kaikki oikeudet pidätetään.",
+    "legal": "Oikeudellinen",
+    "menu": "Valikko"
+  },
+  "metadata": {
+    "title": "ShelfCare - Kestävä muoti ja vaatehuolto",
+    "description": "ShelfCare on omistautunut tekemään vaatteiden, kenkien ja asusteiden korjaus- ja huoltopalveluista helpommin saavutettavia. Integroimme nämä palvelut kuluttajien vaatehuoltorutiineihin, edistäen kestävää muodin kulutusta ja henkilökohtaista tyyliä. Laatu korvaa määrän ShelfCaressa, jossa rakkaat vaatteesi ja uniikki tyylisi ovat keskiössä.",
+    "keywords": "ShelfCare, kestävä muoti, vaatehuolto, vaatteiden korjaus, kenkien huolto, asusteiden korjaus, henkilökohtainen tyyli, laatu korvaa määrän, muodin kestävyys"
+  }
+}

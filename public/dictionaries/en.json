@@ -1,0 +1,26 @@
+{
+  "header": {
+    "price_list": "Price List",
+    "how_it_works": "How it Works",
+    "measurement_guide": "Measurement Guide",
+    "order_now": "Order Now"
+  },
+  "footer": {
+    "address": "Address",
+    "location": "Helsinki, Finland",
+    "price_list": "Price List",
+    "measurement_guide": "Measurement Guide",
+    "how_it_works": "How it Works",
+    "contact_us": "Contact Us",
+    "terms_and_conditions": "Terms and Conditions",
+    "privacy_policy": "Privacy Policy",
+    "copyright": "© 2021 ShelfCare Oy. All rights reserved.",
+    "legal": "Legal",
+    "menu": "Menu"
+  },
+  "metadata": {
+    "title": "ShelfCare - Sustainable Fashion and Wardrobe Care",
+    "description": "ShelfCare is dedicated to making clothing, shoe, and accessory repair and maintenance services accessible. We integrate these services into consumers’ wardrobe care routines, promoting sustainable fashion and personal style. Embrace quality over quantity with ShelfCare, where your beloved clothes and unique style are the focus.",
+    "keywords": "ShelfCare, sustainable fashion, wardrobe care, clothing repair, shoe maintenance, accessory repair, personal style, quality over quantity, fashion sustainability"
+  }
+}
