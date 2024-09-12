@@ -11,7 +11,7 @@ const MissionVisionSection = () => {
   const t = useTranslations(lang, 'mission-vision');
 
   return (
-    <section className="py-32 px-6 md:px-8 bg-primary text-secondary relative">
+    <section className="py-12 md:py-32 px-6 md:px-8 bg-primary text-secondary relative">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8 items-center">
         {/* Mission Section */}
         <div className="flex flex-col items-start order-1 md:order-1">

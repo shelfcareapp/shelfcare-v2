@@ -53,7 +53,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="flex flex-col items-center justify-center text-center min-h-screen bg-white">
+    <section className="flex flex-col items-center justify-center text-center mt-8 md:0 md:min-h-screen bg-white">
       <div className="flex flex-col gap-6 items-center justify-center text-center text-primary mb-14 max-w-4xl mx-auto px-4">
         {/* <div className="flex gap-4 mb-4">
           <a
