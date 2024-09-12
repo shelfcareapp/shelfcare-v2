@@ -42,9 +42,9 @@ const About = () => {
           {t?.description ||
             'Our values are simple, we believe in circularity, self-expression, and self-care.'}
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16 justify-items-center">
           {teamMembers.map((member, index) => (
-            <div key={index} className="relative group">
+            <div key={index} className="relative group w-full max-w-xs">
               <div className="overflow-hidden rounded-lg shadow-md">
                 <Image
                   src={member.image}
