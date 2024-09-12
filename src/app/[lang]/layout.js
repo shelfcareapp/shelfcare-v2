@@ -27,6 +27,9 @@ export const metadata = async ({ params = {} }) => {
           alt: meta.title
         }
       ]
+    },
+    icons: {
+      icon: 'https://shelfcare.app/favicon.png'
     }
   };
 };
