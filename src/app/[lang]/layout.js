@@ -21,7 +21,7 @@ export const metadata = async ({ params = {} }) => {
       type: 'website',
       images: [
         {
-          url: 'https://shelfcare.app/og-image.jpg',
+          url: 'https://shelfcare.app/favicon.png',
           width: 1200,
           height: 630,
           alt: meta.title
