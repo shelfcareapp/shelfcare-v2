@@ -13,8 +13,6 @@ body {
 }
 
 p {
-  font-size: 1.6rem;
-  line-height: 1.5;
   color: theme('colors.primaryDark');
 }
 
@@ -42,5 +40,16 @@ p {
   .nav-link-active::after {
     width: 100%;
     left: 0;
+  }
+  .btn-primary {
+    @apply bg-primary text-white px-4 py-2 rounded-lg transition-all duration-300 ease-in-out;
+    @apply border border-transparent;
+    @apply hover:bg-white hover:text-primary hover:border-primary;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-white px-4 py-2 rounded-lg transition-all duration-300 ease-in-out;
+    @apply border border-transparent;
+    @apply hover:bg-white hover:text-secondary hover:border-secondary;
   }
 }

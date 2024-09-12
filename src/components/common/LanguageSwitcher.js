@@ -2,12 +2,18 @@
 
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { FiChevronDown } from 'react-icons/fi';
+import { CiGlobe } from 'react-icons/ci';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { useLanguage } from '@/context/LanguageContext';
+import useTranslations from '@/hooks/useTranslations';
 
 const LanguageSwitcher = ({ currentLang }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+  const { lang } = useLanguage();
+
+  const t = useTranslations(lang, 'language');
 
   const handleLanguageChange = (lang) => {
     const newPath = pathname.replace(currentLang, lang);
@@ -21,22 +27,23 @@ const LanguageSwitcher = ({ currentLang }) => {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center text-primary focus:outline-none"
       >
-        <span className="mr-1">{currentLang.toUpperCase()}</span>
-        <FiChevronDown />
+        <CiGlobe />
+        <span className="ml-1 mr-1">{currentLang.toUpperCase()}</span>
+        {isOpen ? <FaChevronUp /> : <FaChevronDown />}
       </button>
       {isOpen && (
-        <ul className="absolute mt-2 right-0 w-20 bg-white border border-gray-300 rounded-md shadow-lg">
+        <ul className="absolute mt-2 md:right-0 w-20 bg-white border border-gray-300 rounded-md shadow-lg">
           <li
             onClick={() => handleLanguageChange('en')}
             className="px-4 py-2 cursor-pointer hover:bg-gray-100 text-primary"
           >
-            EN
+            {t.en}
           </li>
           <li
             onClick={() => handleLanguageChange('fi')}
             className="px-4 py-2 cursor-pointer hover:bg-gray-100 text-primary"
           >
-            FI
+            {t.fi}
           </li>
         </ul>
       )}

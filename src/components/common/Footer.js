@@ -13,20 +13,18 @@ const Footer = () => {
   return (
     <footer className="px-8 py-8 bg-primaryDark">
       <div className="container mx-auto flex justify-between items-center md:flex-nowrap flex-wrap">
-        <h2 className="font-bold text-4xl md:text-9xl text-secondary">
-          ShelfCare
-        </h2>
+        <Link href="/" className="cursor-pointer">
+          <h2 className="font-bold text-4xl md:text-8xl text-secondary">
+            ShelfCare
+          </h2>
+        </Link>
         <div className="flex md:flex-nowrap flex-wrap md:mt-0 mt-4 items-start justify-start gap-12 text-base text-secondary">
           <div>
-            <h3 className="font-bold mb-4">{t.address}</h3>
-            <p className="font-light text-secondary text-base">{t.location}</p>
-          </div>
-          <nav>
-            <h3 className="font-bold mb-4">{t.menu}</h3>
+            <h3 className="font-bold mb-4">{t.for_customers}</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/about" className="hover:underline">
-                  {t.about_us}
+                <Link href="/price-list" className="hover:underline">
+                  {t.price_list}
                 </Link>
               </li>
               <li>
@@ -34,28 +32,35 @@ const Footer = () => {
                   {t.measurement_guide}
                 </Link>
               </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-bold mb-4">{t.about_us}</h3>
+            <ul className="space-y-2">
               <li>
-                <Link href="/how-it-works" className="hover:underline">
-                  {t.how_it_works}
+                <Link href="/about#team" className="hover:underline">
+                  {t.our_team}
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:underline">
+                <Link href="/about#contact" className="hover:underline">
                   {t.contact_us}
                 </Link>
               </li>
             </ul>
-          </nav>
+          </div>
+
           <div>
             <h3 className="font-bold mb-4">{t.legal}</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/terms_and_conditions" className="hover:underline">
+                <Link href="/terms" className="hover:underline">
                   {t.terms_and_conditions}
                 </Link>
               </li>
               <li>
-                <Link href="/privacy_policy" className="hover:underline">
+                <Link href="/privacy" className="hover:underline">
                   {t.privacy_policy}
                 </Link>
               </li>

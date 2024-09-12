@@ -16,25 +16,17 @@ const Header = () => {
   return (
     <header className="border-b-[0.5px] sticky top-0 bg-white z-50">
       <div className="container mx-auto flex justify-between items-center p-4">
-        <Link href="/" className="text-2xl font-bold text-primary">
+        <Link href="/" className="text-2xl  font-extrabold text-primary">
           ShelfCare
         </Link>
         <nav className="hidden md:flex space-x-6">
           <Link
-            href="/about"
+            href="/price-list"
             className={`nav-link ${
-              pathname === '/about' ? 'nav-link-active' : ''
+              pathname === '/price-list' ? 'nav-link-active' : ''
             }`}
           >
-            {t.about_us}
-          </Link>
-          <Link
-            href="/how-it-works"
-            className={`nav-link ${
-              pathname === '/how-it-works' ? 'nav-link-active' : ''
-            }`}
-          >
-            {t.how_it_works}
+            {t.price_list}
           </Link>
           <Link
             href="/measurement-guide"
@@ -46,10 +38,8 @@ const Header = () => {
           </Link>
         </nav>
         <div className="hidden md:flex items-center space-x-4">
-          <LanguageSwitcher currentLang={lang} />{' '}
-          <button className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-white hover:text-primary hover:border hover:border-primary">
-            {t.order_now}
-          </button>
+          <LanguageSwitcher currentLang={lang} />
+          <button className="btn-primary">{t.order_now}</button>
         </div>
         <div className="md:hidden flex items-center">
           <button
@@ -77,20 +67,12 @@ const Header = () => {
         <div>
           <nav className="md:hidden bg-white border-t border-gray-200">
             <Link
-              href="/about"
+              href="/price-list"
               className={`block px-4 py-2 text-primary nav-link ${
-                pathname === '/about' ? 'nav-link-active' : ''
+                pathname === '/price-list' ? 'nav-link-active' : ''
               }`}
             >
-              {t.about_us}
-            </Link>
-            <Link
-              href="/how-it-works"
-              className={`block px-4 py-2 text-primary nav-link ${
-                pathname === '/how-it-works' ? 'nav-link-active' : ''
-              }`}
-            >
-              {t.how_it_works}
+              {t.price_list}
             </Link>
             <Link
               href="/measurement-guide"
@@ -102,9 +84,8 @@ const Header = () => {
             </Link>
           </nav>
           <div className="md:hidden p-2 mt-2">
-            <button className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-white hover:text-primary hover:border hover:border-primary">
-              {t.order_now}
-            </button>
+            <button className="btn-primary mb-2">{t.order_now}</button>
+            <LanguageSwitcher currentLang={lang} />
           </div>
         </div>
       )}

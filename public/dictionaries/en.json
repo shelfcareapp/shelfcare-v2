@@ -6,21 +6,396 @@
     "order_now": "Order Now"
   },
   "footer": {
-    "address": "Address",
-    "location": "Helsinki, Finland",
+    "for_customers": "For Customers",
     "price_list": "Price List",
     "measurement_guide": "Measurement Guide",
     "how_it_works": "How it Works",
+
+    "about_us": "About Us",
     "contact_us": "Contact Us",
-    "terms_and_conditions": "Terms and Conditions",
-    "privacy_policy": "Privacy Policy",
-    "copyright": "© 2021 ShelfCare Oy. All rights reserved.",
+    "our_team": "Our Team",
+
     "legal": "Legal",
-    "menu": "Menu"
+    "terms_and_conditions": "Terms",
+    "privacy_policy": "Privacy",
+    "copyright": "©2021 ShelfCare Oy. All rights reserved."
   },
   "metadata": {
     "title": "ShelfCare - Sustainable Fashion and Wardrobe Care",
     "description": "ShelfCare is dedicated to making clothing, shoe, and accessory repair and maintenance services accessible. We integrate these services into consumers’ wardrobe care routines, promoting sustainable fashion and personal style. Embrace quality over quantity with ShelfCare, where your beloved clothes and unique style are the focus.",
     "keywords": "ShelfCare, sustainable fashion, wardrobe care, clothing repair, shoe maintenance, accessory repair, personal style, quality over quantity, fashion sustainability"
+  },
+  "language": {
+    "en": "English",
+    "fi": "Finnish"
+  },
+
+  "home-hero": {
+    "title": "One-stop-shop for high quality tailoring, cobbler and laundry services",
+    "subtitle": "We pick up your items and deliver them back to you.",
+    "cta": "Order Now"
+  },
+
+  "home-how-it-works": {
+    "title": "How It Works",
+    "subtitle": "Get started with these easy steps:",
+    "step1": {
+      "title": "Submit a Service Request",
+      "description": "Fill out the form on our website to get started with your service request."
+    },
+    "step2": {
+      "title": "Orders Are Picked Up",
+      "description": "We will pick up your items at the scheduled time and location."
+    },
+    "step3": {
+      "title": "Services Are Performed",
+      "description": "Our professionals will take care of your tailoring, cobbler, or laundry needs."
+    },
+    "step4": {
+      "title": "Items Are Returned",
+      "description": "Your items will be returned to you, freshly serviced and ready to use."
+    }
+  },
+
+  "mission-vision": {
+    "title": "Our Mission & Vision",
+    "missionTitle": "Our Mission",
+    "mission": "Our mission is to make repair and maintenance services for clothing, shoes and accessories more accessible, and establish these services as a regular activity for wardrobe care and sustainable fashion consumption.",
+    "visionTitle": "Our Vision",
+    "vision": "ShelfCare stands for the new age of fashion industry where quality cancels out quantity. Instead of following the trends and continuous consumption, the focus is on personal style, perfectly fitting and beloved clothes which their owners want to take care of."
+  },
+
+  "services": {
+    "title": "Our Services",
+    "tailoring": {
+      "title": "Tailoring",
+      "shortDescription": "Perfect adjustments for your clothes.",
+      "description": "Get your clothes fitted and altered to perfection, whether it’s adjusting the length, fit, or style. Tailoring services at ShelfCare include professional adjustments to ensure your garments fit you just right."
+    },
+    "laundry": {
+      "title": "Laundry",
+      "shortDescription": "Keep your garments fresh and clean.",
+      "description": "Professional laundry services to keep your garments clean and fresh. Our laundry service ensures your items are handled with care, providing a hassle-free way to maintain your wardrobe’s cleanliness."
+    },
+    "cobbler": {
+      "title": "Cobbler",
+      "shortDescription": "Revive your favorite shoes with care.",
+      "description": "Revive your favorite footwear with our cobbler services, including shoe repairs, sole replacements, and other shoe care needs. ShelfCare’s expert cobblers bring your shoes back to life, keeping them in top condition."
+    }
+  },
+
+  "team": {
+    "title": "Meet our beautiful team",
+    "description": "Our values are simple, we believe in circularity, self-expression, and self-care.",
+    "contact": {
+      "title": "Get in touch",
+      "formTitle": "Leave us a message",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "phone": "Phone number",
+      "message": "Message",
+      "submit": "Submit",
+      "contactOptions": {
+        "callUs": "Call us",
+        "startChat": "Start a live chat",
+        "sendEmail": "Shoot us an email",
+        "twitter": "Message us on Twitter"
+      }
+    }
+  },
+
+  "terms": {
+    "title": "Terms of Service",
+    "general": {
+      "heading": "1. General",
+      "content": "These terms of service apply to the tailoring, cobbler, and laundry services provided by ShelfCare Ltd ('we', 'our', or 'the company'). By ordering our services, you ('you' or 'the customer') agree to comply with these terms."
+    },
+    "ordering": {
+      "heading": "2. Ordering Services",
+      "content": "Ordering services takes place through our website. The customer is responsible for ensuring that the information provided in the order form, such as measurements and specifications, is correct and accurate. The order is confirmed once we have received all the necessary information. We reserve the right to reject the order if the information is incomplete or incorrect."
+    },
+    "pricing": {
+      "heading": "3. Pricing and Payment Terms",
+      "content": "Service prices are visible on our website. By ordering, you agree to pay for the services according to the price list. If the scope of work exceeds the definition of the ordered service, we will agree separately with the customer on the service and price."
+    },
+    "transport": {
+      "heading": "4. Transportation Service",
+      "content": "We offer a pickup and return service to the address provided by the customer. We charge a €10 transportation and service fee at the time of order. Pickup and return times are agreed upon with the customer. The customer must be present at the agreed time."
+    },
+    "handling": {
+      "heading": "5. Product Handling and Quality",
+      "content": "We commit to handling the customer's products properly and professionally. If the customer is not satisfied with the quality of the service, they must notify us in writing within 7 days of the return of the products."
+    },
+    "liability": {
+      "heading": "6. Limitation of Liability",
+      "content": "We are not responsible for any damage to products that result from incorrect measurements or information provided by the customer."
+    },
+    "cancellation": {
+      "heading": "7. Cancellation Policy",
+      "content": "The customer may cancel the order free of charge before the products are picked up. If cancellation is made after pickup but before the work has started, the customer is liable to pay for the transportation costs."
+    },
+    "privacy": {
+      "heading": "8. Privacy and Data Protection",
+      "content": "We are committed to protecting the personal data of customers and processing it in accordance with data protection legislation."
+    },
+    "other": {
+      "heading": "9. Other Terms",
+      "content": "We reserve the right to change these terms without notice. Changes will take effect when published on our website."
+    },
+    "contact": {
+      "heading": "10. Contact Information",
+      "content": "If you have any questions about these terms, you can contact us by email at maija.tunturi@shelfcare.app."
+    }
+  },
+
+  "privacy": {
+    "title": "Privacy Policy",
+    "section1": {
+      "heading": "1. Data Controller",
+      "content": "ShelfCare Oy\nBusiness ID: 3393648-9"
+    },
+    "section2": {
+      "heading": "2. Contact for Privacy Matters",
+      "content": "Data Protection Officer\nEmail: maija.tunturi@shelfcare.app"
+    },
+    "section3": {
+      "heading": "3. Register Name",
+      "content": "Customer Register of ShelfCare Oy"
+    },
+    "section4": {
+      "heading": "4. Purpose and Legal Basis for Processing Personal Data",
+      "content": "The purpose of processing personal data includes:\n- Providing customer service\n- Sending marketing communications\n- Fulfilling contractual obligations\n- Complying with legal requirements\n\nThe legal basis for processing personal data includes:\n- Customer consent\n- Performance of a contract\n- Legal obligations of the data controller\n- Legitimate interests of the data controller"
+    },
+    "section5": {
+      "heading": "5. Content of the Register",
+      "content": "The register may contain the following information:\n- Name\n- Address\n- Phone number\n- Email address\n- Information related to the customer relationship (e.g., order history, customer feedback)"
+    },
+    "section6": {
+      "heading": "6. Regular Data Sources",
+      "content": "Personal data is primarily collected:\n- Directly from the customer during the customer relationship\n- When the customer uses services provided by ShelfCare Oy"
+    },
+    "section7": {
+      "heading": "7. Regular Data Disclosures",
+      "content": "Personal data may be disclosed to:\n- Our service providers and partners who process data on our behalf\n- Authorities in cases required by law"
+    },
+    "section8": {
+      "heading": "8. Transfer of Data Outside the EU or EEA",
+      "content": "Personal data is generally not transferred outside the EU/EEA. If a transfer is necessary, we ensure that it occurs legally and with adequate safeguards."
+    },
+    "section9": {
+      "heading": "9. Rights of the Data Subject",
+      "content": "The data subject has the following rights:\n- Right to access their personal data\n- Right to correct data\n- Right to delete data\n- Right to restrict processing\n- Right to object to data processing\n- Right to data portability\n- Right to withdraw consent at any time\n\nData subjects can exercise their rights by contacting our Data Protection Officer. All requests must be submitted in writing to the contact person mentioned above."
+    },
+    "section10": {
+      "heading": "10. Changes to the Privacy Policy",
+      "content": "ShelfCare Oy reserves the right to change this privacy policy. Changes will be announced on the ShelfCare Oy website and/or to customers via email."
+    }
+  },
+
+  "pricing": {
+    "title": "Pricing Guidelines",
+    "disclaimer": "The prices listed are starting prices and may vary based on the complexity and materials involved in each service. Additional charges may apply.",
+    "categories": {
+      "tailoring": "Tailoring",
+      "cobbler": "Cobbler",
+      "laundry": "Laundry"
+    },
+    "tailoring": {
+      "title": "Tailoring Services",
+      "groups": [
+        {
+          "category": "Pants",
+          "services": [
+            { "name": "Leg Shortening", "price": "29" },
+            { "name": "Hidden Stitch", "price": "+6" },
+            { "name": "Upslaak", "price": "+6" },
+            { "name": "Edging", "price": "+9" },
+            { "name": "Leg Narrowing", "price": "39" },
+            {
+              "name": "Narrowing/Widening of Waist from Back Seam",
+              "price": "37"
+            },
+            {
+              "name": "Narrowing/Widening of Waist from Side Seams",
+              "price": "45"
+            },
+            { "name": "Replacing the Zipper", "price": "36" },
+            { "name": "Patching/Repair of Seam", "price": "22" }
+          ]
+        },
+        {
+          "category": "Jeans",
+          "services": [
+            { "name": "Leg Shortening", "price": "32" },
+            { "name": "Leg Narrowing", "price": "42" },
+            { "name": "Narrowing of Waist from Back Seam", "price": "42" },
+            { "name": "Narrowing of Waist from Side Seams", "price": "65" },
+            { "name": "Replacing the Zipper", "price": "39" },
+            { "name": "Patching/Repair of Seam", "price": "22" }
+          ]
+        },
+        {
+          "category": "Shirts",
+          "services": [
+            { "name": "Shortening of Sleeves", "price": "29" },
+            { "name": "Slit Sleeves with Buttons", "price": "+10" },
+            { "name": "Hem/Waist Narrowing", "price": "29" },
+            { "name": "Hem Shortening", "price": "29" },
+            { "name": "Split Hem", "price": "+14" },
+            { "name": "Shortening Sweater/Knit Sleeves", "price": "44" },
+            { "name": "Shortening Sweater/Knit Hem", "price": "49" },
+            { "name": "Shortening Top Straps", "price": "22" },
+            { "name": "Patching/Repair of Seam", "price": "22" }
+          ]
+        },
+        {
+          "category": "Jackets & Coats",
+          "services": [
+            { "name": "Shortening of Sleeves", "price": "42" },
+            { "name": "Lined Sleeves", "price": "+14" },
+            { "name": "Split Sleeves with Buttons", "price": "+15" },
+            { "name": "Sleeve Extension", "price": "55" },
+            { "name": "Narrowing of Sleeves", "price": "49" },
+            { "name": "Narrowing of Hem/Waist from Side Seams", "price": "55" },
+            { "name": "Shortening the Hem", "price": "50" },
+            { "name": "Narrowing of Shoulder", "price": "74" },
+            { "name": "Changing the Lining", "price": "220" },
+            { "name": "Patching/Repair of Seam", "price": "22" }
+          ]
+        },
+        {
+          "category": "Dresses & Skirts",
+          "services": [
+            { "name": "Shortening the Hem", "price": "35" },
+            { "name": "Narrowing of Skirt from Back Seam", "price": "37" },
+            { "name": "Narrowing of Skirt from Side Seams", "price": "45" },
+            { "name": "Narrowing of Dress from Back Seam", "price": "39" },
+            { "name": "Replacing the Zipper on Skirt", "price": "35" },
+            { "name": "Dress Zipper Replacement", "price": "46" },
+            { "name": "Dress Shoulder Shortening", "price": "24" },
+            { "name": "Patching/Repair of Seam", "price": "22" }
+          ]
+        },
+        {
+          "category": "Sports and Outdoor Clothing",
+          "services": [
+            { "name": "Shortening Sleeves of Sports Shirt", "price": "29" },
+            { "name": "Changing Zipper of Sports Shirt", "price": "42" },
+            { "name": "Shortening Legs of Sports Pants", "price": "29" },
+            { "name": "Narrowing Waist of Sports Pants", "price": "37" },
+            { "name": "Changing Zipper of Sports Pants", "price": "36" },
+            { "name": "Patching/Repair of Seam", "price": "22" }
+          ]
+        },
+        {
+          "category": "Other Sewing Services",
+          "services": [
+            { "name": "Button Sewing", "price": "6" },
+            { "name": "Additional Buttons", "price": "4" }
+          ]
+        }
+      ]
+    },
+    "cobbler": {
+      "title": "Cobbler Services",
+      "groups": [
+        {
+          "category": "Boots",
+          "services": [
+            { "name": "Heel Replacement", "price": "28" },
+            { "name": "Sole Replacement", "price": "44" },
+            { "name": "Shoe Shine", "price": "15" },
+            { "name": "Leather Conditioning", "price": "20" }
+          ]
+        },
+        {
+          "category": "Leather Jackets",
+          "services": [
+            { "name": "Shortening of Sleeves", "price": "65" },
+            { "name": "Shortening Sleeves and Moving Elastic", "price": "75" },
+            { "name": "Narrowing Leather Jacket", "price": "95" },
+            { "name": "Replacing Zipper", "price": "89" },
+            { "name": "Changing Lining", "price": "259" }
+          ]
+        },
+        {
+          "category": "Leather Pants",
+          "services": [
+            { "name": "Leg Shortening", "price": "39" },
+            { "name": "Leg Narrowing", "price": "49" },
+            { "name": "Zipper Replacement (Thin Leather)", "price": "49" },
+            { "name": "Zipper Replacement (Thick Leather)", "price": "59" }
+          ]
+        }
+      ]
+    },
+    "laundry": {
+      "title": "Laundry Services",
+      "groups": [
+        {
+          "category": "Clothes",
+          "services": [
+            { "name": "Pants Wash/Dry Clean", "price": "18" },
+            { "name": "Skirt Wash/Dry Clean", "price": "17" },
+            { "name": "Suit", "price": "38" },
+            { "name": "Dress (Mini)", "price": "32" },
+            { "name": "Dress (Midi)", "price": "39" },
+            { "name": "Dress (Maxi)", "price": "45" },
+            { "name": "Evening Dress", "price": "68" },
+            { "name": "Jacket Wash/Dry Clean", "price": "30" }
+          ]
+        }
+      ]
+    }
+  },
+
+  "measurement-guide": {
+    "title": "Measurement Guide",
+    "sections": [
+      {
+        "heading": "Leg/Hem/Sleeve/Waist Reduction",
+        "instructions": [
+          "Measure and tell the number of centimeters from the leg/hem/cuff/waist to the point where you want the tapering to start.",
+          "Specify the amount of reduction needed.",
+          "If narrowing only from the waist, specify where it ends by measuring the number of centimeters from the hem to that point.",
+          "Alternatively, mark the points with safety pins."
+        ]
+      },
+      {
+        "heading": "Leg/Hem/Sleeve/Shoulder Shortening",
+        "instructions": [
+          "Measure and specify the amount to shorten. You can also mark the shortening with a safety pin."
+        ]
+      },
+      {
+        "heading": "Narrowing/Widening by Moving Buttons",
+        "instructions": [
+          "Measure and tell how much you want to move the buttons for narrowing or widening.",
+          "Alternatively, mark with safety pins where the buttons will be moved."
+        ]
+      },
+      {
+        "heading": "Waist Widening",
+        "instructions": [
+          "Measure and specify where to start widening from the waist down, and how much to widen from the waist.",
+          "Ensure there is enough extra fabric inside the back seam of the pant."
+        ]
+      },
+      {
+        "heading": "Sleeve Extension",
+        "instructions": [
+          "Measure and specify how much to extend the sleeve length.",
+          "Ensure there is extra fabric on the sleeve for lengthening."
+        ]
+      },
+      {
+        "heading": "Patching / Repair of the Seam",
+        "instructions": [
+          "Identify the location of the repair point.",
+          "Seam repairs are done inconspicuously, though complete invisibility may not be achieved."
+        ]
+      }
+    ]
   }
 }

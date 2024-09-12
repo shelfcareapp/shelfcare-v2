@@ -1,6 +1,7 @@
 import '../globals.css';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
+import TidioLoader from '@/components/common/TidioLoader';
 import { LanguageProvider } from '@/context/LanguageContext';
 import { getDictionary } from '@/app/[lang]/dictionaries';
 
@@ -38,6 +39,7 @@ function RootLayout({ children, params }) {
           <Header />
           <main className="flex-grow">{children}</main>
           <Footer />
+          <TidioLoader />
         </LanguageProvider>
       </body>
     </html>
