@@ -1,6 +1,6 @@
 'use client';
 
-import { FaBoxOpen, FaTruck, FaTools, FaUndo } from 'react-icons/fa'; // Example icons
+import { FaArrowRight } from 'react-icons/fa'; // Import right arrow icon
 import useTranslations from '@/hooks/useTranslations';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -12,34 +12,22 @@ const HowItWorksSection = () => {
     {
       number: 1,
       title: t.step1?.title,
-      description: t.step1?.description,
-      icon: (
-        <FaBoxOpen className="absolute opacity-5 text-primary inset-0 w-full h-full" />
-      )
+      description: t.step1?.description
     },
     {
       number: 2,
       title: t.step2?.title,
-      description: t.step2?.description,
-      icon: (
-        <FaTruck className="absolute opacity-5 text-primary inset-0 w-full h-full" />
-      )
+      description: t.step2?.description
     },
     {
       number: 3,
       title: t.step3?.title,
-      description: t.step3?.description,
-      icon: (
-        <FaTools className="absolute opacity-5 text-primary inset-0 w-full h-full" />
-      )
+      description: t.step3?.description
     },
     {
       number: 4,
       title: t.step4?.title,
-      description: t.step4?.description,
-      icon: (
-        <FaUndo className="absolute opacity-5 text-primary inset-0 w-full h-full" />
-      )
+      description: t.step4?.description
     }
   ];
 
@@ -52,20 +40,21 @@ const HowItWorksSection = () => {
         <p className="text-gray-600 mb-12">
           {t.subtitle || 'Get started with these easy steps:'}
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="flex flex-wrap items-center justify-center gap-4">
           {steps.map((step, index) => (
-            <div
-              key={index}
-              className="relative flex flex-col p-6 bg-white shadow-lg rounded-lg transition-transform transform hover:scale-105"
-            >
-              <div className="text-6xl font-bold text-primary relative z-10 mb-4">
-                {step.number}
+            <div key={index} className="flex items-center">
+              <div className="relative flex flex-col justify-center items-center w-64 h-64 p-6 bg-white shadow-lg rounded-lg transition-transform transform hover:scale-105">
+                <div className="text-6xl font-bold text-primary mb-4">
+                  {step.number}
+                </div>
+                <h3 className="text-xl font-semibold text-primary mb-2 text-center">
+                  {step.title}
+                </h3>
+                <p className="text-gray-600 text-center">{step.description}</p>
               </div>
-              {step.icon}
-              <h3 className="text-xl font-semibold text-primary relative z-10 mb-2">
-                {step.title}
-              </h3>
-              <p className="text-gray-600 relative z-10">{step.description}</p>
+              {index < steps.length - 1 && (
+                <FaArrowRight className="hidden lg:block text-primary text-2xl mx-4" />
+              )}
             </div>
           ))}
         </div>
