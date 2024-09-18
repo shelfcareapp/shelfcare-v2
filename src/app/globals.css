@@ -31,7 +31,7 @@ p {
 
 @layer utilities {
   .nav-link {
-    @apply relative text-primary text-lg;
+    @apply relative text-primary text-base;
   }
 
   .nav-link::after {

@@ -36,11 +36,11 @@ const Footer = () => {
           <div>
             <h3 className="font-bold mb-4">{t('footer.about_us')}</h3>
             <ul className="space-y-2">
-              <li>
+              {/* <li>
                 <Link href="/about#team" className="hover:underline">
                   {t('footer.our_team')}
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link href="/about#contact" className="hover:underline">
                   {t('footer.contact_us')}

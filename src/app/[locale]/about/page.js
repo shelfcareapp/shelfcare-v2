@@ -74,11 +74,14 @@ const About = () => {
     <Layout>
       <section className="py-12 bg-gray-50">
         <div id="team" className="container mx-auto px-4">
-          <h2 className="text-5xl text-primary font-semibold text-center mb-4">
+          {/* <h2 className="text-5xl text-primary font-semibold text-center mb-4">
             {t('title')}
+          </h2> */}
+          <h2 className="text-5xl font-semibold text-center mb-6 text-primary">
+            {t('contact.title')}
           </h2>
-          <p className="text-center text-gray-600 mb-8">{t('description')}</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16 justify-items-center">
+          {/* <p className="text-center text-gray-600 mb-8">{t('description')}</p> */}
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16 justify-items-center">
             {teamMembers.map((member, index) => (
               <div key={index} className="relative group w-full max-w-xs">
                 <div className="overflow-hidden rounded-lg shadow-md">
@@ -100,15 +103,12 @@ const About = () => {
                 </div>
               </div>
             ))}
-          </div>
+          </div> */}
 
           <div
             id="contact"
             className="bg-white p-8 rounded-lg shadow-lg max-w-3xl mx-auto"
           >
-            <h3 className="text-3xl font-semibold text-center mb-6 text-primary">
-              {t('contact.title')}
-            </h3>
             <form
               onSubmit={handleSubmit}
               className="grid grid-cols-1 md:grid-cols-2 gap-4"
