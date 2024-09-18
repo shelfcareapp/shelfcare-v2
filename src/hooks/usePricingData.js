@@ -1,8 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import useTranslations from '@/hooks/useTranslations';
-import { useLanguage } from '@/context/LanguageContext';
+import { useTranslations } from 'next-intl';
 
 const usePricingData = () => {
   const { lang } = useLanguage();

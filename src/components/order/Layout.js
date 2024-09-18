@@ -9,8 +9,7 @@ import {
   FaShoppingCart,
   FaHome
 } from 'react-icons/fa';
-import useTranslations from '@/hooks/useTranslations';
-import { useLanguage } from '@/context/LanguageContext';
+import { useTranslations } from 'next-intl';
 import sideBarImage from '../../../public/images/order-page.png';
 
 const OrderLayout = ({

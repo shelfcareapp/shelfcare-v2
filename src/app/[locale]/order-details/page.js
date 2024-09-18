@@ -6,8 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import OrderLayout from '@/components/order/Layout';
 import { useDropzone } from 'react-dropzone';
 import { FaFileUpload, FaTrashAlt } from 'react-icons/fa';
-import useTranslations from '@/hooks/useTranslations';
-import { useLanguage } from '@/context/LanguageContext';
+import { useTranslations } from 'next-intl';
 import {
   setAdditionalNotes,
   addUploadedFiles,
