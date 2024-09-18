@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { config } from '../../../../config';
 
 export default async (req, res) => {
   if (req.method === 'POST') {
@@ -14,7 +15,7 @@ export default async (req, res) => {
 
     const mailOptions = {
       from: email,
-      to: 'maija@shelfcare.app',
+      to: config.mailing.from,
       subject: `Enquiries from Website: ${firstName} ${lastName}`,
       text: `Name: ${firstName} ${lastName}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}`
     };
