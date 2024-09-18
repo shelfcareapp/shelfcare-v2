@@ -86,46 +86,7 @@ export const tailoringServicesKeys = {
   other_tailoring_services: ['button_sewing', 'extra_buttons']
 };
 
-export const cobblerKeys = ['boots', 'leather_jackets', 'leather_pants'];
-
-export const cobblerServicesKeys = {
-  boots: [
-    'heel_replacement',
-    'sole_replacement',
-    'shoe_shine',
-    'leather_conditioning'
-  ],
-  leather_jackets: [
-    'shortening_of_sleeves',
-    'shortening_sleeves_moving_elastic',
-    'narrowing_leather_jacket',
-    'replacing_zipper',
-    'changing_lining'
-  ],
-  leather_pants: [
-    'leg_shortening',
-    'leg_narrowing',
-    'zipper_replacement_thin_leather',
-    'zipper_replacement_thick_leather'
-  ]
-};
-
-export const laundryKeys = ['clothes_laundry'];
-
-export const laundryServicesKeys = {
-  clothes_laundry: [
-    'pants_wash_dry_clean',
-    'skirt_wash_dry_clean',
-    'suit',
-    'dress_mini',
-    'dress_midi',
-    'dress_maxi',
-    'evening_dress',
-    'jacket_wash_dry_clean'
-  ]
-};
-
-export const subOptionsKeys = {
+export const tailoringSubOptionsKeys = {
   trouser_leg_shortening: ['hidden_stitch', 'cuffs', 'binding_tape'],
   shirts_sleeve_shortening: ['slit_sleeves'],
   sleeve_shortening: ['with_lining', 'slit_sleeves'],

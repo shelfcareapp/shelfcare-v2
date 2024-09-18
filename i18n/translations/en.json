@@ -692,6 +692,7 @@
         }
       }
     },
+
     "cobbler": {
       "title": "Cobbler Services",
       "groups": {
@@ -700,19 +701,25 @@
           "services": {
             "heel_replacement": {
               "name": "Heel Replacement",
-              "price": "28"
+              "price": "28",
+              "subOptions": {}
             },
             "sole_replacement": {
               "name": "Sole Replacement",
-              "price": "44"
+              "price": "44",
+              "subOptions": {
+                "vibram_sole": { "name": "Vibram Sole", "price": "+10" }
+              }
             },
             "shoe_shine": {
               "name": "Shoe Shine",
-              "price": "15"
+              "price": "15",
+              "subOptions": {}
             },
             "leather_conditioning": {
               "name": "Leather Conditioning",
-              "price": "20"
+              "price": "20",
+              "subOptions": {}
             }
           }
         },
@@ -720,24 +727,33 @@
           "title": "Leather Jackets",
           "services": {
             "shortening_of_sleeves": {
-              "name": "Shortening of Sleeves",
-              "price": "65"
+              "name": "Sleeve Shortening",
+              "price": "65",
+              "subOptions": {}
             },
             "shortening_sleeves_moving_elastic": {
-              "name": "Shortening Sleeves and Moving Elastic",
-              "price": "75"
+              "name": "Sleeve Shortening and Moving Elastic",
+              "price": "75",
+              "subOptions": {}
             },
             "narrowing_leather_jacket": {
-              "name": "Narrowing Leather Jacket",
-              "price": "95"
+              "name": "Leather Jacket Narrowing",
+              "price": "95",
+              "subOptions": {}
             },
             "replacing_zipper": {
-              "name": "Replacing Zipper",
-              "price": "89"
+              "name": "Zipper Replacement",
+              "price": "89",
+              "subOptions": {
+                "metal_zipper": { "name": "Metal Zipper", "price": "+8" }
+              }
             },
             "changing_lining": {
-              "name": "Changing Lining",
-              "price": "259"
+              "name": "Lining Replacement",
+              "price": "259",
+              "subOptions": {
+                "lining_silk": { "name": "Silk Lining", "price": "+30" }
+              }
             }
           }
         },
@@ -746,63 +762,121 @@
           "services": {
             "leg_shortening": {
               "name": "Leg Shortening",
-              "price": "39"
+              "price": "39",
+              "subOptions": {}
             },
             "leg_narrowing": {
               "name": "Leg Narrowing",
-              "price": "49"
+              "price": "49",
+              "subOptions": {}
             },
             "zipper_replacement_thin_leather": {
               "name": "Zipper Replacement (Thin Leather)",
-              "price": "49"
+              "price": "49",
+              "subOptions": {
+                "metal_zipper": { "name": "Metal Zipper", "price": "+8" }
+              }
             },
             "zipper_replacement_thick_leather": {
               "name": "Zipper Replacement (Thick Leather)",
-              "price": "59"
+              "price": "59",
+              "subOptions": {
+                "metal_zipper": { "name": "Metal Zipper", "price": "+8" }
+              }
             }
           }
         }
       }
     },
+
     "laundry": {
       "title": "Laundry Services",
-      "groups": {
-        "clothes_laundry": {
-          "title": "Clothes Laundry",
-          "services": {
-            "pants_wash_dry_clean": {
-              "name": "Pants Wash/Dry Clean",
-              "price": "18"
-            },
-            "skirt_wash_dry_clean": {
-              "name": "Skirt Wash/Dry Clean",
-              "price": "17"
-            },
-            "suit": {
-              "name": "Suit",
-              "price": "38"
-            },
-            "dress_mini": {
-              "name": "Dress (Mini)",
-              "price": "32"
-            },
-            "dress_midi": {
-              "name": "Dress (Midi)",
-              "price": "39"
-            },
-            "dress_maxi": {
-              "name": "Dress (Maxi)",
-              "price": "45"
-            },
-            "evening_dress": {
-              "name": "Evening Dress",
-              "price": "68"
-            },
-            "jacket_wash_dry_clean": {
-              "name": "Jacket Wash/Dry Clean",
-              "price": "30"
+      "services": {
+        "trousers": {
+          "name": "Trousers",
+          "price": "18"
+        },
+        "skirt": {
+          "name": "Skirt",
+          "price": "17",
+          "subOptions": {
+            "length_over_knee": {
+              "name": "Length Over Knee",
+              "price": "+9"
             }
           }
+        },
+        "suit": {
+          "name": "Suit",
+          "price": "38",
+          "subOptions": {
+            "silk_suit": {
+              "name": "Silk Suit",
+              "price": "+15"
+            },
+            "suit_with_vest": {
+              "name": "Suit with Vest",
+              "price": "46"
+            }
+          }
+        },
+        "dress_mini": {
+          "name": "Mini Dress",
+          "price": "32"
+        },
+        "dress_midi": {
+          "name": "Midi Dress",
+          "price": "39"
+        },
+        "dress_maxi": {
+          "name": "Maxi Dress",
+          "price": "45"
+        },
+        "evening_dress": {
+          "name": "Evening Dress",
+          "price": "68"
+        },
+        "jacket": {
+          "name": "Jacket / Blazer",
+          "price": "26"
+        },
+        "coat": {
+          "name": "Coat",
+          "price": "39",
+          "subOptions": {
+            "wool_coat": {
+              "name": "Wool Coat",
+              "price": "+5"
+            },
+            "length_over_knee": {
+              "name": "Length Over Knee",
+              "price": "+10"
+            }
+          }
+        },
+        "winter_jacket": {
+          "name": "Winter Jacket",
+          "price": "27",
+          "subOptions": {
+            "length_over_knee": {
+              "name": "Length Over Knee",
+              "price": "+10"
+            }
+          }
+        },
+        "down_jacket": {
+          "name": "Down Jacket",
+          "price": "39",
+          "subOptions": {
+            "length_over_knee": {
+              "name": "Length Over Knee",
+              "price": "+10"
+            }
+          }
+        },
+        "canada_goose_jacket": {
+          "name": "Canada Goose Jacket",
+          "price": "59"
         }
       }
     }

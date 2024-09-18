@@ -3,23 +3,28 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import Layout from '@/components/common/Layout';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import {
   tailoringKeys,
   tailoringServicesKeys,
-  subOptionsKeys,
+  tailoringSubOptionsKeys
+} from './tailoringKeys';
+import {
   cobblerKeys,
   cobblerServicesKeys,
+  cobblerSubOptionsKeys
+} from './cobblerKeys';
+import {
   laundryKeys,
-  laundryServicesKeys
-} from './key';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+  laundryServicesKeys,
+  laundrySubOptionsKeys
+} from './laundryKeys';
 
 const PricingPage = () => {
   const t = useTranslations('pricing');
-  const [activeTab, setActiveTab] = useState(0); // 0: Tailoring, 1: Cobbler, 2: Laundry
-  const [expandedGroups, setExpandedGroups] = useState({}); // Track expanded/collapsed state for each group
+  const [activeTab, setActiveTab] = useState(0);
+  const [expandedGroups, setExpandedGroups] = useState({});
 
-  // Function to toggle group collapse/expand state
   const toggleGroup = (groupKey) => {
     setExpandedGroups((prev) => ({
       ...prev,
@@ -27,10 +32,18 @@ const PricingPage = () => {
     }));
   };
 
-  const renderTailoringContent = () => {
-    return tailoringKeys.map((groupKey) => {
-      const groupTitle = t(`tailoring.groups.${groupKey}.title`);
-      const isExpanded = expandedGroups[groupKey]; // Check if group is expanded
+  const getNamespace = () => {
+    if (activeTab === 0) return 'tailoring';
+    if (activeTab === 1) return 'cobbler';
+    if (activeTab === 2) return 'laundry';
+  };
+
+  const renderGroupedContent = (groupKeys, servicesKeys, subOptionsKeys) => {
+    const namespace = getNamespace();
+
+    return groupKeys.map((groupKey) => {
+      const groupTitle = t(`${namespace}.groups.${groupKey}.title`);
+      const isExpanded = expandedGroups[groupKey];
 
       return (
         <div
@@ -39,7 +52,7 @@ const PricingPage = () => {
         >
           <div
             className="flex justify-between items-center cursor-pointer"
-            onClick={() => toggleGroup(groupKey)} // Toggle expand/collapse on click
+            onClick={() => toggleGroup(groupKey)}
           >
             <h3 className="text-xl font-semibold text-primary">{groupTitle}</h3>
             {isExpanded ? (
@@ -53,17 +66,17 @@ const PricingPage = () => {
               isExpanded ? 'max-h-screen' : 'max-h-0'
             }`}
           >
-            {tailoringServicesKeys[groupKey].map((serviceKey) => (
+            {servicesKeys[groupKey].map((serviceKey) => (
               <div key={serviceKey} className="py-2 border-b border-gray-100">
                 <div className="flex justify-between">
                   <span>
                     {t(
-                      `tailoring.groups.${groupKey}.services.${serviceKey}.name`
+                      `${namespace}.groups.${groupKey}.services.${serviceKey}.name`
                     )}
                   </span>
                   <span>
                     {t(
-                      `tailoring.groups.${groupKey}.services.${serviceKey}.price`
+                      `${namespace}.groups.${groupKey}.services.${serviceKey}.price`
                     )}
                     €
                   </span>
@@ -76,12 +89,12 @@ const PricingPage = () => {
                     >
                       <span>
                         {t(
-                          `tailoring.groups.${groupKey}.services.${serviceKey}.subOptions.${subOptionKey}.name`
+                          `${namespace}.groups.${groupKey}.services.${serviceKey}.subOptions.${subOptionKey}.name`
                         )}
                       </span>
                       <span>
                         {t(
-                          `tailoring.groups.${groupKey}.services.${serviceKey}.subOptions.${subOptionKey}.price`
+                          `${namespace}.groups.${groupKey}.services.${serviceKey}.subOptions.${subOptionKey}.price`
                         )}
                         €
                       </span>
@@ -95,109 +108,54 @@ const PricingPage = () => {
     });
   };
 
-  const renderCobblerContent = () => {
-    return cobblerKeys.map((groupKey) => {
-      const groupTitle = t(`cobbler.groups.${groupKey}.title`);
-      const isExpanded = expandedGroups[groupKey];
-
-      return (
-        <div
-          key={groupKey}
-          className="bg-white shadow-lg rounded-lg mb-6 p-4 border border-gray-200"
-        >
-          <div
-            className="flex justify-between items-center cursor-pointer"
-            onClick={() => toggleGroup(groupKey)}
-          >
-            <h3 className="text-xl font-semibold text-primary">{groupTitle}</h3>
-            {isExpanded ? (
-              <FaChevronUp className="text-primary" />
-            ) : (
-              <FaChevronDown className="text-primary" />
-            )}
-          </div>
-          <div
-            className={`mt-4 transition-max-height duration-500 ease-in-out overflow-hidden ${
-              isExpanded ? 'max-h-screen' : 'max-h-0'
-            }`}
-          >
-            {cobblerServicesKeys[groupKey].map((serviceKey) => (
-              <div key={serviceKey} className="py-2 border-b border-gray-100">
-                <div className="flex justify-between">
-                  <span>
-                    {t(
-                      `cobbler.groups.${groupKey}.services.${serviceKey}.name`
-                    )}
-                  </span>
-                  <span>
-                    {t(
-                      `cobbler.groups.${groupKey}.services.${serviceKey}.price`
-                    )}{' '}
-                    €
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      );
-    });
-  };
-
   const renderLaundryContent = () => {
-    return laundryKeys.map((groupKey) => {
-      const groupTitle = t(`laundry.groups.${groupKey}.title`);
-      const isExpanded = expandedGroups[groupKey];
-
-      return (
-        <div
-          key={groupKey}
-          className="bg-white shadow-lg rounded-lg mb-6 p-4 border border-gray-200"
-        >
-          <div
-            className="flex justify-between items-center cursor-pointer"
-            onClick={() => toggleGroup(groupKey)}
-          >
-            <h3 className="text-xl font-semibold text-primary">{groupTitle}</h3>
-            {isExpanded ? (
-              <FaChevronUp className="text-primary" />
-            ) : (
-              <FaChevronDown className="text-primary" />
-            )}
-          </div>
-          <div
-            className={`mt-4 transition-max-height duration-500 ease-in-out overflow-hidden ${
-              isExpanded ? 'max-h-screen' : 'max-h-0'
-            }`}
-          >
-            {laundryServicesKeys[groupKey].map((serviceKey) => (
-              <div key={serviceKey} className="py-2 border-b border-gray-100">
-                <div className="flex justify-between">
-                  <span>
-                    {t(
-                      `laundry.groups.${groupKey}.services.${serviceKey}.name`
-                    )}
-                  </span>
-                  <span>
-                    {t(
-                      `laundry.groups.${groupKey}.services.${serviceKey}.price`
-                    )}{' '}
-                    €
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
+    return laundryKeys.map((serviceKey) => (
+      <div
+        key={serviceKey}
+        className="bg-white shadow-lg rounded-lg mb-6 p-4 border border-gray-200"
+      >
+        <div className="flex justify-between items-center">
+          <span className="text-xl font-semibold text-primary">
+            {t(`laundry.services.${serviceKey}.name`)}
+          </span>
+          <span>{t(`laundry.services.${serviceKey}.price`)} €</span>
         </div>
-      );
-    });
+        {laundrySubOptionsKeys[serviceKey] &&
+          laundrySubOptionsKeys[serviceKey].map((subOptionKey) => (
+            <div
+              key={subOptionKey}
+              className="flex justify-between py-1 text-gray-600 ml-4"
+            >
+              <span>
+                {t(
+                  `laundry.services.${serviceKey}.subOptions.${subOptionKey}.name`
+                )}
+              </span>
+              <span>
+                {t(
+                  `laundry.services.${serviceKey}.subOptions.${subOptionKey}.price`
+                )}
+                €
+              </span>
+            </div>
+          ))}
+      </div>
+    ));
   };
 
   const renderActiveTabContent = () => {
     if (activeTab === 0) {
-      return renderTailoringContent();
+      return renderGroupedContent(
+        tailoringKeys,
+        tailoringServicesKeys,
+        tailoringSubOptionsKeys
+      );
     } else if (activeTab === 1) {
-      return renderCobblerContent();
+      return renderGroupedContent(
+        cobblerKeys,
+        cobblerServicesKeys,
+        cobblerSubOptionsKeys
+      );
     } else if (activeTab === 2) {
       return renderLaundryContent();
     }

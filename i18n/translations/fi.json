@@ -727,233 +727,200 @@
         }
       }
     },
+
     "cobbler": {
       "title": "Suutaripalvelut",
       "groups": {
-        "kengat": {
-          "title": "Kengät",
+        "boots": {
+          "title": "Saappaat",
           "services": {
-            "korkolapun_vaihto_alle_1cm": {
-              "name": "Korkolapun vaihto, alle 1cm",
-              "price": "28"
+            "heel_replacement": {
+              "name": "Korkolapun vaihto",
+              "price": "28",
+              "subOptions": {}
             },
-            "korkolapun_vaihto_alle_5cm": {
-              "name": "Korkolapun vaihto, alle 5cm",
-              "price": "34"
-            },
-            "korkolapun_vaihto_yli_5cm": {
-              "name": "Korkolapun vaihto, yli 5cm",
-              "price": "39"
-            },
-            "paksun_korkolapun_vaihto": {
-              "name": "Paksun korkolapun vaihto",
-              "price": "45"
-            },
-            "korkojen_paallystys_uudet_korkolaput": {
-              "name": "Korkojen päällystys + uudet korkolaput",
-              "price": "86"
-            },
-            "koron_kiinnitys_per_kpl": {
-              "name": "Koron kiinnitys per kpl",
-              "price": "32"
-            },
-            "puolipohjan_vaihto": {
+            "sole_replacement": {
               "name": "Puolipohjan vaihto",
-              "price": "44"
+              "price": "44",
+              "subOptions": {
+                "vibram_sole": { "name": "Vibram Sole", "price": "+10" }
+              }
             },
-            "puolipohjan_vaihto_bootsit": {
-              "name": "Puolipohjan vaihto bootsit",
-              "price": "46"
-            },
-            "karikipalojen_vaihto": {
-              "name": "Kärkipalojen vaihto",
-              "price": "29"
-            },
-            "tennareiden_uudelleenpohjaus": {
-              "name": "Tennareiden uudelleenpohjaus",
-              "price": "109"
-            },
-            "converse_kenkien_uudelleenpohjaus": {
-              "name": "Converse-kenkien uudelleenpohjaus",
-              "price": "138"
-            },
-            "dr_martens_pohjan_vaihto": {
-              "name": "Dr. Martens pohjan vaihto",
-              "price": "109"
-            },
-            "yhden_kengan_pohjan_liimaus": {
-              "name": "Yhden kengän pohjan liimaus",
-              "price": "23"
-            },
-            "kenkaparin_pohjien_liimaus": {
-              "name": "Kenkäparin pohjien liimaus",
-              "price": "40"
-            },
-            "pohjavuorin_korjaus": {
-              "name": "Pohjavuorin korjaus",
-              "price": "29"
-            },
-            "sivupaikka": { "name": "Sivupaikka", "price": "37" },
-            "paallisen_paikka": { "name": "Päällisen paikka", "price": "23" },
-            "matalan_kenkaparin_vetoketjun_vaihto": {
-              "name": "Matalan kenkäparin vetoketjun vaihto",
-              "price": "58"
-            },
-            "saappaiden_vetoketjun_vaihto": {
-              "name": "Saappaiden vetoketjun vaihto",
-              "price": "75"
-            },
-            "kenkien_puhdistus_ja_hoito": {
+            "shoe_shine": {
               "name": "Kenkien puhdistus ja hoito",
-              "price": "25"
+              "price": "15",
+              "subOptions": {}
+            },
+            "leather_conditioning": {
+              "name": "Nahkakenkien syväpesu ja hoito",
+              "price": "20",
+              "subOptions": {}
             }
           }
         },
-        "nahkatakit": {
+        "leather_jackets": {
           "title": "Nahkatakit",
           "services": {
-            "hihojen_lyhennys": { "name": "Hihojen lyhennys", "price": "65" },
-            "hihojen_lyhennys_resorin_siirto": {
+            "shortening_of_sleeves": {
+              "name": "Hihojen lyhennys",
+              "price": "65",
+              "subOptions": {}
+            },
+            "shortening_sleeves_moving_elastic": {
               "name": "Hihojen lyhennys ja resorin siirto",
-              "price": "75"
+              "price": "75",
+              "subOptions": {}
             },
-            "hihojen_lyhennys_vetoketjun_siirto": {
-              "name": "Hihojen lyhennys ja vetoketjun siirto",
-              "price": "95"
-            },
-            "nahkatakin_kavennus": {
+            "narrowing_leather_jacket": {
               "name": "Nahkatakin kavennus",
-              "price": "95"
+              "price": "95",
+              "subOptions": {}
             },
-            "vetoketjun_vaihto": { "name": "Vetoketjun vaihto", "price": "89" },
-            "moottoripyoratakin_vetoketjun_vaihto": {
-              "name": "Moottoripyörätakin vetoketjun vaihto",
-              "price": "149"
+            "replacing_zipper": {
+              "name": "Vetoketjun vaihto",
+              "price": "89",
+              "subOptions": {
+                "metal_zipper": {
+                  "name": "Metallinen vetoketju",
+                  "price": "+8"
+                }
+              }
             },
-            "vuorin_vaihtaminen": {
+            "changing_lining": {
               "name": "Vuorin vaihtaminen",
-              "price": "259"
-            },
-            "nahkatakin_syvapesu": {
-              "name": "Nahkatakin syväpesu",
-              "price": "92"
+              "price": "259",
+              "subOptions": {
+                "lining_silk": { "name": "Silk Lining", "price": "+30" }
+              }
             }
           }
         },
-        "nahkahousut": {
+        "leather_pants": {
           "title": "Nahkahousut",
           "services": {
-            "lahkeiden_lyhennys": {
+            "leg_shortening": {
               "name": "Lahkeiden lyhennys",
-              "price": "39"
+              "price": "39",
+              "subOptions": {}
             },
-            "lahkeiden_kavennus": {
+            "leg_narrowing": {
               "name": "Lahkeiden kavennus",
-              "price": "49"
+              "price": "49",
+              "subOptions": {}
             },
-            "vetoketjun_vaihto_ohut_nahka": {
+            "zipper_replacement_thin_leather": {
               "name": "Vetoketjun vaihto, ohut nahka",
-              "price": "49"
+              "price": "49",
+              "subOptions": {
+                "metal_zipper": {
+                  "name": "Metallinen vetoketju",
+                  "price": "+8"
+                }
+              }
             },
-            "vetoketjun_vaihto_paksu_nahka": {
+            "zipper_replacement_thick_leather": {
               "name": "Vetoketjun vaihto, paksu nahka",
-              "price": "59"
-            }
-          }
-        },
-        "lauku": {
-          "title": "Laukut",
-          "services": {
-            "vetoketjun_vaihto_alle_30cm": {
-              "name": "Vetoketjun vaihto, vetoketju alle 30cm",
-              "price": "50"
-            },
-            "vetoketjun_vaihto_yli_30cm": {
-              "name": "Vetoketjun vaihto, vetoketju yli 30cm",
-              "price": "79"
-            },
-            "sisavetoketjun_vaihto_vuorilliseen_laukkuun": {
-              "name": "Sisävetoketjun vaihto vuorilliseen laukkuun",
-              "price": "29"
-            },
-            "repun_vetoketjun_vaihto": {
-              "name": "Repun vetoketjun vaihto",
-              "price": "59"
-            },
-            "nahkahihnan_tikkauskorjaus": {
-              "name": "Nahkahihnan tikkauskorjaus",
-              "price": "15"
-            },
-            "nahkahihnan_korjaus_paikalla": {
-              "name": "Nahkahihnan korjaus paikalla",
-              "price": "26"
-            }
-          }
-        },
-        "muut_nahkatyot": {
-          "title": "Muut nahkatyöt",
-          "services": {
-            "napin_ompelu": { "name": "Napin ompelu", "price": "9" },
-            "repeaman_korjaus_alle_5cm": {
-              "name": "Repeämän korjaus, repeämä alle 5cm",
-              "price": "25"
-            },
-            "repeaman_korjaus_yli_5cm": {
-              "name": "Repeämän korjaus, repeämä yli 5cm",
-              "price": "35"
-            },
-            "tikkaukset_revennyt_sauma": {
-              "name": "Tikkaukset, esim. revennyt sauma",
-              "price": "22"
-            },
-            "tahran_puhdistus_alle_20cm": {
-              "name": "Tahran puhdistus, alle 20cm",
-              "price": "25"
+              "price": "59",
+              "subOptions": {
+                "metal_zipper": {
+                  "name": "Metallinen vetoketju",
+                  "price": "+8"
+                }
+              }
             }
           }
         }
       }
     },
+
     "laundry": {
-      "title": "Pesulapalvelut",
-      "groups": {
-        "vaatteiden_pesula": {
-          "title": "Vaatteiden Pesula",
-          "services": {
-            "housujen_pesu_ja_kuivaus": {
-              "name": "Housujen pesu/kemiallinen pesu",
-              "price": "18"
-            },
-            "hameen_pesu_ja_kuivaus": {
-              "name": "Hameen pesu/kemiallinen pesu",
-              "price": "17"
-            },
-            "puseron_pesu_ja_kuivaus": {
-              "name": "Puseron pesu/kemiallinen pesu",
-              "price": "20"
-            },
-            "takin_pesu_ja_kuivaus": {
-              "name": "Takin pesu/kemiallinen pesu",
-              "price": "30"
-            },
-            "puku": { "name": "Puku", "price": "38" },
-            "puku_liivilla": { "name": "Puku liivillä", "price": "46" },
-            "mekko_mini": { "name": "Mekko, mini", "price": "32" },
-            "mekko_midi": { "name": "Mekko, midi", "price": "39" },
-            "mekko_maxi": { "name": "Mekko, maxi", "price": "45" },
-            "iltapuku": { "name": "Iltapuku", "price": "68" },
-            "jakku_pikkutakki": { "name": "Jakku / pikkutakki", "price": "26" },
-            "solmio_rusetti": { "name": "Solmio / rusetti", "price": "10" },
-            "paita": { "name": "Paita", "price": "10" },
-            "huivi": { "name": "Huivi", "price": "10" },
-            "kangastakki": { "name": "Kangastakki", "price": "39" },
-            "toppatakki": { "name": "Toppatakki", "price": "27" },
-            "untuvatakki": { "name": "Untuvatakki", "price": "39" },
-            "canada_goose_takit": {
-              "name": "Canada Goose –takit",
-              "price": "59"
+      "title": "Pesu / Kuivapesu",
+      "services": {
+        "trousers": {
+          "name": "Housut",
+          "price": "18"
+        },
+        "skirt": {
+          "name": "Hame",
+          "price": "17",
+          "subOptions": {
+            "length_over_knee": {
+              "name": "Pituus yli polven",
+              "price": "+9"
             }
           }
+        },
+        "suit": {
+          "name": "Puku",
+          "price": "38",
+          "subOptions": {
+            "silk_suit": {
+              "name": "Silkkipuku",
+              "price": "+15"
+            },
+            "suit_with_vest": {
+              "name": "Puku liivillä",
+              "price": "46"
+            }
+          }
+        },
+        "dress_mini": {
+          "name": "Mekko, mini",
+          "price": "32"
+        },
+        "dress_midi": {
+          "name": "Mekko, midi",
+          "price": "39"
+        },
+        "dress_maxi": {
+          "name": "Mekko, maxi",
+          "price": "45"
+        },
+        "evening_dress": {
+          "name": "Iltapuku",
+          "price": "68"
+        },
+        "jacket": {
+          "name": "Jakku / pikkutakki",
+          "price": "26"
+        },
+        "coat": {
+          "name": "Kangastakki",
+          "price": "39",
+          "subOptions": {
+            "wool_coat": {
+              "name": "Villakangastakki",
+              "price": "+5"
+            },
+            "length_over_knee": {
+              "name": "Pituus yli polven",
+              "price": "+10"
+            }
+          }
+        },
+        "winter_jacket": {
+          "name": "Toppatakki",
+          "price": "27",
+          "subOptions": {
+            "length_over_knee": {
+              "name": "Pituus yli polven",
+              "price": "+10"
+            }
+          }
+        },
+        "down_jacket": {
+          "name": "Untuvatakki",
+          "price": "39",
+          "subOptions": {
+            "length_over_knee": {
+              "name": "Pituus yli polven",
+              "price": "+10"
+            }
+          }
+        },
+        "canada_goose_jacket": {
+          "name": "Canada Goose -takki",
+          "price": "59"
         }
       }
     }
