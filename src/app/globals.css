@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,13 +7,25 @@
 }
 
 body {
-  font-family: 'Baskerville', serif;
+  font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   background-color: #fff;
   padding: 0;
   margin: 0;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Baskerville', serif;
+}
+
 p {
+  /* font-family: 'Montserrat', system-ui; */
+  font-size: 14px;
   color: theme('colors.primaryDark');
 }
 
@@ -42,14 +55,13 @@ p {
     left: 0;
   }
   .btn-primary {
-    @apply bg-primary text-white px-4 py-2 rounded-lg transition-all duration-300 ease-in-out;
+    @apply bg-primary text-white px-4 py-2 rounded-lg transition-all duration-300 ease-in-out cursor-pointer;
     @apply border border-transparent;
     @apply hover:bg-white hover:text-primary hover:border-primary;
   }
 
   .btn-secondary {
-    @apply bg-secondary text-white px-4 py-2 rounded-lg transition-all duration-300 ease-in-out;
-    @apply border border-transparent;
-    @apply hover:bg-white hover:text-secondary hover:border-secondary;
+    @apply bg-white border border-primary text-primary px-4 py-2 rounded-lg transition-all duration-300 ease-in-out cursor-pointer;
+    @apply hover:bg-primary hover:text-secondary;
   }
 }

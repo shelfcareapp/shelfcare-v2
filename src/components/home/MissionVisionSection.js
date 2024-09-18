@@ -1,14 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import useTranslations from '@/hooks/useTranslations';
-import { useLanguage } from '@/context/LanguageContext';
+import { useTranslations } from 'next-intl';
 import image1 from '../../../public/images/DDD71F8C-2ED9-4161-8263-19DC5B1FABE4.JPG';
 import image2 from '../../../public/images/736C8CA9-7086-4A5B-A6C4-DA4771CC780A.JPG';
 
 const MissionVisionSection = () => {
-  const { lang } = useLanguage();
-  const t = useTranslations(lang, 'mission-vision');
+  const t = useTranslations();
 
   return (
     <section className="py-12 md:py-32 px-6 md:px-8 bg-primary text-secondary relative">
@@ -16,11 +14,10 @@ const MissionVisionSection = () => {
         {/* Mission Section */}
         <div className="flex flex-col items-start order-1 md:order-1">
           <h3 className="text-2xl font-semibold mb-4">
-            {t.missionTitle || 'Our Mission'}
+            {t('home.mission-vision.missionTitle')}
           </h3>
           <p className="text-base text-secondary opacity-70">
-            {t.mission ||
-              'Our mission is to make repair and maintenance services for clothing, shoes and accessories more accessible, and establish these services as a regular activity for wardrobe care and sustainable fashion consumption.'}
+            {t('home.mission-vision.mission')}
           </p>
         </div>
 
@@ -51,11 +48,10 @@ const MissionVisionSection = () => {
         {/* Vision Section */}
         <div className="flex flex-col items-start order-3 md:order-4">
           <h3 className="text-2xl font-semibold mb-4">
-            {t.visionTitle || 'Our Vision'}
+            {t('home.mission-vision.visionTitle')}
           </h3>
           <p className="text-secondary opacity-70">
-            {t.vision ||
-              'ShelfCare stands for the new age of fashion industry where quality cancels out quantity. Instead of following the trends and continuous consumption, the focus is on personal style, perfectly fitting and beloved clothes which their owners want to take care of.'}
+            {t('home.mission-vision.vision')}
           </p>
         </div>
       </div>

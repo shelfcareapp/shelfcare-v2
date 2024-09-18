@@ -1,33 +1,30 @@
 'use client';
 
-import { FaArrowRight } from 'react-icons/fa'; // Import right arrow icon
-import useTranslations from '@/hooks/useTranslations';
-import { useLanguage } from '@/context/LanguageContext';
+import { useTranslations } from 'next-intl';
 
 const HowItWorksSection = () => {
-  const { lang } = useLanguage();
-  const t = useTranslations(lang, 'home-how-it-works');
+  const t = useTranslations();
 
   const steps = [
     {
       number: 1,
-      title: t.step1?.title,
-      description: t.step1?.description
+      title: t('home.how_it_works.step1.title'),
+      description: t('home.how_it_works.step1.description')
     },
     {
       number: 2,
-      title: t.step2?.title,
-      description: t.step2?.description
+      title: t('home.how_it_works.step2.title'),
+      description: t('home.how_it_works.step2.description')
     },
     {
       number: 3,
-      title: t.step3?.title,
-      description: t.step3?.description
+      title: t('home.how_it_works.step3.title'),
+      description: t('home.how_it_works.step3.description')
     },
     {
       number: 4,
-      title: t.step4?.title,
-      description: t.step4?.description
+      title: t('home.how_it_works.step4.title'),
+      description: t('home.how_it_works.step4.description')
     }
   ];
 
@@ -35,11 +32,9 @@ const HowItWorksSection = () => {
     <section className="py-16 px-6 md:px-24 bg-gradient-to-br from-white via-gray-50 to-white">
       <div className="container mx-auto">
         <h2 className="text-4xl md:text-5xl font-bold text-primary mb-8">
-          {t.title || 'How It Works'}
+          {t('home.how_it_works.title')}
         </h2>
-        <p className="text-gray-600 mb-12">
-          {t.subtitle || 'Get started with these easy steps:'}
-        </p>
+        <p className="text-gray-600 mb-12">{t('home.how_it_works.subtitle')}</p>
         <div className="flex flex-wrap items-center justify-center gap-4">
           {steps.map((step, index) => (
             <div key={index} className="flex items-center">
@@ -52,9 +47,6 @@ const HowItWorksSection = () => {
                 </h3>
                 <p className="text-gray-600 text-center">{step.description}</p>
               </div>
-              {index < steps.length - 1 && (
-                <FaArrowRight className="hidden lg:block text-primary text-2xl mx-4" />
-              )}
             </div>
           ))}
         </div>

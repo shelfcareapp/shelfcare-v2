@@ -2,9 +2,8 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { FaTiktok, FaInstagram } from 'react-icons/fa';
-import useTranslations from '@/hooks/useTranslations';
-import { useLanguage } from '@/context/LanguageContext';
+import { useTranslations } from 'next-intl';
+import { navigateToOrder } from '@/utils/navigateToOrder';
 
 import image1 from '../../../public/images/3E2D2574-5141-4B81-9B47-557D6233CA31.JPG';
 import image2 from '../../../public/images/4A2548A6-6A01-47DE-8CB5-995E14C9D35F.JPG';
@@ -35,8 +34,7 @@ const images = [
 ];
 
 const HeroSection = () => {
-  const { lang } = useLanguage();
-  const t = useTranslations(lang, 'home-hero');
+  const t = useTranslations();
 
   const scrollVariant = {
     animate: {
@@ -55,35 +53,16 @@ const HeroSection = () => {
   return (
     <section className="flex flex-col items-center justify-center text-center mt-8 md:0 md:min-h-screen bg-white">
       <div className="flex flex-col gap-6 items-center justify-center text-center text-primary mb-14 max-w-4xl mx-auto px-4">
-        {/* <div className="flex gap-4 mb-4">
-          <a
-            href="https://www.instagram.com/shelfcare.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaInstagram
-              className="text-primary hover:text-primaryDark"
-              size={30}
-            />
-          </a>
-          <a
-            href="https://www.tiktok.com/@shelfcare.app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaTiktok
-              className="text-primary hover:text-primaryDark"
-              size={30}
-            />
-          </a>
-        </div> */}
         <h1 className="text-3xl md:text-6xl font-bold mb-2 leading-tight">
-          {t.title}
+          {t('home.hero.title')}
         </h1>
         <p className="text-base md:text-lg text-gray-700 mb-4 leading-relaxed">
-          {t.subtitle}
+          {t('home.hero.subtitle')}
         </p>
-        <button className="btn-primary">{t.cta}</button>
+        <button className="btn-primary" onClick={navigateToOrder()}>
+          {' '}
+          {t('home.hero.cta')}
+        </button>
       </div>
 
       <div className="relative overflow-hidden w-full h-full">

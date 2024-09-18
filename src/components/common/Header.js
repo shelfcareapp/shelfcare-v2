@@ -3,21 +3,20 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import useTranslations from '@/hooks/useTranslations';
-import { useLanguage } from '@/context/LanguageContext';
+import { useTranslations } from 'next-intl';
 import LanguageSwitcher from './LanguageSwitcher';
+import { navigateToOrder } from '@/utils/navigateToOrder';
 
 const Header = () => {
-  const { lang } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-  const t = useTranslations(lang, 'header');
+  const t = useTranslations();
 
   return (
     <header className="border-b-[0.5px] sticky top-0 bg-white z-50">
       <div className="container mx-auto flex justify-between items-center p-4">
-        <Link href="/" className="text-2xl  font-extrabold text-primary">
-          ShelfCare
+        <Link href="/" className="text-3xl font-extrabold text-primary">
+          <h1>ShelfCare</h1>
         </Link>
         <nav className="hidden md:flex space-x-6">
           <Link
@@ -26,7 +25,7 @@ const Header = () => {
               pathname === '/price-list' ? 'nav-link-active' : ''
             }`}
           >
-            {t.price_list}
+            {t('header.price_list')}
           </Link>
           <Link
             href="/measurement-guide"
@@ -34,12 +33,14 @@ const Header = () => {
               pathname === '/measurement-guide' ? 'nav-link-active' : ''
             }`}
           >
-            {t.measurement_guide}
+            {t('header.measurement_guide')}
           </Link>
         </nav>
         <div className="hidden md:flex items-center space-x-4">
-          <LanguageSwitcher currentLang={lang} />
-          <button className="btn-primary">{t.order_now}</button>
+          <LanguageSwitcher />
+          <button className="btn-primary" onClick={navigateToOrder()}>
+            {t('header.order_now')}
+          </button>
         </div>
         <div className="md:hidden flex items-center">
           <button
@@ -72,7 +73,7 @@ const Header = () => {
                 pathname === '/price-list' ? 'nav-link-active' : ''
               }`}
             >
-              {t.price_list}
+              {t('header.price_list')}
             </Link>
             <Link
               href="/measurement-guide"
@@ -80,12 +81,14 @@ const Header = () => {
                 pathname === '/measurement-guide' ? 'nav-link-active' : ''
               }`}
             >
-              {t.measurement_guide}
+              {t('header.measurement_guide')}
             </Link>
           </nav>
           <div className="md:hidden p-2 mt-2">
-            <button className="btn-primary mb-2">{t.order_now}</button>
-            <LanguageSwitcher currentLang={lang} />
+            <button className="btn-primary mb-2" onClick={navigateToOrder()}>
+              {t('header.order_now')}
+            </button>
+            <LanguageSwitcher />
           </div>
         </div>
       )}

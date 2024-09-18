@@ -1,26 +1,18 @@
-import { NextResponse } from 'next/server';
+import { config as projectConfig } from '../config';
+import createMiddleware from 'next-intl/middleware';
 
-const locales = ['en', 'fi'];
-const defaultLocale = 'en';
+console.log(projectConfig.i18n.defaultLocale);
 
-function getLocale(request) {
-  const acceptLang = request.headers.get('Accept-Language');
-  if (!acceptLang) return defaultLocale;
-  return acceptLang.split(',')[0].split('-')[0];
-}
+const intlMiddleware = createMiddleware({
+  locales: Object.keys(projectConfig.i18n.locales),
+  defaultLocale: projectConfig.i18n.defaultLocale,
+  localePrefix: 'never'
+});
 
-export function middleware(request) {
-  const { pathname } = request.nextUrl;
-  const pathnameHasLocale = locales.some(
-    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
-  );
-
-  if (pathnameHasLocale) return NextResponse.next();
-
-  const locale = getLocale(request);
-  return NextResponse.redirect(new URL(`/${locale}${pathname}`, request.url));
+export default async function middleware(req) {
+  return intlMiddleware(req);
 }
 
 export const config = {
-  matcher: '/((?!_next).*)'
+  matcher: ['/((?!api|_next|.*\\..*).*)']
 };

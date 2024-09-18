@@ -1,24 +1,27 @@
 'use client';
 
 import { useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { CiGlobe } from 'react-icons/ci';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import { useLanguage } from '@/context/LanguageContext';
-import useTranslations from '@/hooks/useTranslations';
+import { useLocale } from 'next-intl';
+import { useRouter } from '@/hooks/router';
+import { usePathname } from '../../../modules/i18n';
+import { config } from '../../../config';
 
-const LanguageSwitcher = ({ currentLang }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const { locales } = config.i18n;
+
+const LanguageSwitcher = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const { lang } = useLanguage();
+  const currentLocale = useLocale();
+  const searchParams = useSearchParams();
+  const [isOpen, setIsOpen] = useState(false);
+  const [value, setValue] = useState(currentLocale);
 
-  const t = useTranslations(lang, 'language');
-
-  const handleLanguageChange = (lang) => {
-    const newPath = pathname.replace(currentLang, lang);
-    router.push(newPath);
-    setIsOpen(false);
+  const handleLanguageChange = (locale) => {
+    setValue(locale);
+    router.replace(`/${locale}${pathname}?${searchParams.toString()}`);
   };
 
   return (
@@ -28,23 +31,20 @@ const LanguageSwitcher = ({ currentLang }) => {
         className="flex items-center text-primary focus:outline-none"
       >
         <CiGlobe />
-        <span className="ml-1 mr-1">{currentLang.toUpperCase()}</span>
+        <span className="ml-1 mr-1">{value.toUpperCase()}</span>
         {isOpen ? <FaChevronUp /> : <FaChevronDown />}
       </button>
       {isOpen && (
         <ul className="absolute mt-2 md:right-0 w-20 bg-white border border-gray-300 rounded-md shadow-lg">
-          <li
-            onClick={() => handleLanguageChange('en')}
-            className="px-4 py-2 cursor-pointer hover:bg-gray-100 text-primary"
-          >
-            {t.en}
-          </li>
-          <li
-            onClick={() => handleLanguageChange('fi')}
-            className="px-4 py-2 cursor-pointer hover:bg-gray-100 text-primary"
-          >
-            {t.fi}
-          </li>
+          {Object.entries(locales).map(([locale, { label }]) => (
+            <li
+              key={locale}
+              onClick={() => handleLanguageChange(locale)}
+              className="px-4 py-2 cursor-pointer hover:bg-gray-100 text-primary"
+            >
+              {label}
+            </li>
+          ))}
         </ul>
       )}
     </div>
