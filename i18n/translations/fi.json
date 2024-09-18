@@ -1,6 +1,6 @@
 {
   "header": {
-    "price_list": "Hintalista",
+    "price_list": "Hinnasto",
     "how_it_works": "Kuinka se toimii",
     "measurement_guide": "Mittausopas",
     "order_now": "Tilaa nyt"
@@ -8,7 +8,7 @@
 
   "footer": {
     "for_customers": "Asiakkaille",
-    "price_list": "Hintalista",
+    "price_list": "Hinnasto",
     "measurement_guide": "Mittausopas",
     "how_it_works": "Kuinka se toimii",
 
@@ -35,8 +35,8 @@
 
   "home": {
     "hero": {
-      "title": "Huippuluokan ompelu-, suutari ja pesulapalvelut pääkaupunkiseudulla",
-      "subtitle": "Kestävä muoti ja vaatehuolto.",
+      "title": "Huippuluokan ompelu-, suutari- ja pesulapalvelut pääkaupunkiseudulla",
+      "subtitle": "Tilaa nyt ja tulemme hakemaan tavarasi huoltoon",
       "cta": "Tilaa nyt"
     },
     "how_it_works": {
@@ -47,16 +47,20 @@
         "description": "Täytä lomake verkkosivullamme aloittaaksesi palvelupyynnön."
       },
       "step2": {
-        "title": "Tilaukset haetaan",
-        "description": "Noudamme tavarasi sovittuun aikaan ja paikkaan."
+        "title": "Saat tilausvahvistuksen",
+        "description": "Tarvittaessa ennen vahvistusta varmistamme työt palvelun tuottajiltamme"
       },
       "step3": {
-        "title": "Palvelut suoritetaan",
-        "description": "Ammattitaitoiset työntekijämme huolehtivat ompelu-, suutari- tai pesulapalveluistasi."
+        "title": "Haemme tavarat",
+        "description": "Noudamme tavarasi valitsemanasi ajankohtana"
       },
       "step4": {
-        "title": "Tavarat palautetaan",
-        "description": "Tavarat palautetaan sinulle, palvelut suoritettuna ja valmiina käyttöön."
+        "title": "Palvelut suoritetaan",
+        "description": "Tarvittaessa kysymme tarkentavat kysymykset halutun lopputuloksen varmistamiseksi"
+      },
+      "step5": {
+        "title": "Palautamme tavarat",
+        "description": "Toimitamme huolletut tavarat takaisin valitsemanasi ajankohtana"
       }
     },
     "mission-vision": {

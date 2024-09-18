@@ -25,6 +25,11 @@ const HowItWorksSection = () => {
       number: 4,
       title: t('home.how_it_works.step4.title'),
       description: t('home.how_it_works.step4.description')
+    },
+    {
+      number: 5,
+      title: t('home.how_it_works.step5.title'),
+      description: t('home.how_it_works.step5.description')
     }
   ];
 
@@ -34,7 +39,6 @@ const HowItWorksSection = () => {
         <h2 className="text-4xl md:text-5xl font-bold text-primary mb-8">
           {t('home.how_it_works.title')}
         </h2>
-        <p className="text-gray-600 mb-12">{t('home.how_it_works.subtitle')}</p>
         <div className="flex flex-wrap items-center justify-center gap-4">
           {steps.map((step, index) => (
             <div key={index} className="flex items-center">

@@ -16,7 +16,7 @@ const MissionVisionSection = () => {
           <h3 className="text-2xl font-semibold mb-4">
             {t('home.mission-vision.missionTitle')}
           </h3>
-          <p className="text-base text-secondary opacity-70">
+          <p className="text-sm text-secondary opacity-70">
             {t('home.mission-vision.mission')}
           </p>
         </div>
@@ -50,7 +50,7 @@ const MissionVisionSection = () => {
           <h3 className="text-2xl font-semibold mb-4">
             {t('home.mission-vision.visionTitle')}
           </h3>
-          <p className="text-secondary opacity-70">
+          <p className="text-secondary text-sm opacity-70">
             {t('home.mission-vision.vision')}
           </p>
         </div>
