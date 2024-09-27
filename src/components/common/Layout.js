@@ -8,7 +8,6 @@ function Layout({ children }) {
       <Header />
       <main className="flex-grow">{children}</main>
       <Footer />
-      {/* <TidioLoader /> */}
     </>
   );
 }

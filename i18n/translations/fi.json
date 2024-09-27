@@ -36,7 +36,7 @@
   "home": {
     "hero": {
       "title": "Huippuluokan ompelu-, suutari- ja pesulapalvelut pääkaupunkiseudulla",
-      "subtitle": "Tilaa nyt ja tulemme hakemaan tavarasi huoltoon",
+      "subtitle": "Tilaa nyt ja tulemme hakemaan tavarasi huoltoon.",
       "cta": "Tilaa nyt"
     },
     "how_it_works": {
@@ -73,19 +73,19 @@
     "services": {
       "title": "Palvelumme",
       "tailoring": {
-        "title": "Räätälöinti",
+        "title": "Ompelimo",
         "shortDescription": "Täydelliset säädöt vaatteillesi.",
-        "description": "Säädä vaatteesi täydellisesti, olipa kyseessä pituuden, istuvuuden tai tyylin muokkaaminen. ShelfCaren räätälöintipalveluihin kuuluu ammattimainen säätö, jotta vaatteesi istuvat juuri oikein."
+        "description": "Korjauta rikkinäiset ja muokkaa epäsopivat vaatteesi hyvin istuviksi. Saat vaatteillesi lisää käyttökertoja, kun ne tuntuvat päällä mukavalta ja näyttävät huolitelluilta."
       },
       "laundry": {
         "title": "Pesula",
         "shortDescription": "Pidä vaatteesi puhtaina ja raikkaina.",
-        "description": "Ammattimaiset pesulapalvelut pitävät vaatteesi puhtaina ja raikkaina. Pesulapalvelumme varmistaa, että tuotteitasi käsitellään huolellisesti, tarjoten vaivattoman tavan ylläpitää vaatekaappisi puhtautta."
+        "description": "Pesulapalvelumme tarjoaa ammattimaisen puhdistuksen vaatteillesi kiinnittäen erityistä huomiota herkkiin kankaisiin. Pidämme vaatteesi raikkaina ja hyvin hoidettuina, jotta ne näyttävät hyviltä pitkään."
       },
       "cobbler": {
         "title": "Suutari",
         "shortDescription": "Elvytä suosikkikenkäsi huolella.",
-        "description": "Elvytä suosikkijalkineesi suutaripalveluillamme, kuten kenkien korjauksilla, pohjien vaihdoilla ja muilla kengänhoitotarpeilla. ShelfCaren asiantuntevat suutareita tuovat kenkäsi takaisin elämään, pitäen ne huippukunnossa."
+        "description": "Korjaa, kunnosta ja huolla kenkäsi, laukkusi ja nahkatavarasi. Suutarimme pidentävät tavaroidesi elinikää ja ne kestävät käytössä vuodesta toiseen."
       }
     },
     "order-start": {
@@ -1005,10 +1005,12 @@
     "pay": "Maksa",
     "back": "Takaisin",
     "cancel": "Peruuta",
-    "error": "Tapahtui virhe. Yritä myöhemmin uudelleen.",
     "success": "Tilauksesi on lähetetty onnistuneesti.",
     "loading": "Ladataan...",
-    "continue": "Jatka"
+    "continue": "Jatka",
+    "orderSuccess": "Tilaus on lähetetty onnistuneesti!",
+    "error": "Tapahtui virhe. Yritä uudelleen myöhemmin.",
+    "emailSuccess": "Sähköposti lähetetty onnistuneesti!"
   },
   "order-details": {
     "title": "Tilaustiedot",
@@ -1026,7 +1028,13 @@
     "subtitle": "Valitse itsellesi sopiva haku- ja palautuspäivä, täytä tilauksen tiedot ja jätä yhteystietosi. Sinun ei tarvitse pakata tavaroita – annat vain tavarat ja me pakkaamme ne.",
     "subtitle-2": "Tutustu hinnastoon <link1>täältä</link1> ja mittausohjeisiin <link2>täältä</link2>. Kaikkiin tilauksiin lisätään 10€ kuljetus- ja palvelumaksu. Saat laskun sähköpostiisi hakupäivän jälkeen.",
     "pickupDateLabel": "Milloin haemme tavarat?",
+    "selectPickupDate": "Vaihda hakupäiva",
+    "returnDateLabel": "Milloin palautamme tavarat?",
+    "returnPickupDateDescription": "Huollamme tavarat 7 päivässä - ensimmäinen mahdollinen palautuspäivä on viikon päästä tavaroiden hausta.",
+    "selectReturnDate": "Valitse palautuspäivä",
     "orderDetailsLabel": "Tilauksen tiedot",
+    "orderImages": "Upload images of the items(Optional)",
+    "orderImageInstruction": "Upload images showing the specific areas that need adjustments.",
     "orderDetailsInstruction1": "Kerro tilauksen tiedoissa tavarat ja niille haluamasi palvelut sekä tarvittaessa mittatiedot. Halutessasi voit jättää tiedot tyhjäksi, jolloin tilaus käydään läpi haun yhteydessä.",
     "orderDetailsInstruction2": "Voit jättää tähän myös tilausta ja paveluita koskevat kysymykset, jolloin tilaus vahvistetaan myöhemmin.",
     "orderDetailsPlaceholder": "Tilauksen tiedot esim. 'Silkki paita, hihan lyhennys 2cm...'",

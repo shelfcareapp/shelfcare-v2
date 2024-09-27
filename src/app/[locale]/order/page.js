@@ -1,14 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { toast } from 'react-toastify';
-import Layout from '@/components/common/Layout';
-import { sendOrderEmail } from '@/utils/sendOrderEmail';
 import Link from 'next/link';
+import { format, addDays, isAfter } from 'date-fns';
+import { toast } from 'react-toastify';
+
+import Layout from '@/components/common/Layout';
+import { formatTxtToDates } from '@/utils/formatTxtToDates';
 
 const OrderPage = () => {
   const t = useTranslations('order');
+  const tCommon = useTranslations('common');
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -17,9 +20,54 @@ const OrderPage = () => {
     zip: '',
     city: '',
     orderDetails: '',
-    pickupDate: ''
+    pickupDate: null,
+    returnDate: null
+    // orderImages: []
   });
+  const [pickupDates, setPickupDates] = useState([]);
+  const [returnDates, setReturnDates] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const removeDuplicates = (datesArray) => {
+    return datesArray.filter(
+      (value, index, self) =>
+        index ===
+        self.findIndex((t) => t.date.getTime() === value.date.getTime())
+    );
+  };
+
+  useEffect(() => {
+    const fetchDates = async () => {
+      try {
+        const [pickupDateResponse, returnDateResponse] = await Promise.all([
+          fetch(
+            'https://m8v1yt95qjd1nofn.public.blob.vercel-storage.com/pickupDates.txt'
+          ),
+          fetch(
+            'https://m8v1yt95qjd1nofn.public.blob.vercel-storage.com/returnDates.txt'
+          )
+        ]);
+
+        const pickupDatesText = await pickupDateResponse.text();
+        const returnDatesText = await returnDateResponse.text();
+
+        const today = new Date();
+        const parsedPickupDates = removeDuplicates(
+          formatTxtToDates(pickupDatesText)
+        ).filter((date) => isAfter(date.date, today));
+        const parsedReturnDates = removeDuplicates(
+          formatTxtToDates(returnDatesText)
+        ).filter((date) => isAfter(date.date, today));
+
+        setPickupDates(parsedPickupDates);
+        setReturnDates(parsedReturnDates);
+      } catch (error) {
+        toast.error('Failed to fetch dates. Please try again later.');
+      }
+    };
+
+    fetchDates();
+  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -28,12 +76,70 @@ const OrderPage = () => {
     });
   };
 
+  const handlePickUpDateChange = (e) => {
+    const selectedDate = pickupDates.find(
+      (d) => d.date.toISOString() === e.target.value
+    );
+    if (selectedDate) {
+      setFormData((prevData) => ({
+        ...prevData,
+        pickupDate: selectedDate
+      }));
+      updateReturnDates(selectedDate);
+    }
+  };
+
+  const updateReturnDates = (pickupDate) => {
+    if (pickupDate) {
+      const filteredDates = returnDates.filter((date) =>
+        isAfter(date.date, addDays(pickupDate.date, 6))
+      );
+      setReturnDates(filteredDates);
+
+      if (
+        !filteredDates.find((date) => date?.date === formData.returnDate?.date)
+      ) {
+        setFormData((prevData) => ({ ...prevData, returnDate: null }));
+      }
+    }
+  };
+
+  const handleReturnDateChange = (e) => {
+    const selectedDate = returnDates.find(
+      (d) => d.date.toISOString() === e.target.value
+    );
+    if (selectedDate) {
+      setFormData((prevData) => ({
+        ...prevData,
+        returnDate: selectedDate
+      }));
+    }
+  };
+
+  // const handleImageUpload = (e) => {
+  //   const files = Array.from(e.target.files);
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     orderImages: files
+  //   }));
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     try {
-      await sendOrderEmail(formData);
-      toast.success(t('successMessage'));
+      const response = await fetch('/api/send-order-email', {
+        method: 'POST',
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        toast.success(tCommon('orderSuccess'));
+      } else {
+        toast.error(tCommon('error'));
+      }
+
       setFormData({
         name: '',
         phone: '',
@@ -42,10 +148,13 @@ const OrderPage = () => {
         zip: '',
         city: '',
         orderDetails: '',
-        pickupDate: ''
+        pickupDate: null,
+        returnDate: null,
+        orderImages: []
       });
     } catch (error) {
-      toast.error(t('error'));
+      console.error('Error submitting order:', error);
+      toast.error('Error submitting order.');
     } finally {
       setLoading(false);
     }
@@ -83,22 +192,57 @@ const OrderPage = () => {
               <label className="font-semibold text-primary">
                 {t('pickupDateLabel')}
               </label>
-              <input
-                type="date"
+              <select
                 name="pickupDate"
-                value={formData.pickupDate}
-                onChange={handleChange}
+                value={formData.pickupDate?.date?.toISOString() || ''}
+                onChange={handlePickUpDateChange}
                 className="w-full p-2 border border-gray-300 rounded"
                 required
-              />
+              >
+                <option value="" disabled>
+                  {t('selectPickupDate')}
+                </option>
+                {pickupDates.map((date, index) => (
+                  <option
+                    key={`${date.date.toISOString()}-${index}`}
+                    value={date.date.toISOString()}
+                  >
+                    {format(date.date, 'EEEEEE dd.MM.yyyy')} {date.time}
+                  </option>
+                ))}
+              </select>
             </div>
-            {/* Order Details Instructions */}
-            <p className="text-sm text-gray-600 mb-4">
-              {t('orderDetailsInstruction1')}
-            </p>
-            <p className="text-sm text-gray-600 mb-8">
-              {t('orderDetailsInstruction2')}
-            </p>
+
+            {formData.pickupDate && (
+              <div>
+                <label className="font-semibold text-primary">
+                  {t('returnDateLabel')}
+                </label>
+                <p className="text-sm text-gray-500 mb-8">
+                  {t('returnPickupDateDescription')}
+                </p>
+                <select
+                  name="returnDate"
+                  value={formData.returnDate?.date?.toISOString() || ''}
+                  onChange={handleReturnDateChange}
+                  className="w-full p-2 border border-gray-300 rounded"
+                  required
+                >
+                  <option value="" disabled>
+                    {t('selectReturnDate')}
+                  </option>
+                  {returnDates.map((date, index) => (
+                    <option
+                      key={`${date.date.toISOString()}-${index}`}
+                      value={date.date.toISOString()}
+                    >
+                      {format(date.date, 'EEEEEE dd.MM.yyyy')} {date.time}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+
             <div>
               <label className="font-semibold text-primary">
                 {t('orderDetailsLabel')}
@@ -112,6 +256,23 @@ const OrderPage = () => {
                 required
               />
             </div>
+
+            {/* <div>
+              <label className="font-semibold text-primary mb-2">
+                {t('orderImages')}
+              </label>
+              <p className="text-sm text-gray-500 mb-4">
+                {t('orderImageInstruction')}
+              </p>
+              <input
+                type="file"
+                name="orderImages"
+                accept="image/*"
+                multiple
+                onChange={handleImageUpload}
+                className="w-full p-2 border border-gray-300 rounded"
+              />
+            </div> */}
 
             <div>
               <label className="font-semibold text-primary">

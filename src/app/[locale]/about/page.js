@@ -5,8 +5,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { toast } from 'react-toastify';
 import Layout from '@/components/common/Layout';
-import { sendContactEmail } from '@/utils/sendContactEmail';
-import image from '../../../../public/images/F92723E0-595D-4944-B8E1-57870BF67F86.JPG'; // Ensure correct image import
+import image from '../../../../public/images/F92723E0-595D-4944-B8E1-57870BF67F86.JPG';
 
 const teamMembers = [
   {
@@ -50,8 +49,12 @@ const About = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const result = await sendContactEmail(formData);
-      if (result) {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
         toast.success(t('contact.successMessage'));
       } else {
         toast.error(t('contact.errorMessage'));

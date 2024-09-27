@@ -2,8 +2,17 @@ import emailjs from 'emailjs-com';
 import { toast } from 'react-toastify';
 
 export const sendOrderEmail = async (orderData) => {
-  const { name, phone, email, address, zip, city, orderDetails, pickupDate } =
-    orderData;
+  const {
+    name,
+    phone,
+    email,
+    address,
+    zip,
+    city,
+    orderDetails,
+    pickupDate,
+    returnDate
+  } = orderData;
 
   const templateParams = {
     from_name: name,
@@ -13,7 +22,8 @@ export const sendOrderEmail = async (orderData) => {
     postal_code: zip,
     from_city: city,
     order_details: orderDetails,
-    pickup_date: pickupDate
+    pickup_date: pickupDate,
+    return_date: returnDate
   };
 
   try {

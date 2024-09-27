@@ -17,7 +17,7 @@ export const sendContactEmail = async (formData) => {
       templateParams,
       process.env.NEXT_PUBLIC_EMAILJS_USER_ID
     );
-    return true; // Email successfully sent
+    return true;
   } catch (error) {
     throw new Error('Failed to send the message');
   }

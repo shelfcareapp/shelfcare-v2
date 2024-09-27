@@ -33,7 +33,7 @@
   "home": {
     "hero": {
       "title": "One-stop-shop for high quality tailoring, cobbler and laundry services",
-      "subtitle": "Order now and we will come to pick up your items for servicing",
+      "subtitle": "Order now and we will come to pick up your items for servicing.",
       "cta": "Order Now"
     },
     "how_it_works": {
@@ -73,17 +73,17 @@
       "tailoring": {
         "title": "Tailoring",
         "shortDescription": "Perfect adjustments for your clothes.",
-        "description": "Get your clothes fitted and altered to perfection, whether it’s adjusting the length, fit, or style. Tailoring services at ShelfCare include professional adjustments to ensure your garments fit you just right."
+        "description": "Get your clothes repaired and altered to perfection, whether it’s adjusting the length, fit, or style.You’ll get more wear out of your garments when they fit well and feel comfortable."
       },
       "laundry": {
         "title": "Laundry",
         "shortDescription": "Keep your garments fresh and clean.",
-        "description": "Professional laundry services to keep your garments clean and fresh. Our laundry service ensures your items are handled with care, providing a hassle-free way to maintain your wardrobe’s cleanliness."
+        "description": "Our laundry service provides professional cleaning for your clothes, with special care given to delicate fabrics. We keep your clothes fresh and well-maintained and they continue to look great over time."
       },
       "cobbler": {
         "title": "Cobbler",
         "shortDescription": "Revive your favorite shoes with care.",
-        "description": "Revive your favorite footwear with our cobbler services, including shoe repairs, sole replacements, and other shoe care needs. ShelfCare’s expert cobblers bring your shoes back to life, keeping them in top condition."
+        "description": "Our cobblers repair, restore, and maintain your shoes, bags, and leather goods. With cobbler services you can extend the lifespan of your items."
       }
     },
     "order-start": {
@@ -963,10 +963,12 @@
     "pay": "Pay",
     "back": "Back",
     "cancel": "Cancel",
-    "error": "An error occurred. Please try again later.",
     "success": "Your order has been submitted successfully.",
     "loading": "Loading...",
-    "continue": "Continue"
+    "continue": "Continue",
+    "orderSuccess": "Order has been submitted successfully!",
+    "error": "There was an error. Please try again later.",
+    "emailSuccess": "Email sent successfully!"
   },
   "order-details": {
     "title": "Order Details",
@@ -981,11 +983,18 @@
   },
   "order": {
     "title": "Place Your Order",
-    "subtitle": "Choose an application and return date that suits you, fill in the order information and leave your contact information. You don't need to pack the items - you just give the items and we'll pack them.",
-    "subtitle-2": "Check out the price list <link1>here</link1> and the measurement instructions <link2>here</link2>. A €10 transport and service fee is added to all orders. You will receive an invoice in your email after the application day.",
+    "subtitle": "Choose pickup and return time, fill in order information and your contact information. You don't have to pack the items - we bring the bags for it.",
+    "subtitle-2": "Check out the price list <link1>here</link1> and the measurement guide <link2>here</link2>. €10 service and logistics fee is added to all orders. You will receive an invoice via email after pickup.",
     "pickupDateLabel": "When do we pick up the goods?",
+    "selectPickupDate": "Select pickup date",
+    "selectReturnDate": "Select return date",
+    "returnDateLabel": "When do we return the items back to you?",
+    "returnPickupDateDescription": "Services are performed within 7 days - the first option for return date is a week after the pickup.",
+    "returnPickupDate": "Select return date",
     "orderDetailsLabel": "Order Details",
-    "orderDetailsInstruction1": "In the order details, state the items and services you want for them and, if necessary, the measurements. If you wish, you can leave the information blank, and we will go over it during pickup.",
+    "orderImages": "Upload images of the items(Optional)",
+    "orderImageInstruction": "Upload images showing the specific areas that need adjustments.",
+    "orderDetailsInstruction1": "In the order details, fill in the items you are sending and what services you want. State measurement information if needed. Let us know if you want us take your measurements during pickup.",
     "orderDetailsInstruction2": "You can also leave questions about the order and the packages here, and the order will be confirmed later.",
     "orderDetailsPlaceholder": "Order details e.g., 'Silk shirt, shorten sleeve by 2cm...'",
     "nameLabel": "Name",
