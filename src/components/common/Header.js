@@ -1,23 +1,72 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { CiUser } from 'react-icons/ci';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { useSession } from '@/components/common/SessionContext';
+import Logo from './Logo';
 import LanguageSwitcher from './LanguageSwitcher';
-import { navigateToOrder } from '@/utils/navigateToOrder';
+import { toast } from 'react-toastify';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isSignout, setIsSignout] = useState(false);
   const pathname = usePathname();
   const t = useTranslations();
+  const router = useRouter();
+  const { user } = useSession(); // Destructure user directly from session
+  const dropdownRef = useRef(null);
+
+  const handleOrderNow = () => {
+    if (!user) {
+      router.push('/sign-in');
+    } else {
+      // If user is logged in, take them to the new order page directly
+      router.push('/new-order');
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/sign-out', {
+        method: 'POST'
+      });
+      toast.success('You have been signed out');
+      setIsSignout(true);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (isSignout) {
+      window.location.reload();
+    }
+  }, [isSignout]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [dropdownRef]);
 
   return (
     <header className="border-b-[0.5px] sticky top-0 bg-white z-50">
       <div className="container mx-auto flex justify-between items-center p-4">
-        <Link href="/" className="text-3xl font-extrabold text-primary">
-          <h1>ShelfCare</h1>
+        <Link href="/">
+          <Logo />
         </Link>
+
         <nav className="hidden md:flex space-x-6">
           <Link
             href="/price-list"
@@ -36,12 +85,58 @@ const Header = () => {
             {t('header.measurement_guide')}
           </Link>
         </nav>
+
         <div className="hidden md:flex items-center space-x-4">
           <LanguageSwitcher />
-          <button className="btn-primary" onClick={navigateToOrder()}>
-            {t('header.order_now')}
+          {user ? (
+            <div className="relative" ref={dropdownRef}>
+              <button onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+                <CiUser className="text-primary" size={28} />
+              </button>
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg py-2">
+                  <Link
+                    href="/new-order"
+                    className="block px-4 py-2 text-primary hover:bg-gray-100"
+                  >
+                    New Order
+                  </Link>
+                  <Link
+                    href="/orders"
+                    className="block px-4 py-2 text-primary hover:bg-gray-100"
+                  >
+                    My Orders
+                  </Link>
+
+                  <div className="border-t border-gray-200"></div>
+                  <Link
+                    href="/profile"
+                    className="block px-4 py-2 text-primary hover:bg-gray-100"
+                  >
+                    My Account
+                  </Link>
+                  <button
+                    className="block w-full font-semibold text-left px-4 py-2 text-primary hover:bg-gray-100"
+                    onClick={handleLogout}
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <button
+              className="btn-secondary"
+              onClick={() => router.push('/sign-in')}
+            >
+              {t('header.sign_in')}
+            </button>
+          )}
+          <button className="btn-primary" onClick={handleOrderNow}>
+            {user ? t('header.new_order') : t('header.order_now')}
           </button>
         </div>
+
         <div className="md:hidden flex items-center">
           <button
             onClick={() => setIsOpen(!isOpen)}
@@ -64,6 +159,7 @@ const Header = () => {
           </button>
         </div>
       </div>
+
       {isOpen && (
         <div>
           <nav className="md:hidden bg-white border-t border-gray-200">
@@ -84,9 +180,54 @@ const Header = () => {
               {t('header.measurement_guide')}
             </Link>
           </nav>
+
           <div className="md:hidden p-2 mt-2">
-            <button className="btn-primary mb-2" onClick={navigateToOrder()}>
-              {t('header.order_now')}
+            {user ? (
+              <>
+                <button onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+                  <CiUser className="text-primary" size={28} />
+                </button>
+                {isDropdownOpen && (
+                  <div className="bg-white border rounded shadow-lg py-2">
+                    <Link
+                      href="/new-order"
+                      className="block px-4 py-2 text-primary hover:bg-gray-100"
+                    >
+                      New Order
+                    </Link>
+                    <Link
+                      href="/orders"
+                      className="block px-4 py-2 text-primary hover:bg-gray-100"
+                    >
+                      My Orders
+                    </Link>
+
+                    <div className="border-t border-gray-200"></div>
+                    <Link
+                      href="/profile"
+                      className="block px-4 py-2 text-primary hover:bg-gray-100"
+                    >
+                      My Account
+                    </Link>
+                    <button
+                      className="block w-full text-left font-semibold px-4 py-2 text-primary hover:bg-gray-100"
+                      onClick={handleLogout}
+                    >
+                      Sign Out
+                    </button>
+                  </div>
+                )}
+              </>
+            ) : (
+              <button
+                className="btn-secondary mb-2"
+                onClick={() => router.push('/sign-in')}
+              >
+                {t('header.sign_in')}
+              </button>
+            )}
+            <button className="btn-primary mb-2" onClick={handleOrderNow}>
+              {user ? t('header.new_order') : t('header.order_now')}
             </button>
             <LanguageSwitcher />
           </div>

@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { navigateToOrder } from '@/utils/navigateToOrder';
+import { useRouter } from 'next/navigation';
 
 import image1 from '../../../public/images/3E2D2574-5141-4B81-9B47-557D6233CA31.JPG';
 import image2 from '../../../public/images/4A2548A6-6A01-47DE-8CB5-995E14C9D35F.JPG';
@@ -35,6 +35,7 @@ const images = [
 
 const HeroSection = () => {
   const t = useTranslations();
+  const router = useRouter();
 
   const scrollVariant = {
     animate: {
@@ -59,7 +60,7 @@ const HeroSection = () => {
         <p className="text-base md:text-lg text-gray-700 mb-4 leading-relaxed">
           {t('home.hero.subtitle')}
         </p>
-        <button className="btn-primary" onClick={navigateToOrder()}>
+        <button className="btn-primary" onClick={() => router.push('/order')}>
           {' '}
           {t('home.hero.cta')}
         </button>

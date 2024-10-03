@@ -35,12 +35,6 @@ const OrderDetails = () => {
   };
 
   const handleSubmit = () => {
-    console.log('Submitting order with details:', {
-      selectedServices,
-      additionalNotes,
-      uploadedFiles
-    });
-
     sessionStorage.removeItem('selectedServices');
     sessionStorage.removeItem('selectedOptions');
 

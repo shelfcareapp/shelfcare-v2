@@ -1,11 +1,11 @@
 'use client';
 
-import Image from 'next/image';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { toast } from 'react-toastify';
 import Layout from '@/components/common/Layout';
-import image from '../../../../public/images/F92723E0-595D-4944-B8E1-57870BF67F86.JPG';
+
+const image = '/images/F92723E0-595D-4944-B8E1-57870BF67F86.JPG';
 
 const teamMembers = [
   {
@@ -158,7 +158,7 @@ const About = () => {
                 onChange={handleChange}
                 placeholder={t('contact.message')}
                 className="border p-2 rounded md:col-span-2"
-                rows="4"
+                rows={4}
                 aria-label={t('contact.ariaLabels.message')}
               ></textarea>
               <button

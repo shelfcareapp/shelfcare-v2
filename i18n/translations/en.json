@@ -3,7 +3,9 @@
     "price_list": "Price List",
     "how_it_works": "How it Works",
     "measurement_guide": "Measurement Guide",
-    "order_now": "Order Now"
+    "sign_in": "Sign in",
+    "order_now": "Order Now",
+    "new_order": "New Order"
   },
   "footer": {
     "for_customers": "For Customers",

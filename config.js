@@ -16,6 +16,7 @@ export const config = {
   },
   mailing: {
     provider: 'plunk',
-    from: 'maija.tunturi@shelfcare.app'
+    // from: 'maija.tunturi@shelfcare.app'
+    from: 'shelfcaretech@gmail.com'
   }
 };

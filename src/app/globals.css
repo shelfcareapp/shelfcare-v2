@@ -23,10 +23,16 @@ h6 {
   font-family: 'Baskerville', serif;
 }
 
-p {
+p,
+ul,
+li {
   /* font-family: 'Montserrat', system-ui; */
   font-size: 14px;
   color: theme('colors.primaryDark');
+}
+
+li {
+  list-style-type: none;
 }
 
 @layer utilities {
@@ -57,11 +63,11 @@ p {
   .btn-primary {
     @apply bg-primary text-white px-4 py-2 rounded-lg transition-all duration-300 ease-in-out cursor-pointer;
     @apply border border-transparent;
-    @apply hover:bg-white hover:text-primary hover:border-primary;
+    @apply hover:opacity-80;
   }
 
   .btn-secondary {
-    @apply bg-white border border-primary text-primary px-4 py-2 rounded-lg transition-all duration-300 ease-in-out cursor-pointer;
-    @apply hover:bg-primary hover:text-secondary;
+    @apply bg-secondary border border-secondary text-primary px-4 py-2 rounded-lg transition-all duration-300 ease-in-out cursor-pointer;
+    @apply hover:opacity-50;
   }
 }

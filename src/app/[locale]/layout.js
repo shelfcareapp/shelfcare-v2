@@ -3,6 +3,8 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 import { Providers } from '@/redux/Providers';
 import ToastProvider from '@/components/common/ToastProvider';
+import { SessionProvider } from '@/components/common/SessionContext';
+import { validateRequest } from '@/lib/auth';
 
 export const metadata = {
   title: 'ShelfCare - Sustainable Fashion and Wardrobe Care',
@@ -33,17 +35,20 @@ export const metadata = {
 async function RootLayout({ children }) {
   const locale = await getLocale();
   const messages = await getMessages();
+  const session = await validateRequest();
 
   return (
     <html lang={locale}>
       <body>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <Providers>
-            <ToastProvider>
-              <main className="flex-grow">{children}</main>
-            </ToastProvider>
-          </Providers>
-        </NextIntlClientProvider>
+        <SessionProvider value={session}>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <Providers>
+              <ToastProvider>
+                <main className="flex-grow">{children}</main>
+              </ToastProvider>
+            </Providers>
+          </NextIntlClientProvider>
+        </SessionProvider>
       </body>
     </html>
   );
