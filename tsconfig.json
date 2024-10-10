@@ -19,7 +19,7 @@
     ],
     "baseUrl": ".", // Set base URL to the project root
     "paths": {
-      "@/*": ["./src/*"] // Path alias for the src directory
+      "@/*": ["app/*"]
     }
   },
   "include": [
@@ -30,7 +30,9 @@
     "**/*.tsx", // Include React/TypeScript files
     "**/*.js", // Include JavaScript files
     "**/*.jsx", // Include React/JavaScript files
-    "src/**/*" // Include everything under src directory
+    "src/**/*", // Include everything under src directory
+    "app",
+    "components"
   ],
   "exclude": ["node_modules"] // Exclude node_modules
 }
