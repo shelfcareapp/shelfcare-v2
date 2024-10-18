@@ -27,16 +27,10 @@ export default function SignInPage() {
 
     try {
       setLoading(true);
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      console.log('User signed in:', userCredential.user);
+      await signInWithEmailAndPassword(auth, email, password);
 
       router.push('/');
     } catch (error) {
-      console.error('Error during sign-in:', error);
       toast.error('Sign in failed. Please try again.');
     } finally {
       setLoading(false);

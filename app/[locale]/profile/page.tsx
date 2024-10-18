@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useRouter } from 'next/navigation';
 
 type ProfileData = {
   name: string;
@@ -21,6 +22,13 @@ type ProfileData = {
 
 export default function ProfilePage() {
   const [user] = useAuthState(auth);
+  const router = useRouter();
+
+  if (!user) {
+    router.push('/sign-in');
+    return null;
+  }
+
   const [profileData, setProfileData] = useState<ProfileData>({
     name: '',
     email: '',
@@ -48,11 +56,8 @@ export default function ProfilePage() {
 
       if (userDoc.exists()) {
         setProfileData(userDoc.data() as ProfileData);
-      } else {
-        console.log('No such document!');
       }
     } catch (error) {
-      console.error('Error fetching profile data:', error);
       toast.error('Failed to load profile data.');
     } finally {
       setLoading(false);
