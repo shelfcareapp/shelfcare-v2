@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import AuthLayout from 'components/common/AuthLayout';
 import { auth } from '../../../firebase';
