@@ -1,12 +1,12 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest } from 'next';
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
+export async function POST(req) {
   try {
-    const { items } = req.body;
+    const { items } = await req.json();
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -18,7 +18,8 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
 
     NextResponse.json(
       {
-        message: 'Session created successfully'
+        message: 'Session created successfully',
+        session
       },
       {
         status: 200
