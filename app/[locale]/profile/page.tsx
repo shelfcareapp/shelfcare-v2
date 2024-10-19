@@ -24,11 +24,6 @@ export default function ProfilePage() {
   const [user] = useAuthState(auth);
   const router = useRouter();
 
-  if (!user) {
-    router.push('/sign-in');
-    return null;
-  }
-
   const [profileData, setProfileData] = useState<ProfileData>({
     name: '',
     email: '',
@@ -47,6 +42,11 @@ export default function ProfilePage() {
       fetchUserData();
     }
   }, [user]);
+
+  if (!user) {
+    router.push('/sign-in');
+    return null;
+  }
 
   const fetchUserData = async () => {
     try {

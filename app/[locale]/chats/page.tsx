@@ -48,11 +48,6 @@ export default function UserEnquiryPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [showChatList, setShowChatList] = useState(false);
 
-  if (!user) {
-    router.push('/sign-in');
-    return null;
-  }
-
   useEffect(() => {
     const chatsRef = collection(db, 'chats');
     ('chats');
@@ -86,6 +81,11 @@ export default function UserEnquiryPage() {
       return () => unsubscribe();
     }
   }, [selectedChat]);
+
+  if (!user) {
+    router.push('/sign-in');
+    return null;
+  }
 
   const createNewChat = async () => {
     const userChatsCount = userChats.length;
