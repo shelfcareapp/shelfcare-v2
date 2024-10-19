@@ -71,8 +71,6 @@ export default function UserEnquiryPage() {
     return () => unsubscribe();
   }, [user]);
 
-  console.log(userChats);
-
   useEffect(() => {
     if (selectedChat) {
       const chatDocRef = doc(db, 'chats', selectedChat.id);
