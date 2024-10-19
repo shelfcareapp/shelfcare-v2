@@ -1,19 +1,21 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
-
 export async function POST(req) {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+    apiVersion: '2024-09-30.acacia'
+  });
+
   try {
     const body = await req.json();
-    const items = body.items.map((item) => ({
+    const items = body.items.map((item: any) => ({
       price_data: {
-        currency: 'usd',
+        currency: 'eur',
         product_data: {
           name: item.name,
           images: [item.image]
         },
-        unit_amount: item.price
+        unit_amount: item.price * 100
       },
       quantity: item.quantity
     }));
@@ -26,24 +28,18 @@ export async function POST(req) {
       cancel_url: `${req.headers.origin}/payment-failure`
     });
 
-    NextResponse.json(
+    return NextResponse.json(
       {
         message: 'Session created successfully',
-        session
+        sessionId: session.id
       },
-      {
-        status: 200
-      }
+      { status: 200 }
     );
   } catch (err: any) {
-    console.error('Error creating checkout session:', err);
-    NextResponse.json(
-      {
-        message: 'Failed to create checkout session'
-      },
-      {
-        status: 500
-      }
+    console.error('Error creating checkout session:', err.message);
+    return NextResponse.json(
+      { message: 'Failed to create checkout session', error: err.message },
+      { status: 500 }
     );
   }
 }
