@@ -2,7 +2,7 @@
 
 import Layout from 'components/common/Layout';
 import UserDashboardLayout from 'components/common/UserDashboardLayout';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   collection,
   addDoc,
@@ -17,24 +17,7 @@ import { toast } from 'react-toastify';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/navigation';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-
-interface Message {
-  sender: string;
-  content: string;
-  time: string;
-  imageUrl?: string;
-  isRead?: boolean;
-}
-
-interface Chat {
-  id: string;
-  chatName: string;
-  createdAt: Timestamp;
-  messages: Message[];
-  name: string;
-  email: string;
-  isAdmin: boolean;
-}
+import { Chat, Message } from 'components/types';
 
 export default function UserEnquiryPage() {
   const [user] = useAuthState(auth);
@@ -43,27 +26,32 @@ export default function UserEnquiryPage() {
   const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [message, setMessage] = useState<string>('');
-  const [image, setImage] = useState<File | null>(null);
+  const [images, setImages] = useState<File[] | null>(null);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [uploading, setUploading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [showChatList, setShowChatList] = useState(false);
+  const chatEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const chatsRef = collection(db, 'chats');
-    ('chats');
-    const unsubscribe = onSnapshot(chatsRef, (snapshot) => {
-      const fetchedChats = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data()
-      })) as Chat[];
-      setUserChats(fetchedChats);
+    if (user) {
+      const chatsRef = collection(db, 'chats');
+      const unsubscribe = onSnapshot(chatsRef, (snapshot) => {
+        const fetchedChats = snapshot.docs
+          .map((doc) => ({ id: doc.id, ...doc.data() }))
+          .filter((chat: Chat) => chat.userId === user.uid)
+          .sort(
+            (a: Chat, b: Chat) =>
+              b.createdAt.toMillis() - a.createdAt.toMillis()
+          );
+        setUserChats(fetchedChats as Chat[]);
 
-      if (!selectedChat && fetchedChats.length > 0) {
-        setSelectedChat(fetchedChats[0]);
-      }
-    });
+        if (!selectedChat && fetchedChats.length > 0) {
+          setSelectedChat(fetchedChats[0] as Chat);
+        }
+      });
 
-    return () => unsubscribe();
+      return () => unsubscribe();
+    }
   }, [user]);
 
   useEffect(() => {
@@ -76,11 +64,16 @@ export default function UserEnquiryPage() {
         } else {
           setMessages([]);
         }
+        scrollToBottom();
       });
 
       return () => unsubscribe();
     }
   }, [selectedChat]);
+
+  const scrollToBottom = () => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   if (!user) {
     router.push('/sign-in');
@@ -98,63 +91,107 @@ export default function UserEnquiryPage() {
         messages: [],
         name: user?.displayName || 'Anonymous',
         email: user?.email || 'no-email',
-        isAdmin: false
+        isAdmin: false,
+        userId: user?.uid
       };
 
       const newChatRef = await addDoc(collection(db, 'chats'), newChatData);
       setSelectedChat({ ...newChatData, id: newChatRef.id });
-      setShowChatList(false);
     } catch (error) {
       toast.error('Error creating new chat');
     }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setImage(e.target.files[0]);
+    if (e.target.files) {
+      const filesArray = Array.from(e.target.files);
+
+      // Add new files to the state
+      setImages((prev) => (prev ? [...prev, ...filesArray] : filesArray));
+
+      // Generate and display preview URLs
+      const newPreviews = filesArray.map((file) => URL.createObjectURL(file));
+      setImagePreviews((prev) => [...prev, ...newPreviews]);
+    }
+  };
+
+  const removeImage = (index: number) => {
+    if (images) {
+      const updatedImages = images.filter((_, i) => i !== index);
+      const updatedPreviews = imagePreviews.filter((_, i) => i !== index);
+      setImages(updatedImages);
+      setImagePreviews(updatedPreviews);
     }
   };
 
   const handleSendMessage = async () => {
-    if (!message.trim() && !image) return;
+    if (!message.trim() && (!images || images.length === 0)) return;
 
+    // Set initial message data (without image URLs yet)
     const newMessage: Message = {
       sender: user?.email || 'Anonymous',
       content: message.trim(),
       time: new Date().toLocaleTimeString(),
-      imageUrl: null,
+      imageUrls: [],
       isRead: false
     };
 
     setUploading(true);
+    setMessages((prev) => [...prev, newMessage]);
+
+    let uploadedImageUrls: string[] = [];
+    if (images && images.length > 0) {
+      try {
+        // Upload each image to Firebase Storage and get the download URLs
+        const uploadPromises = images.map(async (image) => {
+          const imageRef = ref(
+            storage,
+            `chats-images/${user?.uid}/${image.name}`
+          );
+          await uploadBytes(imageRef, image);
+          const downloadUrl = await getDownloadURL(imageRef);
+          return downloadUrl;
+        });
+
+        uploadedImageUrls = await Promise.all(uploadPromises);
+
+        // Clear the local image previews and images after upload
+        setImages(null);
+        setImagePreviews([]);
+      } catch (error) {
+        console.error('Error uploading images:', error);
+        toast.error('Error uploading images.');
+      }
+    }
+
+    // Update the message to include the uploaded image URLs
+    const updatedMessage: Message = {
+      ...newMessage,
+      imageUrls: uploadedImageUrls
+    };
 
     try {
-      if (image) {
-        const imageRef = ref(storage, `chat_images/${image.name}`);
-        await uploadBytes(imageRef, image);
-        const downloadURL = await getDownloadURL(imageRef);
-        newMessage.imageUrl = downloadURL;
-        setImage(null); // Clear image after upload
-      }
-
       const chatDocRef = doc(db, 'chats', selectedChat!.id);
       const chatSnapshot = await getDoc(chatDocRef);
 
       if (chatSnapshot.exists()) {
         const chatData = chatSnapshot.data();
         const chatsArray = chatData.messages || [];
-        chatsArray.push(newMessage);
+        chatsArray.push(updatedMessage);
 
         await updateDoc(chatDocRef, {
           messages: chatsArray
         });
 
+        // Clear the message input after sending
         setMessage('');
+        scrollToBottom();
       } else {
         toast.error('Chat not found');
       }
     } catch (error) {
-      toast.error('Error sending message');
+      console.error('Error sending message:', error);
+      toast.error('Error sending message.');
     } finally {
       setUploading(false);
     }
@@ -164,6 +201,17 @@ export default function UserEnquiryPage() {
     chat.chatName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const showIsUnreadMessages = (chat: Chat) => {
+    // user is admin
+    if (chat.isAdmin) {
+      return (
+        chat.messages.filter((msg) => {
+          return msg.sender !== user?.email && !msg.isRead;
+        }).length > 0
+      );
+    }
+  };
+
   return (
     <Layout>
       <UserDashboardLayout
@@ -172,16 +220,13 @@ export default function UserEnquiryPage() {
         handleSendMessage={handleSendMessage}
         message={message}
         setMessage={setMessage}
-        image={image}
-        setImage={setImage}
         uploading={uploading}
+        imagePreviews={imagePreviews}
+        removeImage={removeImage}
       >
         <div className="flex h-screen w-full">
-          {/* Sidebar with Chat List */}
           <div
-            className={`bg-gray-100 p-4 border-r lg:relative lg:w-1/4 h-full ${
-              showChatList ? 'block' : 'hidden lg:block'
-            }`}
+            className={`bg-gray-100 p-4 border-r lg:relative lg:w-1/4 h-full`}
           >
             <h2 className="hidden lg:block text-lg font-semibold mb-4">
               My Chats
@@ -216,10 +261,9 @@ export default function UserEnquiryPage() {
                       : 'No messages'}
                   </div>
 
-                  {/* Display unread messages */}
-                  {chat.messages.filter((msg) => !msg.isRead).length > 0 && (
+                  {showIsUnreadMessages(chat) && (
                     <span className="text-sm text-red-500 font-semibold">
-                      {chat.messages.filter((msg) => !msg.isRead).length}
+                      Unread messages
                     </span>
                   )}
                 </div>
@@ -229,7 +273,6 @@ export default function UserEnquiryPage() {
             )}
           </div>
 
-          {/* Chat Messages Section */}
           <div className="w-full flex flex-col bg-gray-50 h-full">
             <div className="flex-1 p-4 overflow-y-auto">
               {selectedChat ? (
@@ -237,48 +280,56 @@ export default function UserEnquiryPage() {
                   <h3 className="text-xl font-bold mb-4">
                     {selectedChat.chatName}
                   </h3>
-                  {messages.length > 0 ? (
-                    messages.map((msg, index) => (
-                      <div
-                        key={index}
-                        className={`mb-4 ${
-                          msg.sender === user?.email
-                            ? 'text-right'
-                            : 'text-left'
-                        }`}
-                      >
+                  <div className="flex flex-col">
+                    {messages.length > 0 ? (
+                      messages.map((msg, index) => (
                         <div
-                          className={`inline-block p-2 rounded-lg shadow ${
+                          key={index}
+                          className={`mb-4 ${
                             msg.sender === user?.email
-                              ? 'bg-primary text-white'
-                              : 'bg-gray-200'
+                              ? 'text-right'
+                              : 'text-left'
                           }`}
                         >
-                          {msg.imageUrl && (
-                            <img
-                              src={msg.imageUrl}
-                              alt="Sent image"
-                              className="mb-2 rounded-lg max-w-xs"
-                            />
-                          )}
-                          <p
-                            className={
+                          <div
+                            className={`inline-block p-2 rounded-lg shadow ${
                               msg.sender === user?.email
-                                ? 'text-white'
-                                : 'text-gray-900'
-                            }
+                                ? 'bg-primary text-white'
+                                : 'bg-gray-200'
+                            }`}
                           >
-                            {msg.content}
-                          </p>
-                          <span className="text-xs text-gray-300">
-                            {msg.time}
-                          </span>
+                            {msg.imageUrls && msg.imageUrls.length > 0 && (
+                              <div className="flex flex-wrap gap-2">
+                                {msg.imageUrls.map((url, i) => (
+                                  <img
+                                    key={i}
+                                    src={url}
+                                    alt={`Sent image ${i + 1}`}
+                                    className="mb-2 rounded-lg max-w-xs"
+                                  />
+                                ))}
+                              </div>
+                            )}
+                            <p
+                              className={
+                                msg.sender === user?.email
+                                  ? 'text-white'
+                                  : 'text-gray-900'
+                              }
+                            >
+                              {msg.content}
+                            </p>
+                            <span className="text-xs text-gray-300">
+                              {msg.time}
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    ))
-                  ) : (
-                    <p className="text-gray-500">No messages yet.</p>
-                  )}
+                      ))
+                    ) : (
+                      <p className="text-gray-500">No messages yet.</p>
+                    )}
+                    <div ref={chatEndRef} />
+                  </div>
                 </>
               ) : (
                 <p className="text-gray-500">
