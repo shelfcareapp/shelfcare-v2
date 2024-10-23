@@ -3,7 +3,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 import ToastProvider from 'components/common/ToastProvider';
 import { SessionProvider } from 'components/common/SessionContext';
-import { Providers } from './redux/Providers';
+import StoreProvider from 'contexts/StoreProvider';
 
 export const metadata = {
   title: 'ShelfCare - Sustainable Fashion and Wardrobe Care',
@@ -40,11 +40,11 @@ async function RootLayout({ children }) {
       <body>
         <SessionProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <Providers>
+            <StoreProvider>
               <ToastProvider>
                 <main>{children}</main>
               </ToastProvider>
-            </Providers>
+            </StoreProvider>
           </NextIntlClientProvider>
         </SessionProvider>
       </body>

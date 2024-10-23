@@ -8,6 +8,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 type ProfileData = {
   name: string;
@@ -23,6 +24,7 @@ type ProfileData = {
 export default function ProfilePage() {
   const [user] = useAuthState(auth);
   const router = useRouter();
+  const t = useTranslations('user-dashboard');
 
   const [profileData, setProfileData] = useState<ProfileData>({
     name: '',
@@ -111,23 +113,23 @@ export default function ProfilePage() {
   return (
     <Layout>
       <UserDashboardLayout>
-        <div className="max-w-3xl mt-6">
+        <div className="max-w-3xl mt-6 p-4 md:p-8 lg:p-10">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-            Profile
+            {t('profile')}
           </h2>
           <p className="mt-2 text-sm text-gray-500 mb-8">
-            This information will be used for shipping and billing purposes.
+            {t('profile-subtitle')}
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-8">
             <div>
               <h3 className="text-md font-semibold mb-4">
-                Personal Information
+                {t('personal-information')}
               </h3>
               <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 mt-2">
                 <div>
                   <label className="block text-sm font-medium text-gray-400">
-                    Full name
+                    {t('full-name')}
                   </label>
                   <input
                     type="text"
@@ -140,7 +142,7 @@ export default function ProfilePage() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-400">
-                    Email address
+                    {t('email-address')}
                   </label>
                   <input
                     type="email"
@@ -153,7 +155,7 @@ export default function ProfilePage() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-400">
-                    Phone
+                    {t('phone-number')}
                   </label>
                   <input
                     type="tel"
@@ -166,7 +168,7 @@ export default function ProfilePage() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-400">
-                    Birthday
+                    {t('birthday')}
                   </label>
                   <input
                     type="date"
@@ -180,11 +182,13 @@ export default function ProfilePage() {
             </div>
 
             <div>
-              <h3 className="text-md font-semibold mb-4">Address Details</h3>
+              <h3 className="text-md font-semibold mb-4">
+                {t('address-details')}
+              </h3>
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <div>
                   <label className="block text-sm font-medium text-gray-400">
-                    Address
+                    {t('address')}
                   </label>
                   <input
                     type="text"
@@ -197,7 +201,7 @@ export default function ProfilePage() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-400">
-                    City
+                    {t('city')}
                   </label>
                   <input
                     type="text"
@@ -210,7 +214,7 @@ export default function ProfilePage() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-400">
-                    Postal Code
+                    {t('postal-code')}
                   </label>
                   <input
                     type="text"
@@ -223,7 +227,7 @@ export default function ProfilePage() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-400">
-                    Entrance information
+                    {t('entrance-info')}
                   </label>
                   <input
                     type="text"
@@ -244,7 +248,7 @@ export default function ProfilePage() {
                   loading ? 'bg-secondary' : 'bg-primary'
                 } text-white px-4 py-2 rounded-md`}
               >
-                {loading ? 'Saving...' : 'Save Profile'}
+                {loading ? t('saving') : t('save-changes')}
               </button>
             </div>
           </form>

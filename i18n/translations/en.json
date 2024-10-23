@@ -5,7 +5,9 @@
     "measurement_guide": "Measurement Guide",
     "sign_in": "Sign in",
     "order_now": "Order Now",
-    "new_order": "New Order"
+    "new_order": "New Order",
+    "my_orders": "My Orders",
+    "my_account": "My Account"
   },
   "footer": {
     "for_customers": "For Customers",
@@ -970,7 +972,8 @@
     "continue": "Continue",
     "orderSuccess": "Order has been submitted successfully!",
     "error": "There was an error. Please try again later.",
-    "emailSuccess": "Email sent successfully!"
+    "emailSuccess": "Email sent successfully!",
+    "save": "Save"
   },
   "order-details": {
     "title": "Order Details",
@@ -1009,5 +1012,39 @@
     "sending": "Sending...",
     "successMessage": "Your order has been submitted successfully!",
     "error": "There was an error. Please try again later."
+  },
+  "user-dashboard": {
+    "chats": "Chats",
+    "orders": "Orders",
+    "account": "Account",
+    "search-chat": "Search chat...",
+    "new-order-enquiry": "New Order Enquiry",
+    "order-enquiry": "Order Enquiry",
+    "last-message": "Last message",
+    "send": "Send",
+    "no-chats": "No chats found",
+    "no-messages": "No messages yet",
+    "my-chats": "My Chats",
+    "unread-messages": "Unread Messages",
+    "type-message": "Type a message...",
+
+    "profile": "Profile",
+    "profile-subtitle": "This information will be used for shipping and billing purposes.",
+    "personal-information": "Personal Information",
+    "full-name": "Full Name",
+    "email-address": "Email Address",
+    "phone-number": "Phone Number",
+    "address-details": "Address details",
+    "birthday": "Birthday",
+    "address": "Address",
+    "postal-code": "Postal Code",
+    "city": "City",
+    "entrance-info": "Entrance Information",
+    "save-changes": "Save Changes",
+    "saving": "Saving...",
+
+    "order-history": "Order History",
+    "order-subtitle": "Check the status of recent orders, manage returns, and make payments.",
+    "no-orders": "No orders found"
   }
 }

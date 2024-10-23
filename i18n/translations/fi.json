@@ -3,7 +3,10 @@
     "price_list": "Hinnasto",
     "how_it_works": "Kuinka se toimii",
     "measurement_guide": "Mittausopas",
-    "order_now": "Tilaa nyt"
+    "order_now": "Tilaa nyt",
+    "new_order": "Uusi tilaus",
+    "my_orders": "Omat tilaukset",
+    "my_account": "Oma tili"
   },
 
   "footer": {
@@ -1010,7 +1013,8 @@
     "continue": "Jatka",
     "orderSuccess": "Tilaus on lähetetty onnistuneesti!",
     "error": "Tapahtui virhe. Yritä uudelleen myöhemmin.",
-    "emailSuccess": "Sähköposti lähetetty onnistuneesti!"
+    "emailSuccess": "Sähköposti lähetetty onnistuneesti!",
+    "save": "Tallenna"
   },
   "order-details": {
     "title": "Tilaustiedot",
@@ -1048,5 +1052,39 @@
     "sending": "Lähettää...",
     "successMessage": "Tilauksesi on lähetetty onnistuneesti!",
     "error": "Tapahtui virhe. Yritä myöhemmin uudelleen."
+  },
+  "user-dashboard": {
+    "chats": "Keskustelut",
+    "orders": "Tilaukset",
+    "account": "Tilini",
+    "search-chat": "Etsi keskusteluja...",
+    "new-order-enquiry": "Uusi tilauskysely",
+    "order-enquiry": "Tilauskysely",
+    "last-message": "Viimeisin viesti",
+    "send": "Lähetä",
+    "no-chats": "Ei keskusteluja",
+    "no-messages": "Ei viestejä",
+    "my-chats": "Keskusteluni",
+    "unread-messages": "Lukematonta viestiä",
+    "type-message": "Kirjoita viesti...",
+
+    "profile": "Profiili",
+    "profile-subtitle": "Tässä voit muokata tietojasi ja asetuksiasi.",
+    "personal-information": "Henkilökohtaiset tiedot",
+    "full-name": "Nimi",
+    "email-address": "Sähköpostiosoite",
+    "phone-number": "Puhelinnumero",
+    "address-details": "Osoitetiedot",
+    "birthday": "Syntymäpäivä",
+    "address": "Osoite",
+    "postal-code": "Postinumero",
+    "city": "Kaupunki",
+    "entrance-info": "Sisäänkäyntitiedot",
+    "save-changes": "Tallenna muutokset",
+    "saving": "Tallennetaan...",
+
+    "order-history": "Tilaushistoria",
+    "orders-subtitle": "Tässä näet kaikki tilauksesi ja niiden tilan.",
+    "no-orders": "Ei tilauksia"
   }
 }

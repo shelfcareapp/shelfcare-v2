@@ -5,27 +5,6 @@ import { useTranslations } from 'next-intl';
 import { toast } from 'react-toastify';
 import Layout from 'components/common/Layout';
 
-const image = '/images/F92723E0-595D-4944-B8E1-57870BF67F86.JPG';
-
-const teamMembers = [
-  {
-    key: 'maija',
-    image
-  },
-  {
-    key: 'ida',
-    image
-  },
-  {
-    key: 'petra',
-    image
-  },
-  {
-    key: 'josephine',
-    image
-  }
-];
-
 const About = () => {
   const t = useTranslations('team');
 

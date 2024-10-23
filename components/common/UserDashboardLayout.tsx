@@ -10,20 +10,7 @@ import { FiPaperclip } from 'react-icons/fi';
 import { AiOutlineLoading } from 'react-icons/ai';
 import { useEffect, useRef } from 'react';
 import { Chat } from '../types';
-
-const secondaryNavigation = [
-  {
-    name: 'Chats',
-    href: '/chats',
-    icon: ChatBubbleBottomCenterIcon
-  },
-  {
-    name: 'My Orders',
-    href: '/orders',
-    icon: ListBulletIcon
-  },
-  { name: 'Account', href: '/profile', icon: UserIcon }
-];
+import { useTranslations } from 'next-intl';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -39,7 +26,7 @@ interface UserDashboardLayoutProps {
   imagePreviews?: string[];
   setImagePreviews?: any;
   uploading?: boolean;
-  removeImage: (index: number) => void;
+  removeImage?: (index: number) => void;
 }
 
 export default function UserDashboardLayout({
@@ -56,6 +43,21 @@ export default function UserDashboardLayout({
   const pathname = usePathname();
   const isNewOrderPage = pathname === '/chats';
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations('user-dashboard');
+
+  const secondaryNavigation = [
+    {
+      name: t('chats'),
+      href: '/chats',
+      icon: ChatBubbleBottomCenterIcon
+    },
+    {
+      name: t('orders'),
+      href: '/orders',
+      icon: ListBulletIcon
+    },
+    { name: t('account'), href: '/profile', icon: UserIcon }
+  ];
 
   useEffect(() => {
     if (Notification.permission !== 'granted') {
@@ -162,7 +164,7 @@ export default function UserDashboardLayout({
                 type="text"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                placeholder="Type a message..."
+                placeholder={t('type-message')}
                 className="flex-1 bg-gray-100 p-2 rounded-lg outline-none"
                 onKeyDown={handleSendOnEnter}
               />

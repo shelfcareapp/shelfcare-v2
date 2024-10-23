@@ -18,6 +18,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/navigation';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Chat, Message } from 'components/types';
+import { useTranslations } from 'next-intl';
 
 export default function UserEnquiryPage() {
   const [user] = useAuthState(auth);
@@ -31,6 +32,7 @@ export default function UserEnquiryPage() {
   const [uploading, setUploading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const chatEndRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations('user-dashboard');
 
   useEffect(() => {
     if (user) {
@@ -82,7 +84,7 @@ export default function UserEnquiryPage() {
 
   const createNewChat = async () => {
     const userChatsCount = userChats.length;
-    const newChatName = `Order Enquiry ${userChatsCount + 1}`;
+    const newChatName = `${t('order-enquiry')} ${userChatsCount + 1}`;
 
     try {
       const newChatData: Omit<Chat, 'id'> = {
@@ -106,10 +108,8 @@ export default function UserEnquiryPage() {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files);
 
-      // Add new files to the state
       setImages((prev) => (prev ? [...prev, ...filesArray] : filesArray));
 
-      // Generate and display preview URLs
       const newPreviews = filesArray.map((file) => URL.createObjectURL(file));
       setImagePreviews((prev) => [...prev, ...newPreviews]);
     }
@@ -127,7 +127,6 @@ export default function UserEnquiryPage() {
   const handleSendMessage = async () => {
     if (!message.trim() && (!images || images.length === 0)) return;
 
-    // Set initial message data (without image URLs yet)
     const newMessage: Message = {
       sender: user?.email || 'Anonymous',
       content: message.trim(),
@@ -142,7 +141,6 @@ export default function UserEnquiryPage() {
     let uploadedImageUrls: string[] = [];
     if (images && images.length > 0) {
       try {
-        // Upload each image to Firebase Storage and get the download URLs
         const uploadPromises = images.map(async (image) => {
           const imageRef = ref(
             storage,
@@ -155,7 +153,6 @@ export default function UserEnquiryPage() {
 
         uploadedImageUrls = await Promise.all(uploadPromises);
 
-        // Clear the local image previews and images after upload
         setImages(null);
         setImagePreviews([]);
       } catch (error) {
@@ -164,7 +161,6 @@ export default function UserEnquiryPage() {
       }
     }
 
-    // Update the message to include the uploaded image URLs
     const updatedMessage: Message = {
       ...newMessage,
       imageUrls: uploadedImageUrls
@@ -183,7 +179,6 @@ export default function UserEnquiryPage() {
           messages: chatsArray
         });
 
-        // Clear the message input after sending
         setMessage('');
         scrollToBottom();
       } else {
@@ -202,7 +197,6 @@ export default function UserEnquiryPage() {
   );
 
   const showIsUnreadMessages = (chat: Chat) => {
-    // user is admin
     if (chat.isAdmin) {
       return (
         chat.messages.filter((msg) => {
@@ -229,11 +223,11 @@ export default function UserEnquiryPage() {
             className={`bg-gray-100 p-4 border-r lg:relative lg:w-1/4 h-full`}
           >
             <h2 className="hidden lg:block text-lg font-semibold mb-4">
-              My Chats
+              {t('my-chats')}
             </h2>
             <input
               type="text"
-              placeholder="Search chats..."
+              placeholder={t('search-chat')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full p-2 mb-4 rounded-lg border border-gray-300"
@@ -242,7 +236,7 @@ export default function UserEnquiryPage() {
               className="mb-4 bg-secondary text-primary p-2 rounded w-full"
               onClick={createNewChat}
             >
-              New order enquiry
+              {t('new-order-enquiry')}
             </button>
             {filteredChats.length > 0 ? (
               filteredChats.map((chat) => (
@@ -255,7 +249,7 @@ export default function UserEnquiryPage() {
                 >
                   <div className="font-bold">{chat.chatName}</div>
                   <div className="text-sm text-gray-500">
-                    Last message:{' '}
+                    {t('last-message')}:{' '}
                     {chat.messages.length > 0
                       ? chat.messages[chat.messages.length - 1].content
                       : 'No messages'}
@@ -263,13 +257,13 @@ export default function UserEnquiryPage() {
 
                   {showIsUnreadMessages(chat) && (
                     <span className="text-sm text-red-500 font-semibold">
-                      Unread messages
+                      {t('unread-messages')}
                     </span>
                   )}
                 </div>
               ))
             ) : (
-              <p className="text-gray-500">No chats found.</p>
+              <p className="text-gray-500">{t('no-chats')}</p>
             )}
           </div>
 
@@ -326,7 +320,7 @@ export default function UserEnquiryPage() {
                         </div>
                       ))
                     ) : (
-                      <p className="text-gray-500">No messages yet.</p>
+                      <p className="text-gray-500">{t('no-messages')}</p>
                     )}
                     <div ref={chatEndRef} />
                   </div>

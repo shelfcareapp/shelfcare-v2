@@ -60,10 +60,7 @@ const HeroSection = () => {
         <p className="text-base md:text-lg text-gray-700 mb-4 leading-relaxed">
           {t('home.hero.subtitle')}
         </p>
-        <button
-          className="btn-primary"
-          onClick={() => router.push('/new-order')}
-        >
+        <button className="btn-primary" onClick={() => router.push('/chats')}>
           {' '}
           {t('home.hero.cta')}
         </button>
