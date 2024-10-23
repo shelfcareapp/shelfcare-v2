@@ -11,6 +11,7 @@ import { AiOutlineLoading } from 'react-icons/ai';
 import { useEffect, useRef } from 'react';
 import { Chat } from '../types';
 import { useTranslations } from 'next-intl';
+import { HiOutlineViewList } from 'react-icons/hi';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -27,6 +28,7 @@ interface UserDashboardLayoutProps {
   setImagePreviews?: any;
   uploading?: boolean;
   removeImage?: (index: number) => void;
+  toggleChatList?: () => void;
 }
 
 export default function UserDashboardLayout({
@@ -38,7 +40,8 @@ export default function UserDashboardLayout({
   setMessage,
   imagePreviews,
   uploading,
-  removeImage
+  removeImage,
+  toggleChatList
 }: UserDashboardLayoutProps) {
   const pathname = usePathname();
   const isNewOrderPage = pathname === '/chats';
@@ -114,6 +117,9 @@ export default function UserDashboardLayout({
             role="list"
             className="flex gap-x-5 gap-y-1 whitespace-nowrap lg:flex-col"
           >
+            <button className="lg:hidden rounded" onClick={toggleChatList}>
+              <HiOutlineViewList size={30} className="text-gray-800" />
+            </button>
             {secondaryNavigation.map((item) => (
               <li key={item.name}>
                 <Link

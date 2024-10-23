@@ -33,6 +33,7 @@ export default function UserEnquiryPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const chatEndRef = useRef<HTMLDivElement>(null);
   const t = useTranslations('user-dashboard');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   useEffect(() => {
     if (user) {
@@ -217,57 +218,64 @@ export default function UserEnquiryPage() {
         uploading={uploading}
         imagePreviews={imagePreviews}
         removeImage={removeImage}
+        toggleChatList={() => setIsSidebarOpen((prev) => !prev)}
       >
         <div className="flex h-screen w-full">
           <div
-            className={`bg-gray-100 p-4 border-r lg:relative lg:w-1/4 h-full`}
+            className={`bg-gray-100 lg:relative lg:w-1/4 transform transition-transform duration-500 ease-in-out ${
+              isSidebarOpen
+                ? 'translate-x-0 p-2'
+                : '-translate-x-full lg:translate-x-0 lg:p-2'
+            }`}
           >
-            <h2 className="hidden lg:block text-lg font-semibold mb-4">
-              {t('my-chats')}
-            </h2>
-            <input
-              type="text"
-              placeholder={t('search-chat')}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full p-2 mb-4 rounded-lg border border-gray-300"
-            />
-            <button
-              className="mb-4 bg-secondary text-primary p-2 rounded w-full"
-              onClick={createNewChat}
-            >
-              {t('new-order-enquiry')}
-            </button>
-            {filteredChats.length > 0 ? (
-              filteredChats.map((chat) => (
-                <div
-                  key={chat.id}
-                  className={`mb-2 p-2 bg-white rounded-lg shadow-sm cursor-pointer ${
-                    selectedChat?.id === chat.id ? 'bg-gray-200' : ''
-                  }`}
-                  onClick={() => setSelectedChat(chat)}
-                >
-                  <div className="font-bold">{chat.chatName}</div>
-                  <div className="text-sm text-gray-500">
-                    {t('last-message')}:{' '}
-                    {chat.messages.length > 0
-                      ? chat.messages[chat.messages.length - 1].content
-                      : 'No messages'}
-                  </div>
+            <div className={isSidebarOpen ? 'block' : 'hidden lg:block'}>
+              <h2 className="text-lg font-semibold mb-4">{t('my-chats')}</h2>
 
-                  {showIsUnreadMessages(chat) && (
-                    <span className="text-sm text-red-500 font-semibold">
-                      {t('unread-messages')}
-                    </span>
-                  )}
-                </div>
-              ))
-            ) : (
-              <p className="text-gray-500">{t('no-chats')}</p>
-            )}
+              <input
+                type="text"
+                placeholder={t('search-chat')}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full p-2 mb-4 rounded-lg border border-gray-300"
+              />
+              <button
+                className="mb-4 bg-secondary text-primary p-2 rounded w-full"
+                onClick={createNewChat}
+              >
+                {t('new-order-enquiry')}
+              </button>
+              {filteredChats.length > 0 ? (
+                filteredChats.map((chat) => (
+                  <div
+                    key={chat.id}
+                    className={`mb-2 p-2 bg-white rounded-lg shadow-sm cursor-pointer ${
+                      selectedChat?.id === chat.id ? 'bg-gray-200' : ''
+                    }`}
+                    onClick={() => setSelectedChat(chat)}
+                  >
+                    <div className="font-bold">{chat.chatName}</div>
+                    <div className="text-sm text-gray-500">
+                      {t('last-message')}:{' '}
+                      {chat.messages.length > 0
+                        ? chat.messages[chat.messages.length - 1].content
+                        : 'No messages'}
+                    </div>
+
+                    {showIsUnreadMessages(chat) && (
+                      <span className="text-sm text-red-500 font-semibold">
+                        {t('unread-messages')}
+                      </span>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-500">{t('no-chats')}</p>
+              )}
+            </div>
           </div>
 
-          <div className="w-full flex flex-col bg-gray-50 h-full">
+          {/* Chat content */}
+          <div className="w-full flex flex-col bg-gray-50 h-full ml-0 lg:ml-1/4">
             <div className="flex-1 p-4 overflow-y-auto">
               {selectedChat ? (
                 <>
