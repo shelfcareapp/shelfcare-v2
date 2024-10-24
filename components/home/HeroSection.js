@@ -59,7 +59,7 @@ const HeroSection = () => {
     if (!user) {
       router.push('/sign-in');
     } else {
-      router.push('/chats');
+      router.push('/chat');
     }
   };
 
