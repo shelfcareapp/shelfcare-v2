@@ -4,7 +4,7 @@ import Layout from 'components/common/Layout';
 import UserDashboardLayout from 'components/common/UserDashboardLayout';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, Timestamp, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/navigation';
@@ -18,8 +18,17 @@ type ProfileData = {
   city: string;
   postalCode: string;
   doorInfo: string;
-  birthday: string;
+  birthday: string | null;
 };
+function convertTimestampToDate(timestamp) {
+  const { seconds } = timestamp;
+  const date = new Date(seconds * 1000); // Convert seconds to milliseconds
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+  const day = String(date.getUTCDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
 
 export default function ProfilePage() {
   const [user] = useAuthState(auth);
@@ -27,9 +36,9 @@ export default function ProfilePage() {
   const t = useTranslations('user-dashboard');
 
   const [profileData, setProfileData] = useState<ProfileData>({
-    name: '',
-    email: '',
-    phone: '',
+    name: user.displayName,
+    email: user.email,
+    phone: user.phoneNumber,
     address: '',
     city: '',
     postalCode: '',
@@ -42,13 +51,10 @@ export default function ProfilePage() {
   useEffect(() => {
     if (user) {
       fetchUserData();
+    } else {
+      router.push('/sign-in');
     }
   }, [user]);
-
-  if (!user) {
-    router.push('/sign-in');
-    return null;
-  }
 
   const fetchUserData = async () => {
     try {
@@ -57,7 +63,15 @@ export default function ProfilePage() {
       const userDoc = await getDoc(userDocRef);
 
       if (userDoc.exists()) {
-        setProfileData(userDoc.data() as ProfileData);
+        const userData = userDoc.data() as ProfileData;
+        const date = userData.birthday;
+
+        const birthday = date ? date : '';
+
+        setProfileData({
+          ...userData,
+          birthday
+        });
       }
     } catch (error) {
       toast.error('Failed to load profile data.');
@@ -90,7 +104,12 @@ export default function ProfilePage() {
       } = profileData;
 
       const userDocRef = doc(db, 'users', user.uid);
-      await setDoc(userDocRef, {
+
+      const birthdayTimestamp = birthday
+        ? Timestamp.fromDate(new Date(birthday))
+        : null;
+
+      await updateDoc(userDocRef, {
         name,
         email,
         phone,
@@ -98,7 +117,8 @@ export default function ProfilePage() {
         city,
         postalCode,
         doorInfo,
-        birthday
+        birthday: birthdayTimestamp,
+        updatedAt: Timestamp.now()
       });
 
       toast.success('Profile updated successfully');
@@ -109,6 +129,8 @@ export default function ProfilePage() {
       setLoading(false);
     }
   };
+
+  console.log('profileData:', profileData);
 
   return (
     <Layout>
@@ -137,6 +159,7 @@ export default function ProfilePage() {
                     value={profileData.name}
                     onChange={handleChange}
                     className="mt-2 block w-full border-gray-300 rounded-md shadow-sm p-2"
+                    required
                   />
                 </div>
 
@@ -149,7 +172,8 @@ export default function ProfilePage() {
                     name="email"
                     value={profileData.email}
                     onChange={handleChange}
-                    className="mt-2 block w-full border-gray-300 rounded-md shadow-sm p-2"
+                    className="mt-2 block w-full border-gray-300 rounded-md shadow-sm p-2 cursor-not-allowed"
+                    disabled
                   />
                 </div>
 
@@ -163,21 +187,22 @@ export default function ProfilePage() {
                     value={profileData.phone}
                     onChange={handleChange}
                     className="mt-2 block w-full border-gray-300 rounded-md shadow-sm p-2"
+                    required
                   />
                 </div>
 
-                <div>
+                {/* <div>
                   <label className="block text-sm font-medium text-gray-400">
                     {t('birthday')}
                   </label>
                   <input
                     type="date"
                     name="birthday"
-                    value={profileData.birthday}
+                    value={convertTimestampToDate(profileData?.birthday)}
                     onChange={handleChange}
                     className="mt-2 block w-full border-gray-300 rounded-md shadow-sm p-2"
                   />
-                </div>
+                </div> */}
               </div>
             </div>
 
@@ -196,6 +221,7 @@ export default function ProfilePage() {
                     value={profileData.address}
                     onChange={handleChange}
                     className="mt-2 block w-full border-gray-300 rounded-md shadow-sm p-2"
+                    required
                   />
                 </div>
 
@@ -209,6 +235,7 @@ export default function ProfilePage() {
                     value={profileData.city}
                     onChange={handleChange}
                     className="mt-2 block w-full border-gray-300 rounded-md shadow-sm p-2"
+                    required
                   />
                 </div>
 
@@ -222,6 +249,7 @@ export default function ProfilePage() {
                     value={profileData.postalCode}
                     onChange={handleChange}
                     className="mt-2 block w-full border-gray-300 rounded-md shadow-sm p-2"
+                    required
                   />
                 </div>
 
@@ -235,6 +263,7 @@ export default function ProfilePage() {
                     value={profileData.doorInfo}
                     onChange={handleChange}
                     className="mt-2 block w-full border-gray-300 rounded-md shadow-sm p-2"
+                    required
                   />
                 </div>
               </div>

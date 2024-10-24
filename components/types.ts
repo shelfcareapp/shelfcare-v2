@@ -11,7 +11,6 @@ export interface Message {
 
 export interface Chat {
   id: string;
-  chatName: string;
   createdAt: Timestamp;
   messages: Message[];
   name: string;

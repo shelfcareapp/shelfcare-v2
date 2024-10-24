@@ -4,6 +4,7 @@ import { getLocale, getMessages } from 'next-intl/server';
 import ToastProvider from 'components/common/ToastProvider';
 import { SessionProvider } from 'components/common/SessionContext';
 import StoreProvider from 'contexts/StoreProvider';
+import { LocaleProvider } from 'contexts/LocaleContext';
 
 export const metadata = {
   title: 'ShelfCare - Sustainable Fashion and Wardrobe Care',
@@ -40,11 +41,13 @@ async function RootLayout({ children }) {
       <body>
         <SessionProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <StoreProvider>
-              <ToastProvider>
-                <main>{children}</main>
-              </ToastProvider>
-            </StoreProvider>
+            <LocaleProvider locale={locale}>
+              <StoreProvider>
+                <ToastProvider>
+                  <main>{children}</main>
+                </ToastProvider>
+              </StoreProvider>
+            </LocaleProvider>
           </NextIntlClientProvider>
         </SessionProvider>
       </body>

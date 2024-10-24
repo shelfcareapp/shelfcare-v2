@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import ordersReducer from './slices/orders-slice';
+import chatReducer from './slices/chat-slice';
 
 export const store = configureStore({
   reducer: {
-    orders: ordersReducer
+    orders: ordersReducer,
+    chat: chatReducer
   }
 });
 

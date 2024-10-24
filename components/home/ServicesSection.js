@@ -36,21 +36,23 @@ const ServicesSection = () => {
           {services.map((service, index) => (
             <div
               key={index}
-              className="relative overflow-hidden rounded-lg shadow-lg bg-gray-800"
+              className="relative overflow-hidden rounded-lg shadow-lg bg-gray-800 flex flex-col"
             >
+              {/* Image as background */}
               <Image
                 src={service.image}
                 alt={t(`home.services.${service.key}.title`)}
                 width={400}
                 height={480}
-                className="object-cover"
+                className="object-cover w-full h-96"
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-primaryDark/70"></div>
-              <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/80 via-black/60 to-transparent">
-                <h3 className="text-2xl font-semibold text-white mb-2">
+
+              {/* Content overlay inside the image */}
+              <div className="absolute inset-0 p-4 bg-gradient-to-t from-black/80 via-black/60 to-transparent top-[45%]">
+                <h3 className="text-2xl font-semibold text-white">
                   {t(`home.services.${service.key}.title`)}
                 </h3>
-                <p className="text-white opacity-80 overflow-hidden max-h-48">
+                <p className="text-white opacity-80 mt-2">
                   {t(`home.services.${service.key}.description`)}
                 </p>
               </div>

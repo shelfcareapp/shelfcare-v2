@@ -38,16 +38,18 @@ export default function SignUpPage() {
 
       await updateProfile(user, { displayName: name });
 
+      // Add user to Firestore with isAdmin: false
       await setDoc(doc(db, 'users', user.uid), {
         uid: user.uid,
         name: name,
         email: user.email,
+        isAdmin: false, // Setting isAdmin to false for all new users
         createdAt: new Date()
       });
 
       setFormData({ email: '', password: '', name: '' });
 
-      router.push('/');
+      router.push('/'); // Redirect to homepage after successful signup
     } catch (error) {
       console.error('Error during signup:', error);
 

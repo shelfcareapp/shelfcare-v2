@@ -67,10 +67,8 @@
 
     "mission-vision": {
       "title": "Our Mission & Vision",
-      "missionTitle": "Our Mission",
-      "mission": "Our mission is to make repair and maintenance services for clothing, shoes and accessories more accessible, and establish these services as a regular activity for wardrobe care and sustainable fashion consumption.",
-      "visionTitle": "Our Vision",
-      "vision": "ShelfCare stands for the new age of fashion industry where quality cancels out quantity. Instead of following the trends and continuous consumption, the focus is on personal style, perfectly fitting and beloved clothes which their owners want to take care of."
+      "mission": "<b>Our mission</b> is to make fashion repair and maintenance services accessible, and establish these services as a part of your regular activity for wardrobe care and sustainable fashion consumption.",
+      "vision": "<b>ShelfCare stands</b> for the new age of fashion industry where quality cancels out quantity. Instead of following the trends and continuous consumption, the focus is on personal style, perfectly fitting and beloved clothes which their owners want to take care of."
     },
     "services": {
       "title": "Our Services",
@@ -1045,6 +1043,7 @@
 
     "order-history": "Order History",
     "order-subtitle": "Check the status of recent orders, manage returns, and make payments.",
-    "no-orders": "No orders found"
+    "no-orders": "No orders found",
+    "welcome-message": "Welcome to ShelfCare! \nShare pictures of the items you need repaired or maintained. We'll ask for any necessary details and provide you with a service plan, including pricing. After that, you'll receive available pickup options."
   }
 }

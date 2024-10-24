@@ -4,6 +4,9 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../firebase';
+import { AiOutlineTikTok, AiOutlineInstagram } from 'react-icons/ai';
 
 import image1 from 'public/images/3E2D2574-5141-4B81-9B47-557D6233CA31.JPG';
 import image2 from 'public/images/4A2548A6-6A01-47DE-8CB5-995E14C9D35F.JPG';
@@ -36,6 +39,7 @@ const images = [
 const HeroSection = () => {
   const t = useTranslations();
   const router = useRouter();
+  const [user] = useAuthState(auth);
 
   const scrollVariant = {
     animate: {
@@ -51,6 +55,14 @@ const HeroSection = () => {
     }
   };
 
+  const handleNavigateToChat = () => {
+    if (!user) {
+      router.push('/sign-in');
+    } else {
+      router.push('/chats');
+    }
+  };
+
   return (
     <section className="flex flex-col items-center justify-center text-center mt-8 md:0 md:min-h-screen bg-white">
       <div className="flex flex-col gap-6 items-center justify-center text-center text-primary mb-14 max-w-4xl mx-auto px-4">
@@ -60,10 +72,24 @@ const HeroSection = () => {
         <p className="text-base md:text-lg text-gray-700 mb-4 leading-relaxed">
           {t('home.hero.subtitle')}
         </p>
-        <button className="btn-primary" onClick={() => router.push('/chats')}>
+        <button className="btn-primary" onClick={handleNavigateToChat}>
           {' '}
           {t('home.hero.cta')}
         </button>
+        <div className="flex items-center justify-between gap-3">
+          <a href="https://www.instagram.com/shelfcare.app/" target="_blank">
+            <AiOutlineInstagram
+              className="text-primary hover:opacity-90"
+              size={30}
+            />
+          </a>
+          <a href="https://www.tiktok.com/@shelfcare.app" target="_blank">
+            <AiOutlineTikTok
+              className="text-primary hover:opacity-90"
+              size={30}
+            />
+          </a>
+        </div>
       </div>
 
       <div className="relative overflow-hidden w-full h-full">

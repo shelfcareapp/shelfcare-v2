@@ -18,7 +18,6 @@ const Footer = () => {
         </Link>
         <div className="flex md:flex-nowrap flex-wrap md:mt-0 mt-4 items-start justify-start gap-12 text-base text-secondary">
           <div>
-            <h3 className="font-bold mb-4">{t('footer.for_customers')}</h3>
             <ul className="space-y-2 ">
               <li>
                 <Link
@@ -40,13 +39,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="font-bold mb-4">{t('footer.about_us')}</h3>
             <ul className="space-y-2">
-              {/* <li>
-                <Link href="/about#team" className="hover:underline text-secondary">
-                  {t('footer.our_team')}
-                </Link>
-              </li> */}
               <li>
                 <Link
                   href="/about#contact"
@@ -59,7 +52,6 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="font-bold mb-4">{t('footer.legal')}</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/terms" className="hover:underline text-secondary">

@@ -1,17 +1,18 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { CiUser } from 'react-icons/ci';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { signOut } from 'firebase/auth';
-import { auth, db } from '../../firebase';
-import { collection, query, onSnapshot, orderBy } from 'firebase/firestore';
+import { auth } from '../../firebase';
 import { useSession } from 'components/common/SessionContext';
 import Logo from './Logo';
 import LanguageSwitcher from './LanguageSwitcher';
 import { toast } from 'react-toastify';
+import { FaInstagramSquare } from 'react-icons/fa';
+import { AiFillTikTok } from 'react-icons/ai';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,14 +27,14 @@ const Header = () => {
     if (!user) {
       router.push('/sign-in');
     } else {
-      router.push('/chats');
+      router.push('/chat');
     }
   };
 
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      router.push('/');
+      router.push('/sign-in');
     } catch (error) {
       toast.error('Failed to sign out');
     }
@@ -74,7 +75,7 @@ const Header = () => {
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg py-2">
                   <Link
-                    href="/chats"
+                    href="/chat"
                     className="block px-4 py-2 text-primary hover:bg-gray-100"
                   >
                     {t('header.new_order')}
@@ -139,75 +140,108 @@ const Header = () => {
       </div>
 
       {isOpen && (
-        <div>
-          <nav className="md:hidden bg-white border-t border-gray-200">
-            <Link
-              href="/price-list"
-              className={`block px-4 py-2 text-primary nav-link ${
-                pathname === '/price-list' ? 'nav-link-active' : ''
-              }`}
-            >
-              {t('header.price_list')}
-            </Link>
-            <Link
-              href="/measurement-guide"
-              className={`block px-4 py-2 text-primary nav-link ${
-                pathname === '/measurement-guide' ? 'nav-link-active' : ''
-              }`}
-            >
-              {t('header.measurement_guide')}
-            </Link>
-          </nav>
-
-          <div className="md:hidden p-2 mt-2">
-            {user ? (
-              <>
-                <button onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-                  <CiUser className="text-primary" size={28} />
-                </button>
-                {isDropdownOpen && (
-                  <div className="bg-white border rounded shadow-lg py-2">
-                    <Link
-                      href="/new-chats"
-                      className="block px-4 py-2 text-primary hover:bg-gray-100"
-                    >
-                      New Order
-                    </Link>
-                    <Link
-                      href="/orders"
-                      className="block px-4 py-2 text-primary hover:bg-gray-100"
-                    >
-                      My Orders
-                    </Link>
-
-                    <div className="border-t border-gray-200"></div>
-                    <Link
-                      href="/profile"
-                      className="block px-4 py-2 text-primary hover:bg-gray-100"
-                    >
-                      My Account
-                    </Link>
-                    <button
-                      className="block w-full text-left font-semibold px-4 py-2 text-primary hover:bg-gray-100"
-                      onClick={handleSignOut}
-                    >
-                      Sign Out
-                    </button>
-                  </div>
-                )}
-              </>
-            ) : (
-              <button
-                className="btn-secondary mb-2"
-                onClick={() => router.push('/sign-in')}
+        <div
+          className={`bg-gray-100 absolute left-0 right-0 transition-all duration-300 ease-in-out ${
+            isOpen
+              ? 'h-screen opacity-100'
+              : 'max-h-0 opacity-0 overflow-hidden'
+          }`}
+        >
+          <div className="flex flex-col ">
+            <nav className="md:hidden border-t border-gray-200">
+              <Link
+                href="/price-list"
+                className={`block px-4 py-2 text-primary nav-link ${
+                  pathname === '/price-list' ? 'nav-link-active' : ''
+                }`}
               >
-                {t('header.sign_in')}
-              </button>
-            )}
-            <button className="btn-primary mb-2" onClick={handleOrderNow}>
-              {user ? t('header.new_order') : t('header.order_now')}
-            </button>
-            <LanguageSwitcher />
+                {t('header.price_list')}
+              </Link>
+              <Link
+                href="/measurement-guide"
+                className={`block px-4 py-2 text-primary nav-link ${
+                  pathname === '/measurement-guide' ? 'nav-link-active' : ''
+                }`}
+              >
+                {t('header.measurement_guide')}
+              </Link>
+            </nav>
+            <div className="md:hidden p-2 mb-2">
+              {user && (
+                <>
+                  <button onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+                    <CiUser className="text-primary" size={28} />
+                  </button>
+                  {isDropdownOpen && (
+                    <div className="bg-white border rounded shadow-lg py-2">
+                      <Link
+                        href="/new-chats"
+                        className="block px-4 py-2 text-primary hover:bg-gray-100"
+                      >
+                        New Order
+                      </Link>
+                      <Link
+                        href="/orders"
+                        className="block px-4 py-2 text-primary hover:bg-gray-100"
+                      >
+                        My Orders
+                      </Link>
+
+                      <div className="border-t border-gray-200"></div>
+                      <Link
+                        href="/profile"
+                        className="block px-4 py-2 text-primary hover:bg-gray-100"
+                      >
+                        My Account
+                      </Link>
+                      <button
+                        className="block w-full text-left font-semibold px-4 py-2 text-primary hover:bg-gray-100"
+                        onClick={handleSignOut}
+                      >
+                        Sign Out
+                      </button>
+                    </div>
+                  )}
+                </>
+              )}
+              <div className="flex flex-col gap-3 p-2">
+                {!user && (
+                  <button
+                    className="btn-secondary"
+                    onClick={() => router.push('/sign-in')}
+                  >
+                    {t('header.sign_in')}
+                  </button>
+                )}
+                <button className="btn-primary" onClick={handleOrderNow}>
+                  {user ? t('header.new_order') : t('header.order_now')}
+                </button>
+
+                <div className="w-full flex items-center justify-center gap-4 mt-4 mb-4 text-center">
+                  <div className="">
+                    <LanguageSwitcher />
+                  </div>
+                  <a
+                    href="https://www.instagram.com/shelfcare.app/"
+                    target="_blank"
+                  >
+                    <FaInstagramSquare
+                      className="text-primary hover:opacity-90"
+                      size={30}
+                    />
+                  </a>
+                  <a
+                    href="https://www.tiktok.com/@shelfcare.app"
+                    target="_blank"
+                  >
+                    <AiFillTikTok
+                      className="text-primary hover:opacity-90"
+                      size={30}
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}

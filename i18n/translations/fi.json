@@ -69,10 +69,8 @@
     },
     "mission-vision": {
       "title": "Missiomme & Visiomme",
-      "missionTitle": "Missiomme",
-      "mission": "Missiomme on madaltaa kynnystä käyttää vaatteiden, kenkien ja asusteiden korjaus- ja huoltopalveluita ja integroida ne osaksi kuluttajien vaatehuoltorutiineja ja vastuullista muodin kulutusta.",
-      "visionTitle": "Visiomme",
-      "vision": "ShelfCare edustaa uutta muotimarkkinaa, jossa laatu korvaa määrän. Trendien ja uuden ostamisen sijaan keskiössä ovat henkilökohtainen oma tyyli ja itselle sopivat rakkaat vaatteet, joista halutaan pitää hyvää huolta."
+      "mission": "<b>Missiomme</b> on madaltaa kynnystä käyttää muodin korjaus- ja huoltopalveluita ja tuoda ne osaksi vaatehuoltorutiinejasi ja vastuullista muodin kuluttamista.",
+      "vision": "<b>ShelfCare edustaa</b> uutta muotimarkkinaa, jossa laatu korvaa määrän. Trendien ja uuden ostamisen sijaan keskiössä ovat henkilökohtainen oma tyyli ja itselle sopivat rakkaat vaatteet, joista halutaan pitää hyvää huolta."
     },
     "services": {
       "title": "Palvelumme",
@@ -1086,6 +1084,7 @@
 
     "order-history": "Tilaushistoria",
     "orders-subtitle": "Tässä näet kaikki tilauksesi ja niiden tilan.",
-    "no-orders": "Ei tilauksia"
+    "no-orders": "Ei tilauksia",
+    "welcome-message": "Tervetuloa ShelfCarelle tekemään muodin huoltoa!  \nLähetä tähän kuvat tuotteista, jotka haluat lähettää huoltoon. Kysymme tarvittavat kysymykset ja annamme sinulle työsuunnitelman ja huollon hinnan. Sitten pääset valitsemaan tavaroiden hakuajan."
   }
 }

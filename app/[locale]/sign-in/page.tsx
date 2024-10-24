@@ -29,7 +29,7 @@ export default function SignInPage() {
       setLoading(true);
       await signInWithEmailAndPassword(auth, email, password);
 
-      router.push('/');
+      router.push('/chat');
     } catch (error) {
       toast.error('Sign in failed. Please try again.');
     } finally {

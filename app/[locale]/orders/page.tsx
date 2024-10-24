@@ -13,7 +13,6 @@ import {
 import { useTranslations } from 'next-intl';
 import { auth } from '../../../firebase';
 import { Order } from 'types';
-import PickupReturnTime from 'components/PickupReturnTime';
 import { formatDateTime } from 'utils/formatDateTime';
 
 export default function OrdersPage() {
@@ -54,7 +53,6 @@ export default function OrdersPage() {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   const handlePayment = async (order: any) => {
-    // use searchParams to pass the order id and total price to the payment page
     router.push(`/payment?orderId=${order.id}&amount=${order.totalPrice}`);
   };
 
@@ -113,16 +111,6 @@ export default function OrdersPage() {
                           <p className="text-gray-500">€{order.totalPrice}</p>
                         </div>
                       </div>
-
-                      {(order.paymentStatus !== 'paid' && !order.pickupTime) ||
-                        (!order.deliveryTime && (
-                          <PickupReturnTime
-                            order={order}
-                            onUpdateTimes={(pickupTime, returnTime) =>
-                              handleTimeUpdate(order.id, pickupTime, returnTime)
-                            }
-                          />
-                        ))}
 
                       {/* Pick up time and delivery time */}
                       <div className="mt-6">
