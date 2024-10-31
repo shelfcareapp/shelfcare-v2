@@ -1,8 +1,8 @@
-import {initializeApp} from 'firebase/app';
-import {getAuth} from 'firebase/auth';
-import {getFirestore} from 'firebase/firestore';
-import {getStorage} from 'firebase/storage';
-import {getDatabase} from 'firebase/database';
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
+import { getDatabase } from 'firebase/database';
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -21,22 +21,22 @@ export const db = getFirestore(app);
 export const storage = getStorage(app);
 export const realtimeDatabase = getDatabase(app);
 
+// Firebase Messaging setup
 let messaging = null;
 let getToken = null;
 let onMessage = null;
 
 if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
     import('firebase/messaging')
-        .then(
-            ({getMessaging, getToken: fetchToken, onMessage: handleOnMessage}) => {
-                messaging = getMessaging(app);
-                getToken = fetchToken;
-                onMessage = handleOnMessage;
-            }
-        )
+        .then(({ getMessaging, getToken: fetchToken, onMessage: handleOnMessage }) => {
+            messaging = getMessaging(app);
+            getToken = (options) => fetchToken(messaging, options); // Safe wrapper for getToken
+            onMessage = (callback) => handleOnMessage(messaging, callback); // Safe wrapper for onMessage
+        })
         .catch((error) => {
             console.error('Firebase Messaging initialization failed:', error);
         });
 }
 
-export {messaging, getToken, onMessage};
+// Export messaging functions
+export { messaging, getToken, onMessage };
