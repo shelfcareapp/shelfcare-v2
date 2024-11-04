@@ -2,7 +2,11 @@
 
 import Layout from 'components/common/Layout';
 import React, { useState, useEffect } from 'react';
-import { sendMessage, listenToChat } from 'store/slices/chat-slice';
+import {
+  sendMessage,
+  listenToChat,
+  setWelcomeMessageSent
+} from 'store/slices/chat-slice';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebase';
 import { useRouter } from 'next/navigation';
@@ -22,7 +26,9 @@ export default function UserEnquiryPage() {
 
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const { messages, initialLoading } = useAppSelector((state) => state.chat);
+  const { messages, initialLoading, welcomeMessageSent } = useAppSelector(
+    (state) => state.chat
+  );
   const [message, setMessage] = useState<string>('');
   const [images, setImages] = useState<File[] | null>(null);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
@@ -36,6 +42,24 @@ export default function UserEnquiryPage() {
       router.push('/login');
     }
   }, [user, dispatch]);
+
+  const adminWelcomeMessage = t('welcome-message');
+
+  useEffect(() => {
+    if (!welcomeMessageSent) {
+      dispatch(
+        sendMessage({
+          userId: user?.uid,
+          content: adminWelcomeMessage,
+          sender: 'admin',
+          isAutoReply: true,
+          welcomeMessageSent: true,
+          images: []
+        })
+      );
+      dispatch(setWelcomeMessageSent(true));
+    }
+  }, [welcomeMessageSent]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -119,21 +143,6 @@ export default function UserEnquiryPage() {
 
     return null;
   };
-
-  useEffect(() => {
-    if (messages.length === 0 && user) {
-      const adminWelcomeMessage = t('welcome-message');
-      dispatch(
-        sendMessage({
-          userId: user.uid,
-          content: adminWelcomeMessage,
-          images: [],
-          sender: 'admin',
-          isAutoReply: true
-        })
-      );
-    }
-  }, [messages, user, dispatch, t]);
 
   return (
     <ProtectRoute>
