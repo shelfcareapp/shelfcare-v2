@@ -1,23 +1,23 @@
 {
   "header": {
-    "price_list": "Price List",
-    "how_it_works": "How it Works",
-    "measurement_guide": "Measurement Guide",
+    "price_list": "Price list",
+    "how_it_works": "How it works",
+    "measurement_guide": "Measuring guide",
     "sign_in": "Sign in",
-    "order_now": "Order Now",
-    "new_order": "New Order",
-    "my_orders": "My Orders",
-    "my_account": "My Account"
+    "order_now": "Order now",
+    "new_order": "New order",
+    "my_orders": "My orders",
+    "my_account": "My account"
   },
   "footer": {
-    "for_customers": "For Customers",
-    "price_list": "Price List",
-    "measurement_guide": "Measurement Guide",
-    "how_it_works": "How it Works",
+    "for_customers": "For customers",
+    "price_list": "Price list",
+    "measurement_guide": "Measuring guide",
+    "how_it_works": "How it works",
 
-    "about_us": "About Us",
-    "contact_us": "Contact Us",
-    "our_team": "Our Team",
+    "about_us": "About us",
+    "contact_us": "Contact us",
+    "our_team": "Our team",
 
     "legal": "Legal",
     "terms_and_conditions": "Terms",
@@ -25,9 +25,9 @@
     "copyright": "©2024 ShelfCare Oy. All rights reserved."
   },
   "metadata": {
-    "title": "ShelfCare - Sustainable Fashion and Wardrobe Care",
-    "description": "ShelfCare is dedicated to making clothing, shoe, and accessory repair and maintenance services accessible. We integrate these services into consumers’ wardrobe care routines, promoting sustainable fashion and personal style. Embrace quality over quantity with ShelfCare, where your beloved clothes and unique style are the focus.",
-    "keywords": "ShelfCare, sustainable fashion, wardrobe care, clothing repair, shoe maintenance, accessory repair, personal style, quality over quantity, fashion sustainability"
+    "title": "ShelfCare - All wardrobe repair and maintenance services",
+    "description": "ShelfCare makes tailoring, cobbler and laundry services more accessible and appealing. We integrate these services into consumers’ wardrobe care routines, promoting sustainable fashion and personal style. Embrace quality over quantity with ShelfCare, where your beloved clothes and unique style are the focus.",
+    "keywords": "ShelfCare, sustainable fashion, wardrobe care, clothing repair, shoe maintenance, accessory repair, personal style, quality over quantity, fashion sustainability, tailor, cobbler, shoe repair, laundry, dry cleaning"
   },
   "language": {
     "en": "English",
@@ -36,56 +36,56 @@
 
   "home": {
     "hero": {
-      "title": "One-stop-shop for high quality tailoring, cobbler and laundry services",
-      "subtitle": "Order now and we will come to pick up your items for servicing.",
-      "cta": "Order Now"
+      "title": "High quality tailoring, cobbler and laundry services in Helsinki metropolitan area",
+      "subtitle": "Place an order and we will pick up your items for some ShelfCare.",
+      "cta": "Order now"
     },
     "how_it_works": {
       "title": "How the service works",
       "subtitle": "Get started with these easy steps:",
       "step1": {
-        "title": "Submit a service request",
-        "description": "Fill out the form on our website to begin your service request."
+        "title": "Place an order",
+        "description": "Send us a message with your repair and maintenance needs and we will make a service plan for you."
       },
       "step2": {
-        "title": "Receive order confirmation",
-        "description": "If needed, we verify the work with our service providers before confirming."
+        "title": "Choose a pickup time",
+        "description": "We will come and get your items at your chosen pickup time."
       },
       "step3": {
-        "title": "We collect the items",
-        "description": "We pick up your items at the time you selected."
+        "title": "Enjoy your ShelfCared items",
+        "description": "We deliver the items back to you at your chosen return time."
       },
       "step4": {
-        "title": "Services are performed",
-        "description": "If necessary, we ask clarifying questions to ensure the desired outcome."
+        "title": "",
+        "description": ""
       },
       "step5": {
-        "title": "Items are returned",
-        "description": "We deliver your serviced items back at the time you selected."
+        "title": "",
+        "description": ""
       }
     },
 
     "mission-vision": {
-      "title": "Our Mission & Vision",
-      "mission": "<b>Our mission</b> is to make fashion repair and maintenance services accessible, and establish these services as a part of your regular activity for wardrobe care and sustainable fashion consumption.",
+      "title": "Our mission & vision",
+      "mission": "<b>Our mission</b> is to make wardrobe repair and maintenance services accessible and appealing, and establish these services as a regular activity for wardrobe care and sustainable fashion consumption.",
       "vision": "<b>ShelfCare stands</b> for the new age of fashion industry where quality cancels out quantity. Instead of following the trends and continuous consumption, the focus is on personal style, perfectly fitting and beloved clothes which their owners want to take care of."
     },
     "services": {
-      "title": "Our Services",
+      "title": "Our services",
       "tailoring": {
         "title": "Tailoring",
-        "shortDescription": "Perfect adjustments for your clothes.",
-        "description": "Get your clothes repaired and altered to perfection, whether it’s adjusting the length, fit, or style.You’ll get more wear out of your garments when they fit well and feel comfortable."
+        "shortDescription": "",
+        "description": "Get your clothes repaired and altered to perfection. You’ll get more wear out of your clothes when they feel comfortable and fit well."
       },
       "laundry": {
         "title": "Laundry",
-        "shortDescription": "Keep your garments fresh and clean.",
-        "description": "Our laundry service provides professional cleaning for your clothes, with special care given to delicate fabrics. We keep your clothes fresh and well-maintained and they continue to look great over time."
+        "shortDescription": "",
+        "description": "Get your clothes professionally cleaned with special care given to delicate fabrics. We keep your clothes fresh and well-maintained and they continue to look great over time."
       },
       "cobbler": {
         "title": "Cobbler",
-        "shortDescription": "Revive your favorite shoes with care.",
-        "description": "Our cobblers repair, restore, and maintain your shoes, bags, and leather goods. With cobbler services you can extend the lifespan of your items."
+        "shortDescription": "",
+        "description": "Get your shoes, bags and leather goods repaired and maintained. With cobbler services you can extend the lifespan of your items."
       }
     },
     "order-start": {
@@ -101,8 +101,8 @@
   },
 
   "team": {
-    "title": "Meet our beautiful team",
-    "description": "Our values are simple, we believe in circularity, self-expression, and self-care.",
+    "title": "Here's ShelfCare team",
+    "description": "Our values are simple, we believe in circularity, self-expression and confidence.",
     "members": {
       "maija": {
         "name": "Maija Tunturi",
@@ -110,7 +110,7 @@
       },
       "ida": {
         "name": "Ida",
-        "role": "CM"
+        "role": "Content producers"
       },
       "petra": {
         "name": "Petra Komppula",
@@ -134,67 +134,67 @@
       "successMessage": "Your message has been sent successfully!",
       "errorMessage": "There was an error sending the message, please try again later.",
       "ariaLabels": {
-        "firstName": "Enter your first name",
-        "lastName": "Enter your last name",
-        "email": "Enter your email",
-        "phone": "Enter your phone number",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "email": "Email",
+        "phone": "Phone number",
         "message": "Write your message here",
         "submit": "Send message"
       }
     }
   },
   "terms": {
-    "title": "Terms of Service",
+    "title": "Terms of service",
     "general": {
       "heading": "1. General",
       "content": "These terms of service apply to the tailoring, cobbler, and laundry services provided by ShelfCare Ltd ('we', 'our', or 'the company'). By ordering our services, you ('you' or 'the customer') agree to comply with these terms."
     },
     "ordering": {
-      "heading": "2. Ordering Services",
-      "content": "Ordering services takes place through our website. The customer is responsible for ensuring that the information provided in the order form, such as measurements and specifications, is correct and accurate. The order is confirmed once we have received all the necessary information. We reserve the right to reject the order if the information is incomplete or incorrect."
+      "heading": "2. Ordering services",
+      "content": "Ordering services takes place through our website. The customer is responsible for ensuring that the information provided, such as measurements and other specifications, is correct and accurate. We reserve the right to reject the order if the information is incomplete or incorrect."
     },
     "pricing": {
-      "heading": "3. Pricing and Payment Terms",
-      "content": "Service prices are visible on our website. By ordering, you agree to pay for the services according to the price list. If the scope of work exceeds the definition of the ordered service, we will agree separately with the customer on the service and price."
+      "heading": "3. Pricing and payment terms",
+      "content": "Service prices are visible on our website. By ordering, the customer agrees to pay for the services according to the price list. If the scope of work exceeds the definition of the ordered service, we will agree separately with the customer on the service and price. Once items are taken to the service provider, the customer will receive a payment request on the ordering portal or an invoice in their email. Invoices have seven day payment term. We reserve the right to make changes to the price list. The changes wll not affect already made and confirmed orders."
     },
     "transport": {
-      "heading": "4. Transportation Service",
-      "content": "We offer a pickup and return service to the address provided by the customer. We charge a €10 transportation and service fee at the time of order. Pickup and return times are agreed upon with the customer. The customer must be present at the agreed time."
+      "heading": "4. Logistics",
+      "content": "We offer a pickup and return service to the address provided by the customer. We charge a €10 logistics and service fee at the time of order. Pickup and return times are agreed upon with the customer. We reserve the right to charge an additional fee due to customer's failure to be present at pickup or return. The order is confirmed once the customer selects a pickup time for the order."
     },
     "handling": {
-      "heading": "5. Product Handling and Quality",
-      "content": "We commit to handling the customer's products properly and professionally. If the customer is not satisfied with the quality of the service, they must notify us in writing within 7 days of the return of the products."
+      "heading": "5. Product handling and quality",
+      "content": "We commit to handling the customer's products properly and professionally. If the customer is not satisfied with the quality of the service, they must notify us in writing within 7 days of the return of the products. We strive to correct any deficiencies or errors at no additional cost to the customer if the error is due to us. Please note that our services are based on the information you provide. If you are not satisfied with the outcome and the service has been carried out according to the infromation you have provided, we can agree separately on additional corrections and the cost of such corrections. "
     },
     "liability": {
-      "heading": "6. Limitation of Liability",
-      "content": "We are not responsible for any damage to products that result from incorrect measurements or information provided by the customer."
+      "heading": "6. Limitation of liability",
+      "content": "We are not responsible for any damage to products that result from incorrect measurements or information provided and/or accepted by the customer. We are not responsible for any delays or issues arising from factors that are beyond our control, such as weather conditions, traffic disruptions or other similar reasons. Our liability is always limited to the price of the service. We want to ensure that you are satisfied with the service you receive, and we will make every effort within reason to resolve the situation so that you are pleased with the final outcome. "
     },
     "cancellation": {
-      "heading": "7. Cancellation Policy",
-      "content": "The customer may cancel the order free of charge before the products are picked up. If cancellation is made after pickup but before the work has started, the customer is liable to pay for the transportation costs."
+      "heading": "7. Cancellation policy",
+      "content": "The customer may cancel the order free of charge before the products are picked up. If cancellation is made after pickup but before the work has started, the customer is liable to pay for the transportation costs. If services are already started, the customer is liable to pay for the services performed until cancellation notice."
     },
     "privacy": {
-      "heading": "8. Privacy and Data Protection",
+      "heading": "8. Privacy and data protection",
       "content": "We are committed to protecting the personal data of customers and processing it in accordance with data protection legislation."
     },
     "other": {
-      "heading": "9. Other Terms",
+      "heading": "9. Other terms",
       "content": "We reserve the right to change these terms without notice. Changes will take effect when published on our website."
     },
     "contact": {
-      "heading": "10. Contact Information",
+      "heading": "10. Contact information",
       "content": "If you have any questions about these terms, you can contact us by email at maija.tunturi@shelfcare.app."
     }
   },
 
   "privacy": {
-    "title": "Privacy Policy",
+    "title": "Privacy policy",
     "section1": {
-      "heading": "1. Data Controller",
+      "heading": "1. Data controller",
       "content": "ShelfCare Oy\nBusiness ID: 3393648-9"
     },
     "section2": {
-      "heading": "2. Contact for Privacy Matters",
+      "heading": "2. Contact for privacy matters",
       "content": "Data Protection Officer\nEmail: maija.tunturi@shelfcare.app"
     },
     "section3": {
@@ -202,75 +202,75 @@
       "content": "Customer Register of ShelfCare Oy"
     },
     "section4": {
-      "heading": "4. Purpose and Legal Basis for Processing Personal Data",
+      "heading": "4. Purpose and legal basis for processing personal data",
       "content": "The purpose of processing personal data includes:\n- Providing customer service\n- Sending marketing communications\n- Fulfilling contractual obligations\n- Complying with legal requirements\n\nThe legal basis for processing personal data includes:\n- Customer consent\n- Performance of a contract\n- Legal obligations of the data controller\n- Legitimate interests of the data controller"
     },
     "section5": {
-      "heading": "5. Content of the Register",
+      "heading": "5. Content of the register",
       "content": "The register may contain the following information:\n- Name\n- Address\n- Phone number\n- Email address\n- Information related to the customer relationship (e.g., order history, customer feedback)"
     },
     "section6": {
-      "heading": "6. Regular Data Sources",
+      "heading": "6. Regular data sources",
       "content": "Personal data is primarily collected:\n- Directly from the customer during the customer relationship\n- When the customer uses services provided by ShelfCare Oy"
     },
     "section7": {
-      "heading": "7. Regular Data Disclosures",
+      "heading": "7. Regular data disclosures",
       "content": "Personal data may be disclosed to:\n- Our service providers and partners who process data on our behalf\n- Authorities in cases required by law"
     },
     "section8": {
-      "heading": "8. Transfer of Data Outside the EU or EEA",
+      "heading": "8. Transfer of data outside the EU or EEA",
       "content": "Personal data is generally not transferred outside the EU/EEA. If a transfer is necessary, we ensure that it occurs legally and with adequate safeguards."
     },
     "section9": {
-      "heading": "9. Rights of the Data Subject",
+      "heading": "9. Rights of the data subject",
       "content": "The data subject has the following rights:\n- Right to access their personal data\n- Right to correct data\n- Right to delete data\n- Right to restrict processing\n- Right to object to data processing\n- Right to data portability\n- Right to withdraw consent at any time\n\nData subjects can exercise their rights by contacting our Data Protection Officer. All requests must be submitted in writing to the contact person mentioned above."
     },
     "section10": {
-      "heading": "10. Changes to the Privacy Policy",
-      "content": "ShelfCare Oy reserves the right to change this privacy policy. Changes will be announced on the ShelfCare Oy website and/or to customers via email."
+      "heading": "10. Changes to the privacy policy",
+      "content": "ShelfCare Oy reserves the right to change this privacy policy. Any substantial changes to our privacy policy will be announced on the ShelfCare Oy website and/or to customers via email."
     }
   },
 
   "pricing": {
-    "title": "Pricing Guidelines",
-    "disclaimer": "The prices listed are starting prices and may vary based on the complexity and materials involved in each service. Additional charges may apply.",
+    "title": "Price list",
+    "disclaimer": "Here you can find the list of our services and prices. If you can't find the service you are looking for, send us a message - we will find a solution!",
     "categories": {
       "0": "Tailoring",
       "1": "Cobbler",
       "2": "Laundry"
     },
     "tailoring": {
-      "title": "Tailoring Services",
+      "title": "Tailoring services",
       "groups": {
         "trousers": {
           "title": "Trousers",
           "services": {
             "trouser_leg_shortening": {
-              "name": "Trouser Leg Shortening",
+              "name": "Trouser leg hhortening",
               "price": "29",
               "subOptions": {
-                "hidden_stitch": { "name": "Hidden Stitch", "price": "+6" },
+                "hidden_stitch": { "name": "Hidden stitch", "price": "+6" },
                 "cuffs": { "name": "Cuffs", "price": "+6" },
-                "binding_tape": { "name": "Binding Tape", "price": "+9" }
+                "binding_tape": { "name": "Binding tape", "price": "+9" }
               }
             },
             "trouser_leg_narrowing": {
-              "name": "Trouser Leg Narrowing",
+              "name": "Trouser leg narrowring",
               "price": "39",
               "subOptions": {}
             },
             "waist_narrowing_back_seam": {
-              "name": "Waist Narrowing from Back Seam",
+              "name": "Waist narrowing from back seam",
               "price": "37",
               "subOptions": {}
             },
             "waist_widening_back_seam": {
-              "name": "Waist Widening from Back Seam",
+              "name": "Waist widening from back seam",
               "price": "37",
               "subOptions": {}
             },
             "waist_narrowing_side_seams": {
-              "name": "Waist Narrowing from Side Seams",
+              "name": "Waist narrowing from side seams",
               "price": "45",
               "subOptions": {
                 "narrowing_exceeding_4cm": {
@@ -280,12 +280,12 @@
               }
             },
             "zipper_replacement": {
-              "name": "Zipper Replacement",
+              "name": "Zipper replacement",
               "price": "36",
               "subOptions": {}
             },
             "patching_repair_seam": {
-              "name": "Patching/Repair from Seam",
+              "name": "Patching/repair from seam",
               "price": "22",
               "subOptions": {}
             }
@@ -295,22 +295,22 @@
           "title": "Jeans",
           "services": {
             "leg_shortening": {
-              "name": "Leg Shortening",
+              "name": "Leg shortening",
               "price": "32",
               "subOptions": {}
             },
             "leg_narrowing": {
-              "name": "Leg Narrowing",
+              "name": "Leg narrowing",
               "price": "42",
               "subOptions": {}
             },
             "waist_narrowing_back_seam": {
-              "name": "Waist Narrowing from Back Seam",
+              "name": "Waist narrowing from back seam",
               "price": "42",
               "subOptions": {}
             },
             "waist_narrowing_side_seams": {
-              "name": "Waist Narrowing from Side Seams",
+              "name": "Waist narrowing from side seams",
               "price": "65",
               "subOptions": {
                 "jeans_narrowing_exceeding_4cm": {
@@ -320,12 +320,12 @@
               }
             },
             "zipper_replacement": {
-              "name": "Zipper Replacement",
+              "name": "Zipper replacement",
               "price": "39",
               "subOptions": {}
             },
             "patching_repair_seam": {
-              "name": "Patching/Repair from Seam",
+              "name": "Patching/repair from seam",
               "price": "22",
               "subOptions": {}
             }
@@ -335,45 +335,45 @@
           "title": "Shirts",
           "services": {
             "shirts_sleeve_shortening": {
-              "name": "Sleeve Shortening",
+              "name": "Sleeve shortening",
               "price": "29",
               "subOptions": {
-                "slit_sleeves": { "name": "Slit Sleeves", "price": "+10" }
+                "slit_sleeves": { "name": "Slit sleeves", "price": "+10" }
               }
             },
             "waist_narrowing": {
-              "name": "Waist Narrowing",
+              "name": "Waist narrowing",
               "price": "29",
               "subOptions": {}
             },
             "shirts_hem_shortening": {
-              "name": "Hem Shortening",
+              "name": "Hem shortening",
               "price": "29",
               "subOptions": {
-                "slit_hem": { "name": "Slit Hem", "price": "+14" }
+                "slit_hem": { "name": "Slit hem", "price": "+14" }
               }
             },
             "cardigan_knit_sleeve_shortening": {
-              "name": "Cardigan/Knit Sleeve Shortening",
+              "name": "Cardigan/knit sleeve shortening",
               "price": "44",
               "subOptions": {}
             },
             "cardigan_knit_waist_narrowing": {
-              "name": "Cardigan/Knit Waist Narrowing",
+              "name": "Cardigan/knit waist narrowing",
               "price": "49",
               "subOptions": {}
             },
             "top_strap_shortening": {
-              "name": "Shortening of Top Straps",
+              "name": "Shortening of top straps",
               "price": "22",
               "subOptions": {}
             },
             "patching_repair_seam": {
-              "name": "Patching/Repair from Seam",
+              "name": "Patching/repair from seam",
               "price": "22",
               "subOptions": {
                 "cardigan_knit_shirt": {
-                  "name": "Cardigan/Knit Shirt",
+                  "name": "Cardigan/knit shirt",
                   "price": "+7"
                 }
               }
@@ -381,95 +381,95 @@
           }
         },
         "blazers_suit_jackets": {
-          "title": "Blazers & Suit Jackets",
+          "title": "Blazers & suit jackets",
           "services": {
             "sleeve_shortening": {
-              "name": "Sleeve Shortening",
+              "name": "Sleeve shortening",
               "price": "42",
               "subOptions": {
-                "with_lining": { "name": "With Lining", "price": "+14" },
-                "slit_sleeves": { "name": "Slit Sleeves", "price": "+15" }
+                "with_lining": { "name": "With lining", "price": "+14" },
+                "slit_sleeves": { "name": "Slit sleeves", "price": "+15" }
               }
             },
             "sleeve_lengthening": {
-              "name": "Sleeve Lengthening",
+              "name": "Sleeve lengthening",
               "price": "55",
               "subOptions": {
-                "with_lining": { "name": "With Lining", "price": "+12" }
+                "with_lining": { "name": "With lining", "price": "+12" }
               }
             },
             "blazers_sleeve_narrowing": {
-              "name": "Sleeve Narrowing",
+              "name": "Sleeve narrowing",
               "price": "49",
               "subOptions": {
-                "with_lining": { "name": "With Lining", "price": "+18" }
+                "with_lining": { "name": "With lining", "price": "+18" }
               }
             },
             "waist_narrowing_side_seams": {
-              "name": "Waist Narrowing from Side Seams",
+              "name": "Waist narrowing from side seams",
               "price": "50",
               "subOptions": {
-                "with_lining": { "name": "With Lining", "price": "+16" }
+                "with_lining": { "name": "With lining", "price": "+16" }
               }
             },
             "blazers_hem_shortening": {
-              "name": "Hem Shortening",
+              "name": "Hem shortening",
               "price": "55",
               "subOptions": {
-                "with_lining": { "name": "With Lining", "price": "+14" }
+                "with_lining": { "name": "With lining", "price": "+14" }
               }
             },
             "shoulder_narrowing": {
-              "name": "Shoulder Narrowing",
+              "name": "Shoulder narrowing",
               "price": "74",
               "subOptions": {
-                "with_lining": { "name": "With Lining", "price": "+25" }
+                "with_lining": { "name": "With lining", "price": "+25" }
               }
             },
             "blazers_lining_replacement": {
-              "name": "Lining Replacement",
+              "name": "Lining replacement",
               "price": "220",
               "subOptions": {}
             },
             "patching_repair_seam": {
-              "name": "Patching/Repair from Seam",
+              "name": "Patching/repair from seam",
               "price": "22",
               "subOptions": {
-                "with_lining": { "name": "With Lining", "price": "+5" }
+                "with_lining": { "name": "With lining", "price": "+5" }
               }
             }
           }
         },
         "dresses_skirts": {
-          "title": "Dresses & Skirts",
+          "title": "Dresses & skirts",
           "services": {
             "dresses_hem_shortening": {
-              "name": "Hem Shortening",
+              "name": "Hem shortening",
               "price": "35",
               "subOptions": {
-                "with_lining": { "name": "With Lining", "price": "+10" },
-                "slit_hem": { "name": "Slit Hem", "price": "+15" },
-                "hidden_stitch": { "name": "Hidden Stitch", "price": "+12" }
+                "with_lining": { "name": "With lining", "price": "+10" },
+                "slit_hem": { "name": "Slit hem", "price": "+15" },
+                "hidden_stitch": { "name": "Hidden stitch", "price": "+12" }
               }
             },
             "skirt_narrowing_back_seam": {
-              "name": "Skirt Narrowing from Back Seam",
+              "name": "Skirt narrowing from back seam",
               "price": "37",
               "subOptions": {
-                "with_lining": { "name": "With Lining", "price": "+10" },
+                "with_lining": { "name": "With lining", "price": "+10" },
                 "zipper_back_seam": {
-                  "name": "Zipper in Back Seam",
+                  "name": "Zipper in back seam",
                   "price": "+17"
                 }
               }
             },
             "skirt_narrowing_side_seams": {
-              "name": "Skirt Narrowing from Side Seams",
+              "name": "Skirt narrowing from side seams",
               "price": "45",
               "subOptions": {
-                "with_lining": { "name": "With Lining", "price": "+10" },
+                "with_lining": { "name": "With lining", "price": "+10" },
                 "zipper_side_seam": {
-                  "name": "Zipper in Side Seam",
+                  "name": "Zipper in side seam",
                   "price": "+17"
                 },
                 "dresses_narrowing_exceeding_4cm": {
@@ -479,23 +479,23 @@
               }
             },
             "dress_narrowing_back_seam": {
-              "name": "Dress Narrowing from Back Seam",
+              "name": "Dress narrowing from back seam",
               "price": "39",
               "subOptions": {
-                "with_lining": { "name": "With Lining", "price": "+10" },
+                "with_lining": { "name": "With lining", "price": "+10" },
                 "zipper_back_seam": {
-                  "name": "Zipper in Back Seam",
+                  "name": "Zipper in back seam",
                   "price": "+17"
                 }
               }
             },
             "dress_narrowing_side_seams": {
-              "name": "Dress Narrowing from Side Seams",
+              "name": "Dress narrowing from side seams",
               "price": "49",
               "subOptions": {
-                "with_lining": { "name": "With Lining", "price": "+10" },
+                "with_lining": { "name": "With lining", "price": "+10" },
                 "zipper_side_seam": {
-                  "name": "Zipper in Side Seam",
+                  "name": "Zipper in side seam",
                   "price": "+17"
                 },
                 "dresses_narrowing_exceeding_4cm": {
@@ -505,29 +505,29 @@
               }
             },
             "skirt_zipper_replacement": {
-              "name": "Skirt Zipper Replacement",
+              "name": "Skirt zipper replacement",
               "price": "35",
               "subOptions": {
-                "metal_zipper": { "name": "Metal Zipper", "price": "+8" }
+                "metal_zipper": { "name": "Metal zipper", "price": "+8" }
               }
             },
             "dress_zipper_replacement": {
-              "name": "Dress Zipper Replacement",
+              "name": "Dress zipper replacement",
               "price": "46",
               "subOptions": {
-                "metal_zipper": { "name": "Metal Zipper", "price": "+8" }
+                "metal_zipper": { "name": "Metal zipper", "price": "+8" }
               }
             },
             "shortening_dress_straps": {
-              "name": "Shortening of Dress Straps",
+              "name": "Shortening of dress straps",
               "price": "24",
               "subOptions": {}
             },
             "patching_repair_seam": {
-              "name": "Patching/Repair from Seam",
+              "name": "Patching/repair from seam",
               "price": "22",
               "subOptions": {
-                "with_lining": { "name": "With Lining", "price": "+5" }
+                "with_lining": { "name": "With lining", "price": "+5" }
               }
             }
           }
@@ -536,162 +536,162 @@
           "title": "Coats",
           "services": {
             "sleeve_shortening": {
-              "name": "Sleeve Shortening",
+              "name": "Sleeve shortening",
               "price": "45",
               "subOptions": {
-                "with_lining": { "name": "With Lining", "price": "+14" },
-                "slit_sleeves": { "name": "Slit Sleeves", "price": "+15" }
+                "with_lining": { "name": "With lining", "price": "+14" },
+                "slit_sleeves": { "name": "Slit sleeves", "price": "+15" }
               }
             },
             "sleeve_shortening_relocation_welt": {
-              "name": "Sleeve Shortening with Relocation of Welt",
+              "name": "Sleeve shortening with relocation of welt",
               "price": "65",
               "subOptions": {
-                "with_lining": { "name": "With Lining", "price": "+14" }
+                "with_lining": { "name": "With lining", "price": "+14" }
               }
             },
             "sleeve_shortening_relocation_zipper": {
-              "name": "Sleeve Shortening with Relocation of Zipper",
+              "name": "Sleeve shortening with relocation of zipper",
               "price": "75",
               "subOptions": {
-                "with_lining": { "name": "With Lining", "price": "+14" }
+                "with_lining": { "name": "With lining", "price": "+14" }
               }
             },
             "coats_sleeve_narrowing": {
-              "name": "Sleeve Narrowing",
+              "name": "Sleeve narrowing",
               "price": "52",
               "subOptions": {
-                "with_lining": { "name": "With Lining", "price": "+14" }
+                "with_lining": { "name": "With lining", "price": "+14" }
               }
             },
             "waist_narrowing": {
-              "name": "Waist Narrowing",
+              "name": "Waist narrowing",
               "price": "58",
               "subOptions": {
-                "with_lining": { "name": "With Lining", "price": "+16" }
+                "with_lining": { "name": "With lining", "price": "+16" }
               }
             },
             "coats_hem_shortening": {
-              "name": "Hem Shortening",
+              "name": "Hem shortening",
               "price": "62",
               "subOptions": {
-                "with_lining": { "name": "With Lining", "price": "+14" },
-                "slit_hem": { "name": "Slit Hem", "price": "+20" }
+                "with_lining": { "name": "With lining", "price": "+14" },
+                "slit_hem": { "name": "Slit hem", "price": "+20" }
               }
             },
             "coat_with_zipper": {
-              "name": "Coat with Zipper",
+              "name": "Coat with zipper",
               "price": "35",
               "subOptions": {}
             },
             "shoulder_narrowing": {
-              "name": "Shoulder Narrowing",
+              "name": "shoulder narrowing",
               "price": "79",
               "subOptions": {
-                "with_lining": { "name": "With Lining", "price": "+30" }
+                "with_lining": { "name": "with lining", "price": "+30" }
               }
             },
             "coat_zipper_replacement": {
-              "name": "Coat Zipper Replacement",
+              "name": "Coat zipper replacement",
               "price": "53",
               "subOptions": {
-                "metal_zipper": { "name": "Metal Zipper", "price": "+8" },
+                "metal_zipper": { "name": "Metal zipper", "price": "+8" },
                 "length_over_knee": {
-                  "name": "Length Over the Knee",
+                  "name": "Length over the knee",
                   "price": "+15"
                 }
               }
             },
             "winter_jacket_zipper_replacement": {
-              "name": "Winter Jacket Zipper Replacement",
+              "name": "Winter jacket zipper replacement",
               "price": "65",
               "subOptions": {
-                "metal_zipper": { "name": "Metal Zipper", "price": "+8" },
+                "metal_zipper": { "name": "Metal zipper", "price": "+8" },
                 "length_over_knee": {
-                  "name": "Length Over the Knee",
+                  "name": "Length over the knee",
                   "price": "+25"
                 }
               }
             },
             "coats_lining_replacement": {
-              "name": "Lining Replacement",
+              "name": "Lining replacement",
               "price": "220",
               "subOptions": {
                 "length_over_knee": {
-                  "name": "Length Over the Knee",
+                  "name": "Length over the knee",
                   "price": "+60"
                 }
               }
             },
             "patching_repair_seam": {
-              "name": "Patching/Repair from Seam",
+              "name": "Patching/repair from seam",
               "price": "24",
               "subOptions": {
-                "with_lining": { "name": "With Lining", "price": "+6" }
+                "with_lining": { "name": "With lining", "price": "+6" }
               }
             }
           }
         },
         "sports_outdoor_clothing": {
-          "title": "Sports & Outdoor Clothing",
+          "title": "Sports & outdoor clothing",
           "services": {
             "sports_shirt_sleeve_shortening": {
-              "name": "Sports Shirt Sleeve Shortening",
+              "name": "Sports shirt sleeve shortening",
               "price": "29",
               "subOptions": {}
             },
             "sports_top_straps_shortening": {
-              "name": "Sports Top Straps Shortening",
+              "name": "Sports top straps shortening",
               "price": "22",
               "subOptions": {}
             },
             "sports_shirt_zipper_replacement": {
-              "name": "Sports Shirt Zipper Replacement",
+              "name": "Sports shirt zipper replacement",
               "price": "42",
               "subOptions": {
-                "metal_zipper": { "name": "Metal Zipper", "price": "+8" }
+                "metal_zipper": { "name": "Metal zipper", "price": "+8" }
               }
             },
             "sports_pants_leg_shortening": {
-              "name": "Sports Pants Leg Shortening",
+              "name": "Sports pants leg shortening",
               "price": "29",
               "subOptions": {
-                "with_lining": { "name": "With Lining", "price": "+10" }
+                "with_lining": { "name": "With lining", "price": "+10" }
               }
             },
             "sports_pants_waist_narrowing": {
-              "name": "Sports Pants Waist Narrowing",
+              "name": "Sports pants waist narrowing",
               "price": "37",
               "subOptions": {
-                "with_lining": { "name": "With Lining", "price": "+10" }
+                "with_lining": { "name": "With lining", "price": "+10" }
               }
             },
             "sports_pants_zipper_replacement": {
-              "name": "Sports Pants Zipper Replacement",
+              "name": "Sports pants zipper replacement",
               "price": "36",
               "subOptions": {
-                "metal_zipper": { "name": "Metal Zipper", "price": "+8" }
+                "metal_zipper": { "name": "Metal zipper", "price": "+8" }
               }
             },
             "patching_repair_seam": {
-              "name": "Patching/Repair from Seam",
+              "name": "Patching/repair from seam",
               "price": "22",
               "subOptions": {
-                "with_lining": { "name": "With Lining", "price": "+6" }
+                "with_lining": { "name": "With lining", "price": "+6" }
               }
             }
           }
         },
         "other_tailoring_services": {
-          "title": "Other Tailoring Services",
+          "title": "Other tailoring services",
           "services": {
             "button_sewing": {
-              "name": "Button Sewing",
+              "name": "Button sewing",
               "price": "6",
               "subOptions": {}
             },
             "extra_buttons": {
-              "name": "Extra Buttons",
+              "name": "Extra buttons",
               "price": "4",
               "subOptions": {}
             }
@@ -701,21 +701,21 @@
     },
 
     "cobbler": {
-      "title": "Cobbler Services",
+      "title": "Cobbler services",
       "groups": {
         "boots": {
           "title": "Boots",
           "services": {
             "heel_replacement": {
-              "name": "Heel Replacement",
+              "name": "Heel replacement",
               "price": "28",
               "subOptions": {}
             },
             "sole_replacement": {
-              "name": "Sole Replacement",
+              "name": "Sole replacement",
               "price": "44",
               "subOptions": {
-                "vibram_sole": { "name": "Vibram Sole", "price": "+10" }
+                "vibram_sole": { "name": "Vibram sole", "price": "+10" }
               }
             },
             "shoe_shine": {
@@ -731,32 +731,32 @@
           }
         },
         "leather_jackets": {
-          "title": "Leather Jackets",
+          "title": "Leather jackets",
           "services": {
             "shortening_of_sleeves": {
-              "name": "Sleeve Shortening",
+              "name": "Sleeve shortening",
               "price": "65",
               "subOptions": {}
             },
             "shortening_sleeves_moving_elastic": {
-              "name": "Sleeve Shortening and Moving Elastic",
+              "name": "Sleeve shortening with relocation of welt",
               "price": "75",
               "subOptions": {}
             },
             "narrowing_leather_jacket": {
-              "name": "Leather Jacket Narrowing",
+              "name": "Leather jacket narrowing",
               "price": "95",
               "subOptions": {}
             },
             "replacing_zipper": {
-              "name": "Zipper Replacement",
+              "name": "Zipper replacement",
               "price": "89",
               "subOptions": {
-                "metal_zipper": { "name": "Metal Zipper", "price": "+8" }
+                "metal_zipper": { "name": "Metal ipper", "price": "+8" }
               }
             },
             "changing_lining": {
-              "name": "Lining Replacement",
+              "name": "Lining replacement",
               "price": "259",
               "subOptions": {
                 "lining_silk": { "name": "Silk Lining", "price": "+30" }
@@ -765,30 +765,30 @@
           }
         },
         "leather_pants": {
-          "title": "Leather Pants",
+          "title": "Leather pants",
           "services": {
             "leg_shortening": {
-              "name": "Leg Shortening",
+              "name": "Leg shortening",
               "price": "39",
               "subOptions": {}
             },
             "leg_narrowing": {
-              "name": "Leg Narrowing",
+              "name": "Leg narrowing",
               "price": "49",
               "subOptions": {}
             },
             "zipper_replacement_thin_leather": {
-              "name": "Zipper Replacement (Thin Leather)",
+              "name": "Zipper replacement (thin leather)",
               "price": "49",
               "subOptions": {
-                "metal_zipper": { "name": "Metal Zipper", "price": "+8" }
+                "metal_zipper": { "name": "Metal zipper", "price": "+8" }
               }
             },
             "zipper_replacement_thick_leather": {
-              "name": "Zipper Replacement (Thick Leather)",
+              "name": "Zipper replacement (thick leather)",
               "price": "59",
               "subOptions": {
-                "metal_zipper": { "name": "Metal Zipper", "price": "+8" }
+                "metal_zipper": { "name": "Metal zipper", "price": "+8" }
               }
             }
           }
@@ -808,7 +808,7 @@
           "price": "17",
           "subOptions": {
             "length_over_knee": {
-              "name": "Length Over Knee",
+              "name": "Length over knee",
               "price": "+9"
             }
           }
@@ -818,33 +818,33 @@
           "price": "38",
           "subOptions": {
             "silk_suit": {
-              "name": "Silk Suit",
+              "name": "Silk suit",
               "price": "+15"
             },
             "suit_with_vest": {
-              "name": "Suit with Vest",
+              "name": "Suit with vest",
               "price": "46"
             }
           }
         },
         "dress_mini": {
-          "name": "Mini Dress",
+          "name": "Mini dress",
           "price": "32"
         },
         "dress_midi": {
-          "name": "Midi Dress",
+          "name": "Midi dress",
           "price": "39"
         },
         "dress_maxi": {
-          "name": "Maxi Dress",
+          "name": "Maxi dress",
           "price": "45"
         },
         "evening_dress": {
-          "name": "Evening Dress",
+          "name": "Evening dress",
           "price": "68"
         },
         "jacket": {
-          "name": "Jacket / Blazer",
+          "name": "Jacket / blazer",
           "price": "26"
         },
         "coat": {
@@ -852,86 +852,125 @@
           "price": "39",
           "subOptions": {
             "wool_coat": {
-              "name": "Wool Coat",
+              "name": "Wool coat",
               "price": "+5"
             },
             "length_over_knee": {
-              "name": "Length Over Knee",
+              "name": "Length over the knee",
               "price": "+10"
             }
           }
         },
         "winter_jacket": {
-          "name": "Winter Jacket",
+          "name": "Winter jacket",
           "price": "27",
           "subOptions": {
             "length_over_knee": {
-              "name": "Length Over Knee",
+              "name": "Length over the knee",
               "price": "+10"
             }
           }
         },
         "down_jacket": {
-          "name": "Down Jacket",
+          "name": "Down jacket",
           "price": "39",
           "subOptions": {
             "length_over_knee": {
-              "name": "Length Over Knee",
+              "name": "Length over the knee",
               "price": "+10"
             }
           }
         },
         "canada_goose_jacket": {
-          "name": "Canada Goose Jacket",
+          "name": "Canada Goose jacket",
           "price": "59"
         }
       }
     }
   },
   "measurement-guide": {
-    "title": "Measurement Guide",
+    "title": "Measuring guide",
     "sections": {
       "section-1": {
-        "heading": "Leg/Hem/Sleeve/Waist Reduction",
+        "heading": "Leg shortening",
         "instructions": {
-          "instruction-1": "Measure and tell the number of centimeters from the leg/hem/cuff/waist to the point where you want the tapering to start.",
-          "instruction-2": "Specify the amount of reduction needed.",
-          "instruction-3": "If narrowing only from the waist, specify where it ends by measuring the number of centimeters from the hem to that point.",
-          "instruction-4": "Alternatively, mark the points with safety pins."
+          "instruction-1": "Fold the fabric at the thigh area. Adjust the length by folding the fabric until you find the desired length for the leg. Measure the amount to be shortened from the fold. Keep in mind that the fabric is two-folded, so you need to double the measurement taken on one side.",
+          "instruction-2": "Folding the fabric at the thigh area helps you to determine the right leg length. Shortening will be done at the leg opening.",
+          "instruction-3": "You can also mark the shortening with a safety pin. Mark the shortening in the same way by folding the fabric.",
+          "instruction-4": ""
         }
       },
       "section-2": {
-        "heading": "Leg/Hem/Sleeve/Shoulder Shortening",
+        "heading": "Leg narrowing",
         "instructions": {
-          "instruction-1": "Measure and specify the amount to shorten. You can also mark the shortening with a safety pin."
+          "instruction-1": "Fold the fabric at the leg. Measure the amount to be narrowed. Remember, the fabric is two-folded, so you need to double the measurement taken on one side. Measure the distance from the bottom of the leg to the point where you want the narrowing to begin.  --- You can also mark the narrowing with a safety pin. Mark the narrowing at the leg opening and the spot where you want the narrowing to start. --- Example: You want the narrowing to start 30cm up from the bottom of the leg, with a 6cm narrowing at the leg opening."
         }
       },
       "section-3": {
-        "heading": "Narrowing/Widening by Moving Buttons",
+        "heading": "Waist narrowing for trousers, jeans and skirts",
         "instructions": {
-          "instruction-1": "Measure and tell how much you want to move the buttons for narrowing or widening.",
-          "instruction-2": "Alternatively, mark with safety pins where the buttons will be moved."
+          "instruction-1": "Fold the fabric at the waist. Measure the amount to be narrowed. Keep in mind that the fabric is two-folded, so you need to double the measurement taken on one side. Measure the distance from the waistline to the point where you want the narrowing to begin.",
+          "instruction-2": "You can also mark the narrowing with a safety pin. Mark the narrowing at waist and the spot where you want the narrowing to start. --- Example: You want to start narrowing 10cm down from the waistline, with a 4cm narrowing at the waistline."
         }
       },
       "section-4": {
-        "heading": "Waist Widening",
+        "heading": "Waist widening",
         "instructions": {
-          "instruction-1": "Measure and specify where to start widening from the waist down, and how much to widen from the waist.",
-          "instruction-2": "Ensure there is enough extra fabric inside the back seam of the pant."
+          "instruction-1": "Measure the amount of widening needed at the waist. Measure the point down from the waistline where you want the widening to start.",
+          "instruction-2": "Example: You want the widening to start 10cm down from the waistline, with a 4cm widening at the waistline. --- Make sure the inner back seam has enough extra fabric for the widening."
         }
       },
       "section-5": {
-        "heading": "Sleeve Extension",
+        "heading": "Sleeve shortening",
         "instructions": {
-          "instruction-1": "Measure and specify how much to extend the sleeve length.",
-          "instruction-2": "Ensure there is extra fabric on the sleeve for lengthening."
+          "instruction-1": "Fold the fabric at the elbow area. Adjust the length by folding the fabric until you find the desired length for the sleeve. Measure the amount to be shortened from the fold. Keep in mind that the fabric is two-folded, so you need to double the measurement taken on one side.",
+          "instruction-2": "Folding the fabric at the elbow area helps you to determine the right leg length. Shortening will be done at the sleeve opening. --- You can also mark the shortening with a safety pin. Mark the shortening in the same way by folding the fabric."
         }
       },
       "section-6": {
-        "heading": "Patching / Repair of the Seam",
+        "heading": "Waist narrowing for skirts, blazers, jackets and dresses",
         "instructions": {
-          "instruction-1": "Identify the location of the repair point.",
-          "instruction-2": "Seam repairs are done inconspicuously, though complete invisibility may not be achieved."
+          "instruction-1": "Measure\n a) the distance from the hem to the point where you want the narrowing to start.\n b) the distance from the hem to the point where you want the narrowing to be at its maximum.\n c) how much you want to narrow the garment at its maximum.\n d) the distance from the hem to the point where you want the narrowing to end, or if you want the narrowing to continue to the hem, measure how much narrowing you want at the hem.",
+          "instruction-2": "You can also mark the points with safety pins as an alternative. ---- Narrowing is done following the original shape and cut. --- Example: You want to start narrowing at a point 30cm up from the hem and end narrowing at a point 10cm up from the hem. The maximum narrowing need is 4cm, and the 4cm narrowing is wanted at a point 17cm up from the hem. The shirt will be narrowed between the starting and ending points, with a maximum narrowing of 4cm at 17cm up from the hem."
+        }
+      },
+      "section-7": {
+        "heading": "Hem shortening for shirts, blazers and jackets",
+        "instructions": {
+          "instruction-1": "Measure much shortening is needed.\nThe shortening will be done according to the original shape. Alternatively, you can mark the shortening with safety pins."
+        }
+      },
+      "section-8": {
+        "heading": "Hem shortening for skirts, dresses and long coats and jackets",
+        "instructions": {
+          "instruction-1": "Fold the fabric at the thigh area. Adjust the length by folding the fabric until you find the desired length. Measure the amount to be shortened from the fold. Keep in mind that the fabric is two-folded, so you need to double the measurement taken on one side.",
+          "instruction-2": "Folding the fabric at the thigh area helps you to determine the right hem length. Shortening will be done at the hem. You can also mark the shortening with a safety pin. Mark the shortening in the same way by folding the fabric."
+        }
+      },
+      "section-9": {
+        "heading": "Shoulder strap shortening",
+        "instructions": {
+          "instruction-1": "Fold the strap. Measure the amount to be shortened. Keep in mind that the fabric is two-fold,  so you need to double the measurement taken on one side."
+        }
+      },
+      "section-10": {
+        "heading": "Sleeve lengthening",
+        "instructions": {
+          "instruction-1": "Measure how much lengthening is needed. Make sure the sleeve has enough fabric for lengthening."
+        }
+      },
+      "section-11": {
+        "heading": "Sleeve narrowing",
+        "instructions": {
+          "instruction-1": "Fold the fabric in half at the sleeve opening. Measure the amount to be narrowed. Keep in mind that the fabric is two-folded, so you need to double the measurement taken on one side. Measure the distance from the sleeve opening to the point where you want the narrowing to begin. You can also mark the narrowing with a safety pin. Mark the narrowing at sleeve opening and the spot where you want the narrowing to start.",
+          "instruction-2": "Example: You want the narrowing to start 30cm up from the sleeve opening, with a 4cm narrowing at the sleeve opening."
+        }
+      },
+      "section-12": {
+        "heading": "Shoulder narrowing",
+        "instructions": {
+          "instruction-1": "Fold the fabric above the shoulder. Adjust the folding until you find the desired width for the shoulder. Measure the amount to be narrowed from the fold. Keep in mind that the fabric is two-folded, so you need to double the measurement taken on one side. Folding the fabric above the shoulder helps you to determine the right shoulder width. Narrowing is done at the seam between shoulder and sleeve.",
+          "instruction-2": "You can also mark the narrowing with a safety pin. Mark the narrowing in the same way by folding the fabric."
         }
       }
     }
@@ -1012,7 +1051,7 @@
     "error": "There was an error. Please try again later."
   },
   "user-dashboard": {
-    "chats": "Chats",
+    "chats": "ShelfCare chat",
     "orders": "Orders",
     "account": "Account",
     "search-chat": "Search chat...",
@@ -1027,7 +1066,7 @@
     "type-message": "Type a message...",
 
     "profile": "Profile",
-    "profile-subtitle": "This information will be used for shipping and billing purposes.",
+    "profile-subtitle": "Here you can edit your account information.",
     "personal-information": "Personal Information",
     "full-name": "Full Name",
     "email-address": "Email Address",
@@ -1044,6 +1083,21 @@
     "order-history": "Order History",
     "order-subtitle": "Check the status of recent orders, manage returns, and make payments.",
     "no-orders": "No orders found",
-    "welcome-message": "Welcome to ShelfCare! \nShare pictures of the items you need repaired or maintained. We'll ask for any necessary details and provide you with a service plan, including pricing. After that, you'll receive available pickup options."
+    "welcome-message": "Welcome to do some ShelfCare! \n\nSend us pictures of the items you want repaired or maintained. We will ask all necessary details and provide you with a service plan with prices. After that, you will be provided with pickup options. \n\nWe are here to answer any questions, so let's chat! \n\nPlease note that we opearate in the Helsinki metropolitan area at the moment"
+  },
+  "order-history": {
+    "title": "Order History",
+    "loading-orders": "Loading orders...",
+    "date-placed": "Date Placed",
+    "order-id": "Order ID",
+    "total-amount": "Total Amount",
+    "pickup-date": "Pickup Date",
+    "return-date": "Return Date",
+    "adjustments": "Adjustments",
+    "service-type": "Service Type",
+    "paid": "Paid",
+    "pay-now": "Pay Now",
+    "all": "All",
+    "unpaid": "Unpaid"
   }
 }

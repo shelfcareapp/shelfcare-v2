@@ -1,24 +1,21 @@
-"use client";
+'use client';
 
-import Layout from "components/common/Layout";
-import React, { useState, useEffect, use, useLayoutEffect } from "react";
-import { sendMessage, listenToChat } from "store/slices/chat-slice";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../../firebase";
-import { useRouter } from "next/navigation";
-import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
-import { FiPaperclip } from "react-icons/fi";
-import { AiOutlineLoading } from "react-icons/ai";
-import { useTranslations } from "next-intl";
-import { useAppDispatch, useAppSelector } from "hooks/store";
-import UserDashboardLeftbar from "components/common/UserDashboardLeftbar";
-import { useChatScroll } from "hooks/use-chat-scroll";
-import ProtectRoute from "components/common/ProtectedRoute";
-import { onSnapshot } from "firebase/firestore"; // Import onSnapshot for real-time updates
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store/store";
-import firebase from "firebase/app";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import Layout from 'components/common/Layout';
+import React, { useState, useEffect } from 'react';
+import { sendMessage, listenToChat } from 'store/slices/chat-slice';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../../firebase';
+import { useRouter } from 'next/navigation';
+import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
+import { FiPaperclip } from 'react-icons/fi';
+import { AiOutlineLoading } from 'react-icons/ai';
+import { useTranslations } from 'next-intl';
+import { useAppDispatch, useAppSelector } from 'hooks/store';
+import UserDashboardLeftbar from 'components/common/UserDashboardLeftbar';
+import { useChatScroll } from 'hooks/use-chat-scroll';
+import ProtectRoute from 'components/common/ProtectedRoute';
+
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 export default function UserEnquiryPage() {
   const [user] = useAuthState(auth);
@@ -26,17 +23,17 @@ export default function UserEnquiryPage() {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { messages, initialLoading } = useAppSelector((state) => state.chat);
-  const [message, setMessage] = useState<string>("");
+  const [message, setMessage] = useState<string>('');
   const [images, setImages] = useState<File[] | null>(null);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const chatRef = useChatScroll(messages);
-  const t = useTranslations("user-dashboard");
+  const t = useTranslations('user-dashboard');
 
   useEffect(() => {
     if (user) {
       dispatch(listenToChat(user.uid));
     } else {
-      router.push("/login");
+      router.push('/login');
     }
   }, [user, dispatch]);
 
@@ -81,17 +78,17 @@ export default function UserEnquiryPage() {
         userId: user?.uid,
         content: message,
         images: imageUrls,
-        sender: user?.uid,
+        sender: user?.uid
       })
     );
 
-    setMessage("");
+    setMessage('');
     setImages(null);
     setImagePreviews([]);
   };
 
   const handleSendOnEnter = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+    if (e.key === 'Enter' && !e.shiftKey) {
       handleSendMessage();
     }
   };
@@ -110,7 +107,7 @@ export default function UserEnquiryPage() {
               <button
                 onClick={() => removeImage(i)}
                 className="absolute top-0 right-0 bg-white rounded-full text-red-500 hover:text-red-700 p-1"
-                style={{ transform: "translate(50%, -50%)" }}
+                style={{ transform: 'translate(50%, -50%)' }}
               >
                 ✕
               </button>
@@ -125,14 +122,14 @@ export default function UserEnquiryPage() {
 
   useEffect(() => {
     if (messages.length === 0 && user) {
-      const adminWelcomeMessage = t("welcome-message");
+      const adminWelcomeMessage = t('welcome-message');
       dispatch(
         sendMessage({
           userId: user.uid,
           content: adminWelcomeMessage,
           images: [],
-          sender: "admin",
-          isAutoReply: true,
+          sender: 'admin',
+          isAutoReply: true
         })
       );
     }
@@ -146,12 +143,12 @@ export default function UserEnquiryPage() {
           <main className="flex-1 flex flex-col bg-white relative h-screen">
             <div
               className="flex-1 flex flex-col justify-between bg-white"
-              style={{ height: "calc(100vh - 100px)" }}
+              style={{ height: 'calc(100vh - 100px)' }}
             >
               <div
                 className="flex-1 overflow-y-auto"
                 ref={chatRef}
-                style={{ maxHeight: "calc(100vh - 150px)" }}
+                style={{ maxHeight: 'calc(100vh - 150px)' }}
               >
                 <div className="flex flex-col w-full">
                   <div className="flex flex-col justify-end bg-gray-50 w-full h-screen">
@@ -168,15 +165,15 @@ export default function UserEnquiryPage() {
                                   key={index}
                                   className={`mb-4 ${
                                     msg.sender === user?.uid
-                                      ? "text-right"
-                                      : "text-left"
+                                      ? 'text-right'
+                                      : 'text-left'
                                   }`}
                                 >
                                   <div
                                     className={`inline-block p-4 rounded-lg shadow max-w-md lg:w-auto $ ${
                                       msg.sender === user?.uid
-                                        ? "bg-primary text-white"
-                                        : "bg-secondary"
+                                        ? 'bg-primary text-white'
+                                        : 'bg-[#FAEDE9]'
                                     }`}
                                   >
                                     {msg.imageUrls &&
@@ -195,8 +192,8 @@ export default function UserEnquiryPage() {
                                     <p
                                       className={
                                         msg.sender === user?.uid
-                                          ? "text-white"
-                                          : "text-gray-900"
+                                          ? 'text-white'
+                                          : 'text-gray-900'
                                       }
                                     >
                                       {msg.content}
@@ -209,7 +206,6 @@ export default function UserEnquiryPage() {
                               ))}
                         </div>
                       )}
-                      ;
                     </div>
                   </div>
                 </div>
@@ -233,18 +229,17 @@ export default function UserEnquiryPage() {
                     type="text"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    placeholder={t("type-message")}
+                    placeholder={t('type-message')}
                     className="flex-1 bg-gray-100 p-2 rounded-lg outline-none"
                     onKeyDown={handleSendOnEnter}
                   />
 
                   <button
-  onClick={handleSendMessage}
-  className="ml-4 bg-primary text-white p-2 rounded-lg cursor-pointer"
->
-  <PaperAirplaneIcon className="h-5 w-5 -rotate-45" />
-</button>
-
+                    onClick={handleSendMessage}
+                    className="ml-4 bg-primary text-white p-2 rounded-lg cursor-pointer"
+                  >
+                    <PaperAirplaneIcon className="h-5 w-5 -rotate-45" />
+                  </button>
                 </div>
               </div>
             </div>
