@@ -36,9 +36,9 @@ export default function ProfilePage() {
   const t = useTranslations('user-dashboard');
 
   const [profileData, setProfileData] = useState<ProfileData>({
-    name: user.displayName,
-    email: user.email,
-    phone: user.phoneNumber,
+    name: user.displayName || '',
+    email: user.email || '',
+    phone: user.phoneNumber || '',
     address: '',
     city: '',
     postalCode: '',
@@ -129,8 +129,6 @@ export default function ProfilePage() {
       setLoading(false);
     }
   };
-
-  console.log('profileData:', profileData);
 
   return (
     <Layout>
