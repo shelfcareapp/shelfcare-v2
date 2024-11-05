@@ -6,25 +6,27 @@ import Layout from 'components/common/Layout';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from 'hooks/store';
-import {
-  fetchOrdersByUserId,
-  updateOrderTimes
-} from 'store/slices/orders-slice';
+import { fetchOrdersByUserId } from 'store/slices/orders-slice';
 import { useTranslations } from 'next-intl';
 import { auth } from '../../../firebase';
 import { Order } from 'types';
 import { formatDateTime } from 'utils/formatDateTime';
+
+const filterStatus = {
+  all: 'All',
+  paid: 'Paid',
+  unpaid: 'Unpaid'
+};
 
 export default function OrdersPage() {
   const [user] = useAuthState(auth);
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { orders, loading } = useAppSelector((state) => state.orders);
-  const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
-  const [isProcessing, setIsProcessing] = useState(false);
-  const t = useTranslations('user-dashboard');
+  const [filter, setFilter] = useState(filterStatus.all);
+  const t = useTranslations('order-history');
 
   useEffect(() => {
     if (user) {
@@ -38,12 +40,11 @@ export default function OrdersPage() {
   }
 
   const filteredOrders = orders.filter((order) => {
-    return (
-      order.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      Object.values(order.services).some((service: any) =>
-        service.name.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    );
+    const matchesFilter =
+      filter === filterStatus.all ||
+      (filter === filterStatus.paid && order.paymentStatus === 'paid') ||
+      (filter === filterStatus.unpaid && order.paymentStatus !== 'paid');
+    return matchesFilter;
   });
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -52,14 +53,6 @@ export default function OrdersPage() {
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  const handlePayment = async (order: any) => {
-    router.push(`/payment?orderId=${order.id}&amount=${order.totalPrice}`);
-  };
-
-  const handleTimeUpdate = (orderId: string, pickupTime, deliveryTime) => {
-    dispatch(updateOrderTimes({ orderId, pickupTime, deliveryTime }));
-  };
-
   return (
     <Layout>
       <UserDashboardLayout>
@@ -67,27 +60,40 @@ export default function OrdersPage() {
           <div className="mx-auto lg:pb-24">
             <div className="max-w-xl mb-8">
               <h1 className="text-2xl font-bold tracking-tight text-primary sm:text-3xl">
-                {t('order-history')}
+                {t('title')}
               </h1>
-              <p className="mt-2 text-sm text-gray-800">
-                {t('orders-subtitle')}
-              </p>
             </div>
 
-            <div className="mt-16">
+            <div className="flex items-center gap-4 mb-6">
+              {Object.values(filterStatus).map((status) => (
+                <button
+                  key={status}
+                  onClick={() => setFilter(status)}
+                  className={`${
+                    filter === status
+                      ? 'bg-primary text-white'
+                      : 'bg-gray-200 text-gray-700'
+                  } px-4 py-2 rounded-md shadow-md hover:bg-primary hover:text-white transition`}
+                >
+                  {t(`${status.toLowerCase()}`)}
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-10">
               <div className="overflow-x-auto">
                 {loading ? (
-                  <p>Loading orders...</p>
+                  <p> {t('loading-orders')}</p>
                 ) : (
                   currentOrders.map((order: Order) => (
                     <div
                       key={order.id}
-                      className="mb-8 rounded-lg border border-gray-200 bg-gray-50 p-6 shadow-sm"
+                      className="mb-8 rounded-lg border border-gray-200 bg-white p-6 shadow-lg hover:shadow-xl transition"
                     >
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-sm">
                         <div>
                           <span className="block font-medium text-gray-700">
-                            Date placed
+                            {t('date-placed')}
                           </span>
                           <time
                             dateTime={order.createdAt as unknown as string}
@@ -100,43 +106,38 @@ export default function OrdersPage() {
                         </div>
                         <div>
                           <span className="block font-medium text-gray-700">
-                            Order ID
+                            {t('order-id')}
                           </span>
                           <p className="text-gray-500">{order.id}</p>
                         </div>
                         <div>
                           <span className="block font-medium text-gray-700">
-                            Total amount
+                            {t('total-amount')}
                           </span>
                           <p className="text-gray-500">€{order.totalPrice}</p>
                         </div>
                       </div>
 
-                      {/* Pick up time and delivery time */}
-                      <div className="mt-6">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                          <div>
-                            <span className="block font-medium text-gray-700">
-                              Pick up time
-                            </span>
-                            <time
-                              dateTime={order.pickupTime}
-                              className="text-gray-500"
-                            >
-                              {formatDateTime(order.pickupTime)}
-                            </time>
-                          </div>
-                          <div>
-                            <span className="block font-medium text-gray-700">
-                              Delivery time
-                            </span>
-                            <time
-                              dateTime={order.deliveryTime}
-                              className="text-gray-500"
-                            >
-                              {formatDateTime(order.deliveryTime)}
-                            </time>
-                          </div>
+                      <div className="mt-6 grid grid-cols-3 sm:grid-cols-3 gap-6">
+                        <div>
+                          <span className="block font-medium text-gray-700 text-sm">
+                            {t('pickup-date')}
+                          </span>
+                          <time className="text-gray-500 text-sm">
+                            {order.pickupTime
+                              ? formatDateTime(order.pickupTime)
+                              : '--'}
+                          </time>
+                        </div>
+                        <div>
+                          <span className="block font-medium text-gray-700 text-sm">
+                            {t('return-date')}
+                          </span>
+                          <time className="text-gray-500  text-sm">
+                            {order.deliveryTime
+                              ? formatDateTime(order.deliveryTime)
+                              : '--'}
+                          </time>
                         </div>
                       </div>
 
@@ -144,9 +145,13 @@ export default function OrdersPage() {
                         <table className="w-full table-auto text-sm">
                           <thead>
                             <tr className="text-gray-700">
-                              <th className="py-2 text-left">Service</th>
                               <th className="py-2 text-left">
-                                Additional Info
+                                {' '}
+                                {t('adjustments')}
+                              </th>
+                              <th className="py-2 text-left">
+                                {' '}
+                                {t('service-type')}
                               </th>
                             </tr>
                           </thead>
@@ -165,21 +170,19 @@ export default function OrdersPage() {
                         </table>
                       </div>
 
-                      {/* Single payment button for the entire order */}
                       <div className="mt-4 text-right">
                         {order.paymentStatus === 'paid' ? (
-                          <span className="text-green-600 font-bold">Paid</span>
+                          <span className="text-green-600 font-semibold">
+                            {t('paid')}
+                          </span>
                         ) : (
                           <button
-                            onClick={() => handlePayment(order)}
-                            className={`${
-                              isProcessing
-                                ? 'bg-gray-400 cursor-not-allowed'
-                                : 'bg-primary'
-                            } text-white px-4 py-2 rounded-md`}
-                            disabled={isProcessing}
+                            onClick={() =>
+                              window.open(order?.paymentLink, '_blank')
+                            }
+                            className="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-dark transition"
                           >
-                            {isProcessing ? 'Processing...' : 'Pay Now'}
+                            {t('pay-now')}
                           </button>
                         )}
                       </div>
@@ -187,7 +190,6 @@ export default function OrdersPage() {
                   ))
                 )}
 
-                {/* Pagination */}
                 <div className="mt-8 flex justify-center">
                   <ul className="flex space-x-2">
                     {Array.from(
@@ -199,11 +201,11 @@ export default function OrdersPage() {
                       <li key={page}>
                         <button
                           onClick={() => paginate(page)}
-                          className={`px-4 py-2 border ${
+                          className={`px-4 py-2 border rounded ${
                             currentPage === page
                               ? 'bg-primary text-white'
                               : 'bg-white text-primary'
-                          }`}
+                          } hover:bg-primary hover:text-white transition`}
                         >
                           {page}
                         </button>

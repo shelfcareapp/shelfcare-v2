@@ -1,93 +1,87 @@
 {
   "header": {
     "price_list": "Hinnasto",
-    "how_it_works": "Kuinka se toimii",
+    "how_it_works": "Kuinka palvelu toimii",
     "measurement_guide": "Mittausopas",
     "order_now": "Tilaa nyt",
     "new_order": "Uusi tilaus",
-    "my_orders": "Omat tilaukset",
-    "my_account": "Oma tili",
+    "my_orders": "Omat tilaukseni",
+    "my_account": "Oma tilini",
     "sign_in": "Kirjaudu sisään"
   },
-
   "footer": {
     "for_customers": "Asiakkaille",
     "price_list": "Hinnasto",
     "measurement_guide": "Mittausopas",
-    "how_it_works": "Kuinka se toimii",
-
+    "how_it_works": "Kuinka palvelu toimii",
     "about_us": "Tietoa meistä",
     "contact_us": "Ota yhteyttä",
     "our_team": "Tiimimme",
-
-    "legal": "Oikeudellinen",
+    "legal": "Ehdot ja tietosuoja",
     "terms_and_conditions": "Käyttöehdot",
     "privacy_policy": "Tietosuojaseloste",
-    "copyright": "©2024 ShelfCare. Kaikki oikeudet pidätetään."
+    "copyright": "©2024 ShelfCare Oy. Kaikki oikeudet pidätetään."
   },
-
   "metadata": {
-    "title": "ShelfCare - Kestävä muoti ja vaatehuolto",
-    "description": "ShelfCare on omistautunut tekemään vaatteiden, kenkien ja asusteiden korjaus- ja huoltopalveluista helpommin saavutettavia. Integroimme nämä palvelut kuluttajien vaatehuoltorutiineihin, edistäen kestävää muodin kulutusta ja henkilökohtaista tyyliä. Laatu korvaa määrän ShelfCaressa, jossa rakkaat vaatteesi ja uniikki tyylisi ovat keskiössä.",
-    "keywords": "ShelfCare, kestävä muoti, vaatehuolto, vaatteiden korjaus, kenkien huolto, asusteiden korjaus, henkilökohtainen tyyli, laatu korvaa määrän, muodin kestävyys"
+    "title": "ShelfCare - Kaikki vaatekaapin korjaus- ja huoltopalvelut",
+    "description": "ShelfCare tekee ompelimo-, suutari- ja pesulapalveluista helppoja ja houkuttelevia. Integroimme vaatekaapin korjaus- ja huoltopalvelut kuluttajien vaatehuoltorutiineihin edistäen kestävää muodin kulutusta ja henkilökohtaista tyyliä. ShelfCaren avulla laatu korvaa määrän ja rakkaat vaatteesi ja uniikki tyylisi ovat keskiössä.",
+    "keywords": "ShelfCare, kestävä muoti, vaatehuolto, vaatteiden korjaus, kenkien huolto, asusteiden korjaus, henkilökohtainen tyyli, laatu korvaa määrän, muodin kestävyys, ompelimo, suutari, pesula, kuivapesu"
   },
-
   "language": {
     "en": "Englanti",
     "fi": "Suomi"
   },
-
   "home": {
     "hero": {
       "title": "Huippuluokan ompelu-, suutari- ja pesulapalvelut pääkaupunkiseudulla",
-      "subtitle": "Tilaa nyt ja tulemme hakemaan tavarasi huoltoon.",
+      "subtitle": "Tilaa nyt ja tulemme hakemaan tavarasi huoltoon ja hoitoon.",
       "cta": "Tilaa nyt"
     },
     "how_it_works": {
-      "title": "Miten palvelu toimii",
+      "title": "Kuinka palvelu toimii?",
       "subtitle": "Aloita näillä helpoilla vaiheilla:",
       "step1": {
-        "title": "Lähetä palvelupyyntö",
-        "description": "Täytä lomake verkkosivullamme aloittaaksesi palvelupyynnön."
+        "title": "Tilaa",
+        "description": "Laita meille viestillä korjaus- ja huoltotarpeesi ja teemme sinulle työsuunnitelman tarpeidesi mukaan."
       },
       "step2": {
-        "title": "Saat tilausvahvistuksen",
-        "description": "Tarvittaessa ennen vahvistusta varmistamme työt palvelun tuottajiltamme"
+        "title": "Valitse hakuaika",
+        "description": "Tulemme hakemaan tavarat huoltoon valitsemanasi ajankohtana."
       },
       "step3": {
-        "title": "Haemme tavarat",
-        "description": "Noudamme tavarasi valitsemanasi ajankohtana"
+        "title": "Nauti huolletuista tavaroistasi",
+        "description": "Palautamme tavarat takaisin valitsemanasi ajankohtana."
       },
       "step4": {
-        "title": "Palvelut suoritetaan",
-        "description": "Tarvittaessa kysymme tarkentavat kysymykset halutun lopputuloksen varmistamiseksi"
+        "title": "",
+        "description": ""
       },
       "step5": {
-        "title": "Palautamme tavarat",
-        "description": "Toimitamme huolletut tavarat takaisin valitsemanasi ajankohtana"
+        "title": "",
+        "description": ""
       }
     },
     "mission-vision": {
-      "title": "Missiomme & Visiomme",
-      "mission": "<b>Missiomme</b> on madaltaa kynnystä käyttää muodin korjaus- ja huoltopalveluita ja tuoda ne osaksi vaatehuoltorutiinejasi ja vastuullista muodin kuluttamista.",
+      "title": "Missiomme & visiomme",
+      "mission": "<b>Missiomme</b> on tehdä muodin korjaus- ja huoltopalveluista helppoja ja houkuttelevia sekä tuoda ne säännölliseksi osaksi vaatehuoltorutiineja ja vastuullista muodin kuluttamista.",
       "vision": "<b>ShelfCare edustaa</b> uutta muotimarkkinaa, jossa laatu korvaa määrän. Trendien ja uuden ostamisen sijaan keskiössä ovat henkilökohtainen oma tyyli ja itselle sopivat rakkaat vaatteet, joista halutaan pitää hyvää huolta."
     },
     "services": {
       "title": "Palvelumme",
       "tailoring": {
         "title": "Ompelimo",
-        "shortDescription": "Täydelliset säädöt vaatteillesi.",
+        "shortDescription": "",
         "description": "Korjauta rikkinäiset ja muokkaa epäsopivat vaatteesi hyvin istuviksi. Saat vaatteillesi lisää käyttökertoja, kun ne tuntuvat päällä mukavalta ja näyttävät huolitelluilta."
       },
       "laundry": {
         "title": "Pesula",
-        "shortDescription": "Pidä vaatteesi puhtaina ja raikkaina.",
-        "description": "Pesulapalvelumme tarjoaa ammattimaisen puhdistuksen vaatteillesi kiinnittäen erityistä huomiota herkkiin kankaisiin. Pidämme vaatteesi raikkaina ja hyvin hoidettuina, jotta ne näyttävät hyviltä pitkään."
+        "shortDescription": "",
+        "description": "Pesetä vaatteesi ammattilaisella. Kiinnittämme erityistä huomiota herkkiin kankaisiin ja pidämme vaatteesi raikkaina ja hyvin hoidettuina, jotta ne näyttävät hyviltä pitkään."
       },
       "cobbler": {
         "title": "Suutari",
-        "shortDescription": "Elvytä suosikkikenkäsi huolella.",
-        "description": "Korjaa, kunnosta ja huolla kenkäsi, laukkusi ja nahkatavarasi. Suutarimme pidentävät tavaroidesi elinikää ja ne kestävät käytössä vuodesta toiseen."
+        "shortDescription": "",
+        "description": "Korjaa ja huollata kenkäsi, laukkusi ja nahkatavarasi suutareillamme. Suutarimme pidentävät tavaroidesi elinikää ja ne kestävät käytössä vuodesta toiseen."
       }
     },
     "order-start": {
@@ -101,10 +95,9 @@
       "error": "Valitse esineen tyyppi jatkaaksesi."
     }
   },
-
   "team": {
-    "title": "Tapaa kaunis tiimimme",
-    "description": "Arvomme ovat yksinkertaisia: uskomme kiertotalouteen, itseilmaisuun ja itsensä hoitamiseen.",
+    "title": "Tässä on ShelfCaren tiimi",
+    "description": "Arvomme ovat yksinkertaisia: uskomme kiertotalouteen, itseilmaisuun ja itsevarmuuteen.",
     "members": {
       "maija": {
         "name": "Maija Tunturi",
@@ -112,7 +105,7 @@
       },
       "ida": {
         "name": "Ida",
-        "role": "CM"
+        "role": "Sisällön tuottaja"
       },
       "petra": {
         "name": "Petra Komppula",
@@ -135,10 +128,10 @@
       "successMessage": "Viesti lähetetty onnistuneesti!",
       "errorMessage": "Virhe viestiä lähetettäessä, yritä myöhemmin.",
       "ariaLabels": {
-        "firstName": "Syötä etunimesi",
-        "lastName": "Syötä sukunimesi",
-        "email": "Syötä sähköpostisi",
-        "phone": "Syötä puhelinnumerosi",
+        "firstName": "Etunimi",
+        "lastName": "Sukunimi",
+        "email": "Sähköposti",
+        "phone": "Puhelinnumero",
         "message": "Kirjoita viestisi tähän",
         "submit": "Lähetä viesti"
       }
@@ -152,27 +145,27 @@
     },
     "ordering": {
       "heading": "2. Palvelun tilaaminen",
-      "content": "Palvelun tilaaminen tapahtuu verkkosivujemme kautta. Asiakas on vastuussa siitä, että tilauslomakkeessa annetut tiedot, kuten mitat ja eritelmät, ovat oikeita ja tarkkoja."
+      "content": "Palvelun tilaaminen tapahtuu verkkosivujemme kautta. Asiakas on vastuussa siitä, että annetut tiedot, kuten mitat, ovat oikeita ja tarkkoja. Pidätämme oikeuden kieltäytyä vastaanottamasta tilausta, mikäli annetut tiedot ovat puutteellisia. Tilaus vahvistetaan, kun asiakas on valinnut tilaukselleen hakuajan."
     },
     "pricing": {
       "heading": "3. Hinnasto ja maksuehdot",
-      "content": "Palvelujen hinnat ovat näkyvillä verkkosivuillamme. Tilatessasi sitoudut maksamaan palvelut hinnaston mukaisesti. Mikäli tuotteelle tehtävän työn laajuus ylittää tilatun palvelun määritelmän, sovimme asiakkaan kanssa palvelusta ja hinnasta erikseen."
+      "content": "Palvelujen hinnat ovat näkyvillä verkkosivuillamme. Tilatessaan asiakas sitoudut maksamaan palvelut hinnaston mukaisesti. Mikäli tuotteelle tehtävän työn laajuus ylittää tilatun palvelun määritelmän, sovimme asiakkaan kanssa palvelusta ja hinnasta erikseen. Asiakas saa maksupyynnön tilausportaaliin tai laskun sähköpostiin, kun palvelun tarjoaja on vastaanottanut työt. Laskulla on seitsemän päivän maksuaika. Pidätämme oikeuden tehdä muutoksia listahintoihin. Muutokset eivät koske jo tehtyjä ja vahvistettuja tilauksia."
     },
     "transport": {
       "heading": "4. Kuljetuspalvelu",
-      "content": "Tarjoamme nouto- ja palautuspalvelun asiakkaan ilmoittamaan osoitteeseen. Veloitamme tilauksen yhteydessä 10 € kuljetus- ja palvelumaksun."
+      "content": "Tarjoamme nouto- ja palautuspalvelun asiakkaan ilmoittamaan osoitteeseen. Veloitamme tilauksen yhteydessä 10 € kuljetus- ja palvelumaksun. Pidätämme oikeuden veloittaa lisämaksun, jos nouto- tai palautusyritys epäonnistuu asiakkaasta johtuvista syistä."
     },
     "handling": {
       "heading": "5. Tuotteiden käsittely ja laatu",
-      "content": "Sitoudumme huolehtimaan asiakkaan tuotteista asianmukaisesti ja käsittelemään ne ammattimaisesti. Jos asiakas ei ole tyytyväinen palvelun laatuun, hänen tulee ilmoittaa siitä meille kirjallisesti 7 päivän kuluessa tuotteiden palautuksesta."
+      "content": "Sitoudumme huolehtimaan asiakkaan tuotteista asianmukaisesti ja käsittelemään ne ammattimaisesti. Jos asiakas ei ole tyytyväinen palvelun laatuun, hänen tulee ilmoittaa siitä meille kirjallisesti 7 päivän kuluessa tuotteiden palautuksesta. \nPyrimme korjaamaan mahdolliset puutteet tai virheet ilman lisämaksua asiakkaalle, mikäli virhe johtuu meistä. Huomioithan, että teemme palvelut antamiesi tietojen perusteella. Jos et ole tyytyväinen lopputulokseen ja palvelu on tehty antamiesi tietojen mukaisesti, voimme sopia lisäkorjauksesta ja lisäkorjauksen hinnasta erikseen."
     },
     "liability": {
       "heading": "6. Vastuunrajoitus",
-      "content": "Emme ole vastuussa tuotteiden mahdollisista vaurioista, jotka johtuvat virheellisistä mitoista tai tiedoista, jotka asiakas on toimittanut."
+      "content": "Emme ole vastuussa tuotteiden mahdollisista vaurioista, jotka johtuvat virheellisistä mitoista tai tiedoista, jotka asiakas on toimittanut ja/tai hyväksynyt. Emme ole vastuussa viivästyksistä tai ongelmista, jotka johtuvat meistä riippumattomista syistä, kuten sääolosuhteista, liikenteen esteistä tai muista vastaavista syistä. Vastuumme rajoittuu aina enintään palvelun hinnan määrään. Haluamme varmistaa, että olet tyytymäinen saamasi palveluun ja pyrimme korjaamaan tilanteen kohtuuden rajoissa niin että olet tyytyväinen lopputulokseen."
     },
     "cancellation": {
       "heading": "7. Peruutusehdot",
-      "content": "Asiakas voi peruuttaa tilauksen ilman kustannuksia ennen kuin tuotteet on noudettu. Jos peruutus tehdään noudon jälkeen mutta ennen työn aloitusta, asiakas on velvollinen maksamaan kuljetuskustannukset."
+      "content": "Asiakas voi peruuttaa tilauksen ilman kustannuksia ennen kuin tuotteet on noudettu. Jos peruutus tehdään noudon jälkeen mutta ennen työn aloitusta, asiakas on velvollinen maksamaan kuljetuskustannukset. Jos työ on jo aloitettu, asiakas on velvollinen maksamaan työstä aiheutuneet kustannusket siihen asti, kun peruutus tehdään."
     },
     "privacy": {
       "heading": "8. Yksityisyys ja tietosuoja",
@@ -187,7 +180,6 @@
       "content": "Jos sinulla on kysyttävää näistä käyttöehdoista, voit ottaa meihin yhteyttä sähköpostitse maija.tunturi@shelfcare.app."
     }
   },
-
   "privacy": {
     "title": "Tietosuojaseloste",
     "section1": {
@@ -228,13 +220,12 @@
     },
     "section10": {
       "heading": "10. Muutokset tietosuojaselosteeseen",
-      "content": "ShelfCare Oy pidättää oikeuden muuttaa tätä tietosuojaselostetta. Muutokset ilmoitetaan ShelfCare Oy:n verkkosivuilla ja/tai asiakkaille sähköpostitse."
+      "content": "ShelfCare Oy pidättää oikeuden muuttaa tätä tietosuojaselostetta. Merkittävät muutokset tietosuojaselosteeseen ilmoitetaan ShelfCare Oy:n nettisivuilla ja/tai asiakkaille sähköpostitse."
     }
   },
-
   "pricing": {
     "title": "Hinnasto",
-    "disclaimer": "Hinnat ovat alkaen-hintoja ja voivat vaihdella palvelun monimutkaisuuden ja käytettyjen materiaalien mukaan. Lisämaksuja saattaa aiheutua.",
+    "disclaimer": "Tästä löydät palveluvalikoimamme ja hinnastomme. Jos et löydä haluamaasi palvelua listalta, laita meille viestiä - löydämme ratkaisun!",
     "categories": {
       "0": "Ompelu",
       "1": "Suutari",
@@ -250,9 +241,18 @@
               "name": "Lahkeen lyhennys",
               "price": "29",
               "subOptions": {
-                "hidden_stitch": { "name": "Piilo-ommel", "price": "+6" },
-                "cuffs": { "name": "Upslaaki", "price": "+6" },
-                "binding_tape": { "name": "Kanttinauha", "price": "+9" }
+                "hidden_stitch": {
+                  "name": "Piilo-ommel",
+                  "price": "+6"
+                },
+                "cuffs": {
+                  "name": "Upslaaki",
+                  "price": "+6"
+                },
+                "binding_tape": {
+                  "name": "Kanttinauha",
+                  "price": "+9"
+                }
               }
             },
             "trouser_leg_narrowing": {
@@ -379,7 +379,10 @@
               "name": "Paikkaus/korjaus saumasta",
               "price": "22",
               "subOptions": {
-                "cardigan_knit_shirt": { "name": "Villapaita", "price": "+7" }
+                "cardigan_knit_shirt": {
+                  "name": "Villapaita",
+                  "price": "+7"
+                }
               }
             }
           }
@@ -391,7 +394,10 @@
               "name": "Hihojen lyhennys",
               "price": "42",
               "subOptions": {
-                "with_lining": { "name": "Vuorillinen", "price": "+14" },
+                "with_lining": {
+                  "name": "Vuorillinen",
+                  "price": "+14"
+                },
                 "slit_sleeves": {
                   "name": "Halkiolliset hihat",
                   "price": "+15"
@@ -402,35 +408,50 @@
               "name": "Hihojen pidennys",
               "price": "55",
               "subOptions": {
-                "with_lining": { "name": "Vuorillinen", "price": "+12" }
+                "with_lining": {
+                  "name": "Vuorillinen",
+                  "price": "+12"
+                }
               }
             },
             "blazers_sleeve_narrowing": {
               "name": "Hihojen kavennus",
               "price": "49",
               "subOptions": {
-                "with_lining": { "name": "Vuorillinen", "price": "+18" }
+                "with_lining": {
+                  "name": "Vuorillinen",
+                  "price": "+18"
+                }
               }
             },
             "waist_narrowing_side_seams": {
               "name": "Vyötärön kavennus sivusaumoista",
               "price": "50",
               "subOptions": {
-                "with_lining": { "name": "Vuorillinen", "price": "+16" }
+                "with_lining": {
+                  "name": "Vuorillinen",
+                  "price": "+16"
+                }
               }
             },
             "blazers_hem_shortening": {
               "name": "Helman lyhennys",
               "price": "55",
               "subOptions": {
-                "with_lining": { "name": "Vuorillinen", "price": "+14" }
+                "with_lining": {
+                  "name": "Vuorillinen",
+                  "price": "+14"
+                }
               }
             },
             "shoulder_narrowing": {
               "name": "Hartian kavennus",
               "price": "74",
               "subOptions": {
-                "with_lining": { "name": "Vuorillinen", "price": "+25" }
+                "with_lining": {
+                  "name": "Vuorillinen",
+                  "price": "+25"
+                }
               }
             },
             "blazers_lining_replacement": {
@@ -442,7 +463,10 @@
               "name": "Paikkaus/korjaus saumasta",
               "price": "22",
               "subOptions": {
-                "with_lining": { "name": "Vuorillinen", "price": "+5" }
+                "with_lining": {
+                  "name": "Vuorillinen",
+                  "price": "+5"
+                }
               }
             }
           }
@@ -454,19 +478,28 @@
               "name": "Helman lyhennys",
               "price": "35",
               "subOptions": {
-                "with_lining": { "name": "Vuorillinen", "price": "+10" },
+                "with_lining": {
+                  "name": "Vuorillinen",
+                  "price": "+10"
+                },
                 "slit_hem": {
                   "name": "Halkiollinen helma",
                   "price": "+15"
                 },
-                "hidden_stitch": { "name": "Piilo-ommel", "price": "+12" }
+                "hidden_stitch": {
+                  "name": "Piilo-ommel",
+                  "price": "+12"
+                }
               }
             },
             "skirt_narrowing_back_seam": {
               "name": "Hameen kavennus takasaumasta",
               "price": "37",
               "subOptions": {
-                "with_lining": { "name": "Vuorillinen", "price": "+10" },
+                "with_lining": {
+                  "name": "Vuorillinen",
+                  "price": "+10"
+                },
                 "zipper_back_seam": {
                   "name": "Vetoketju kyseisessä saumassa",
                   "price": "+17"
@@ -477,7 +510,10 @@
               "name": "Hameen kavennus sivusaumoista",
               "price": "45",
               "subOptions": {
-                "with_lining": { "name": "Vuorillinen", "price": "+10" },
+                "with_lining": {
+                  "name": "Vuorillinen",
+                  "price": "+10"
+                },
                 "zipper_side_seam": {
                   "name": "Vetoketju kyseisessä saumassa",
                   "price": "+17"
@@ -492,7 +528,10 @@
               "name": "Mekon kavennus takasaumasta",
               "price": "39",
               "subOptions": {
-                "with_lining": { "name": "Vuorillinen", "price": "+10" },
+                "with_lining": {
+                  "name": "Vuorillinen",
+                  "price": "+10"
+                },
                 "zipper_back_seam": {
                   "name": "Vetoketju kyseisessä saumassa",
                   "price": "+17"
@@ -503,7 +542,10 @@
               "name": "Mekon kavennus sivusaumoista",
               "price": "49",
               "subOptions": {
-                "with_lining": { "name": "Vuorillinen", "price": "+10" },
+                "with_lining": {
+                  "name": "Vuorillinen",
+                  "price": "+10"
+                },
                 "zipper_back_seam": {
                   "name": "Vetoketju kyseisessä saumassa",
                   "price": "+17"
@@ -543,7 +585,10 @@
               "name": "Paikkaus/korjaus saumasta",
               "price": "22",
               "subOptions": {
-                "with_lining": { "name": "Vuorillinen", "price": "+5" }
+                "with_lining": {
+                  "name": "Vuorillinen",
+                  "price": "+5"
+                }
               }
             }
           }
@@ -555,7 +600,10 @@
               "name": "Hihojen lyhennys",
               "price": "45",
               "subOptions": {
-                "with_lining": { "name": "Vuorillinen", "price": "+14" },
+                "with_lining": {
+                  "name": "Vuorillinen",
+                  "price": "+14"
+                },
                 "slit_sleeves": {
                   "name": "Halkiolliset hihat",
                   "price": "+15"
@@ -566,35 +614,50 @@
               "name": "Hihojen lyhennys ja resorin siirto",
               "price": "65",
               "subOptions": {
-                "with_lining": { "name": "Vuorillinen", "price": "+14" }
+                "with_lining": {
+                  "name": "Vuorillinen",
+                  "price": "+14"
+                }
               }
             },
             "sleeve_shortening_relocation_zipper": {
               "name": "Hihojen lyhennys ja vetoketjun siirto",
               "price": "75",
               "subOptions": {
-                "with_lining": { "name": "Vuorillinen", "price": "+14" }
+                "with_lining": {
+                  "name": "Vuorillinen",
+                  "price": "+14"
+                }
               }
             },
             "coats_sleeve_narrowing": {
               "name": "Hihojen kavennus",
               "price": "52",
               "subOptions": {
-                "with_lining": { "name": "Vuorillinen", "price": "+14" }
+                "with_lining": {
+                  "name": "Vuorillinen",
+                  "price": "+14"
+                }
               }
             },
             "waist_narrowing": {
               "name": "Vyötärön kavennus",
               "price": "58",
               "subOptions": {
-                "with_lining": { "name": "Vuorillinen", "price": "+16" }
+                "with_lining": {
+                  "name": "Vuorillinen",
+                  "price": "+16"
+                }
               }
             },
             "coats_hem_shortening": {
               "name": "Helman lyhennys",
               "price": "62",
               "subOptions": {
-                "with_lining": { "name": "Vuorillinen", "price": "+14" },
+                "with_lining": {
+                  "name": "Vuorillinen",
+                  "price": "+14"
+                },
                 "slit_hem": {
                   "name": "Halkiollinen helma",
                   "price": "+20"
@@ -610,7 +673,10 @@
               "name": "Hartian kavennus",
               "price": "79",
               "subOptions": {
-                "vuorillinen": { "name": "Vuorillinen", "price": "+30" }
+                "vuorillinen": {
+                  "name": "Vuorillinen",
+                  "price": "+30"
+                }
               }
             },
             "coat_zipper_replacement": {
@@ -655,7 +721,10 @@
               "name": "Paikkaus/korjaus saumasta",
               "price": "24",
               "subOptions": {
-                "with_lining": { "name": "Vuorillinen", "price": "+6" }
+                "with_lining": {
+                  "name": "Vuorillinen",
+                  "price": "+6"
+                }
               }
             }
           }
@@ -687,14 +756,20 @@
               "name": "Urheiluhousujen lahkeiden lyhennys",
               "price": "29",
               "subOptions": {
-                "vuorillinen": { "name": "Vuorillinen", "price": "+10" }
+                "vuorillinen": {
+                  "name": "Vuorillinen",
+                  "price": "+10"
+                }
               }
             },
             "sports_pants_waist_narrowing": {
               "name": "Urheiluhousujen vyötärön kavennus",
               "price": "37",
               "subOptions": {
-                "vuorillinen": { "name": "Vuorillinen", "price": "+10" }
+                "vuorillinen": {
+                  "name": "Vuorillinen",
+                  "price": "+10"
+                }
               }
             },
             "sports_pants_zipper_replacement": {
@@ -711,7 +786,10 @@
               "name": "Paikkaus/korjaus saumasta",
               "price": "22",
               "subOptions": {
-                "vuorillinen": { "name": "Vuorillinen", "price": "+6" }
+                "vuorillinen": {
+                  "name": "Vuorillinen",
+                  "price": "+6"
+                }
               }
             }
           }
@@ -733,7 +811,6 @@
         }
       }
     },
-
     "cobbler": {
       "title": "Suutaripalvelut",
       "groups": {
@@ -749,7 +826,10 @@
               "name": "Puolipohjan vaihto",
               "price": "44",
               "subOptions": {
-                "vibram_sole": { "name": "Vibram Sole", "price": "+10" }
+                "vibram_sole": {
+                  "name": "Vibram Sole",
+                  "price": "+10"
+                }
               }
             },
             "shoe_shine": {
@@ -796,7 +876,10 @@
               "name": "Vuorin vaihtaminen",
               "price": "259",
               "subOptions": {
-                "lining_silk": { "name": "Silk Lining", "price": "+30" }
+                "lining_silk": {
+                  "name": "Silk Lining",
+                  "price": "+30"
+                }
               }
             }
           }
@@ -838,7 +921,6 @@
         }
       }
     },
-
     "laundry": {
       "title": "Pesu / Kuivapesu",
       "services": {
@@ -935,46 +1017,85 @@
     "title": "Mittausohjeet",
     "sections": {
       "section-1": {
-        "heading": "Lahkeen/helman/hihan/vyötärön kavennus",
+        "heading": "Lahkeen lyhennys",
         "instructions": {
-          "instruction-1": "Mittaa ja kerro senttimetrimäärä lahkeesta/helmasta/hihansuusta/vyötärönsuusta pisteeseen, mistä haluat kavennuksen aloittaa.",
-          "instruction-2": "Määritä paljonko kavennustarve on.",
-          "instruction-3": "Jos kavennus tehdään vain vyötäröltä, kerro mihin kohtaan kavennus lopetetaan mittaamalla senttimetrimäärä helmasta siihen kohtaan.",
-          "instruction-4": "Vaihtoehtoisesti merkkaa pisteet hakaneuloilla."
+          "instruction-1": "Taita kangas kaksin kerroin reiden kohdalta. Mallaa pituutta kangasta taittamalla niin, että löydät lahkeelle haluamasi pituuden. Mittaa kavennustarve taitoksesta. Huomioithan, että kangas on kaksin kerroin taitoskohdassa, jolloin yhden puolen mittaustulos pitää kertoa kahdella.",
+          "instruction-2": "Kankaan taittaminen reiden kohdalta helpottaa löytämään oikean pituuden. Lyhennys tehdään lahkeensuusta.",
+          "instruction-3": "Voit myös merkata lyhennyksen hakaneulalla. Merkkaa lyhennys samalla tavalla kangasta taittaen.",
+          "instruction-4": ""
         }
       },
       "section-2": {
-        "heading": "Lahkeen/helman/hihan/olkainten lyhennys",
+        "heading": "Lahkeen kavennus",
         "instructions": {
-          "instruction-1": "Mittaa ja kerro, kuinka paljon lyhennetään. Voit myös merkata lyhennyksen hakaneulalla."
+          "instruction-1": "Taita kangas kaksin kerroin lahkeesta. Mittaa paljonko kavennustarve on. Huomioithan, että kangas on kaksin kerroin taitoskohdassa, jolloin yhden puolen mittaustulos pitää kertoa kahdella. Mittaa senttimetrimäärä lahkeensuusta pisteeseen, josta haluat, että kavennus aloitetaan. --- Voit myös merkata kavennukseen hakaneulalla. Merkkaa kavennus lahkeesta ja kohta, mistä kavennus aloitetaan. --- Esim. Lahkeen kavennus halutaan aloittaa kohdasta, joka on 30cm lahkeensuusta ylöspäin. Kavennus lahkeensuussa on 6cm."
         }
       },
       "section-3": {
-        "heading": "Kavennus/levennys nappeja siirtämällä",
+        "heading": "Vyötärön kavennus housuille, farkuille ja hameille",
         "instructions": {
-          "instruction-1": "Mittaa ja kerro kuinka paljon nappeja siirretään kavennusta tai levennystä varten.",
-          "instruction-2": "Vaihtoehtoisesti merkkaa paikka hakaneuloilla, mihin napit siirretään."
+          "instruction-1": "Taita kangas kaksin kerroin vyötäröltä. Mittaa paljonko kavennustarve on. Huomioithan, että kangas on kaksin kerroin taitoskohdassa, jolloin yhden puolen mittaustulos pitää kertoa kahdella. Mittaa senttimetrimäärä vyötärönsuusta pisteeseen, josta haluat, että kavennus aloitetaan. ",
+          "instruction-2": "Voit myös merkata kavennukseen hakaneulalla. Merkkaa kavennus vyötäröltä ja kohta, mistä kavennus aloitetaan. --- Esim. Vyötärön kavennus halutaan aloittaa kohdasta, joka on 10cm vyötärönsuusta alaspäin. Kavennus vyötärönsuussa on 4cm. "
         }
       },
       "section-4": {
         "heading": "Vyötärön levennys",
         "instructions": {
-          "instruction-1": "Mittaa ja kerro mistä kohtaa vyötärön levennys alkaa ja kuinka paljon leveämmäksi halutaan.",
-          "instruction-2": "Varmista, että housujen takasaumassa on tarpeeksi ylimääräistä kangasta levennystä varten."
+          "instruction-1": "Mittaa levennystarve vyötäröllä. Mittaa kohta vyötärönsuusta alaspäin, josta levennys halutaan aloittaa.",
+          "instruction-2": "Esim. Levennys halutaan aloittaa kohdasta, joka on 10cm vyötärönsuusta alaspäin ja levennys vyötärönsuussa on 4cm. --- Varmista, että sisällä housun takasaumassa on tarpeeksi ylimääräistä kangasta levennystä varten."
         }
       },
       "section-5": {
-        "heading": "Hihojen pidennys",
+        "heading": "Hihojen lyhennys",
         "instructions": {
-          "instruction-1": "Mittaa ja kerro, kuinka paljon pidennetään.",
-          "instruction-2": "Varmista, että hihassa on tarpeeksi ylimääräistä kangasta pidennystä varten."
+          "instruction-1": "Taita kangas kaksin kerroin kyynärtaipeen kohdalta. Mallaa pituutta kangasta taittamalla niin, että löydät hihalle haluamasi pituuden. Mittaa kavennustarve taitoksesta. Huomioithan, että kangas on kaksin kerroin taitoskohdassa, jolloin yhden puolen mittaustulos pitää kertoa kahdella. ",
+          "instruction-2": "Kankaan taittaminen kyynärtaipeen kohdalta helpottaa löytämään oikean pituuden. Lyhennys tehdään hihansuusta. --- Voit myös merkata lyhennyksen hakaneulalla. Merkkaa lyhennys samalla tavalla kangasta taittaen."
         }
       },
       "section-6": {
-        "heading": "Paikkaus / korjaus saumasta",
+        "heading": "Vyötärön kavennus paidoille, jakuille, pikkutakeille ja mekoille",
         "instructions": {
-          "instruction-1": "Kerro korjattavan kohdan sijainti.",
-          "instruction-2": "Sauman korjaukset pyritään tekemään huomaamattomasti, mutta täysin huomaamatonta paikkaa ei voida taata."
+          "instruction-1": "Mittaa\na) senttimetrimäärä helmasta pisteeseen, josta haluat, että kavennus aloitetaan.\nb) senttimetrimäärä helmasta pisteeseen, jossa kavennustarve on enimmillään.\nc) senttimetrimäärä, minkä verran haluat enimmillään kaventaa vaatetta. \nd) senttimetrimäärä helmasta pisteeseen, johon haluat, että kavennus päättyy tai jos haluat kaventaa helmaan saakka, mittaa senttimetrimäärä, minkä verran haluat kaventaa vaatetta helmasta. ",
+          "instruction-2": "Voit myös vaihtoehtoisesti merkata pisteet hakaneuloilla.\nKavennus tehdään noudattaen vaatteen alkuperäistä leikkausta. --- Esim. Vyötärön kavennus halutaan aloittaa kohdasta, joka on 30cm paidan helmasta ylöspäin ja lopettaa kohtaan 10cm helmasta ylöspäin. Kavennustarve enimmillään on 4cm ja 4cm kavennus halutaan tehdä kohtaan, joka on 17cm paidan helmasta ylöspäin. Paita kavennetaan aloitus- ja lopetuspisteen väliltä kavennustarpeen 4cm mukaisesti niin, että enimmäiskavennus on kohdassa, joka on paidan helmasta 17cm ylöspäin."
+        }
+      },
+      "section-7": {
+        "heading": "Helman lyhennys paidoille, jakuille ja pikkutakeille",
+        "instructions": {
+          "instruction-1": "Mittaa senttimetrimäärä, paljonko lyhennystarve on. Lyhennys tehdään alkuperäisen muodon mukaisesti. Voit myös vaihtoehtoisesti merkata lyhennystarpeen hakaneuloilla."
+        }
+      },
+      "section-8": {
+        "heading": "Helman lyhennys hameille, mekoille ja pitkille takeille",
+        "instructions": {
+          "instruction-1": "Taita kangas kaksin kerroin reiden kohdalta. Mallaa pituutta kangasta taittamalla niin, että löydät helmalle haluamasi lyhennystarpeen. Mittaa lyhennystarve taitoksesta.",
+          "instruction-2": "Huomioithan, että kangas on kaksin kerroin taitoskohdassa, jolloin yhden puolen mittaustulos pitää kertoa kahdella. Voit myös merkata lyhennyksen hakaneulalla. Merkkaa lyhennys samalla tavalla kangasta taittaen."
+        }
+      },
+      "section-9": {
+        "heading": "Olkainten lyhennys",
+        "instructions": {
+          "instruction-1": "Taita olkain kaksin kerroin. Mittaa olkaimen lyhennystarve. Huomioithan, että kangas on kaksin kerroin taitoskohdassa, jolloin yhden puolen mittaustulos pitää kertoa kahdella."
+        }
+      },
+      "section-10": {
+        "heading": "Hihan pidennys",
+        "instructions": {
+          "instruction-1": "Mittaa senttimetrimäärä, paljonko pidennystarve on. Varmista, että hihan käänteessä on kangasta tarpeeksi pidennystä varten."
+        }
+      },
+      "section-11": {
+        "heading": "Hihan kavennus",
+        "instructions": {
+          "instruction-1": "Taita kangas kaksin kerroin hihansuusta. Mittaa paljonko kavennustarve on. Huomioithan, että kangas on kaksin kerroin taitoskohdassa, jolloin yhden puolen mittaustulos pitää kertoa kahdella. Mittaa senttimetrimäärä hihansuusta pisteeseen, josta haluat, että kavennus aloitetaan. Voit myös merkata kavennukseen hakaneulalla. Merkkaa kavennus hihansuusta ja kohta, mistä kavennus aloitetaan.",
+          "instruction-2": "Esim. Hihan kavennus halutaan aloittaa kohdasta, joka on 30cm hihansuusta ylöspäin. Kavennus hihansuussa on 4cm."
+        }
+      },
+      "section-12": {
+        "heading": "Hartian kavennus",
+        "instructions": {
+          "instruction-1": "Taita kangas kaksin kerroin hartian päältä. Mallaa pituutta kangasta taittamalla niin, että löydät hartialle haluamasi kavennustarpeen. Mittaa kavennustarve taitoksesta. Huomioithan, että kangas on kaksin kerroin taitoskohdassa, jolloin yhden puolen mittaustulos pitää kertoa kahdella. Kankaan taittaminen hartian päältä helpottaa löytämään oikean hartian leveyden. Kavennus tehdään olkapään ja hihan välisestä saumasta.",
+          "instruction-2": "Voit myös merkata kavennuksen hakaneulalla. Merkkaa kavennus samalla tavalla kangasta taittaen."
         }
       }
     }
@@ -983,7 +1104,6 @@
     "back_to_home": "Takaisin etusivulle",
     "back": "Takaisin"
   },
-
   "items-options": {
     "title": "Valitse korjattava vaate",
     "options": {
@@ -1053,7 +1173,7 @@
     "error": "Tapahtui virhe. Yritä myöhemmin uudelleen."
   },
   "user-dashboard": {
-    "chats": "Keskustelut",
+    "chats": "ShelfCare chat",
     "orders": "Tilaukset",
     "account": "Tilini",
     "search-chat": "Etsi keskusteluja...",
@@ -1066,9 +1186,8 @@
     "my-chats": "Keskusteluni",
     "unread-messages": "Lukematonta viestiä",
     "type-message": "Kirjoita viesti...",
-
     "profile": "Profiili",
-    "profile-subtitle": "Tässä voit muokata tietojasi ja asetuksiasi.",
+    "profile-subtitle": "Tässä voit muokata tilisi tietoja.",
     "personal-information": "Henkilökohtaiset tiedot",
     "full-name": "Nimi",
     "email-address": "Sähköpostiosoite",
@@ -1081,10 +1200,24 @@
     "entrance-info": "Sisäänkäyntitiedot",
     "save-changes": "Tallenna muutokset",
     "saving": "Tallennetaan...",
-
     "order-history": "Tilaushistoria",
     "orders-subtitle": "Tässä näet kaikki tilauksesi ja niiden tilan.",
     "no-orders": "Ei tilauksia",
-    "welcome-message": "Tervetuloa ShelfCarelle tekemään muodin huoltoa!  \nLähetä tähän kuvat tuotteista, jotka haluat lähettää huoltoon. Kysymme tarvittavat kysymykset ja annamme sinulle työsuunnitelman ja huollon hinnan. Sitten pääset valitsemaan tavaroiden hakuajan."
+    "welcome-message": "Tervetuloa ShelfCarelle tekemään vaatekaapin huoltoa!  \n\nLähetä tähän kuvat tuotteista, jotka haluat lähettää huoltoon. Kysymme tarvittavat kysymykset ja annamme sinulle työsuunnitelman ja huollon hinnan. Sitten pääset valitsemaan tavaroiden hakuajan.\n\nVastaamme tätä kautta myös kaikkiin kysymyksiisi.\n\nHuomioithan, että toimimme tällä hetkellä pääkaupunkiseudulla."
+  },
+  "order-history": {
+    "title": "Tilaushistoria",
+    "loading-orders": "Ladataan tilauksia...",
+    "date-placed": "Tilauspäivä",
+    "order-id": "Tilaus ID",
+    "total-amount": "Yhteensä",
+    "pickup-date": "Hakupäivä",
+    "return-date": "Palautuspäivä",
+    "adjustments": "Mukautukset",
+    "service-type": "Palvelutyyppi",
+    "paid": "Maksettu",
+    "pay-now": "Maksa nyt",
+    "all": "Kaikki",
+    "unpaid": "Maksamatta"
   }
 }

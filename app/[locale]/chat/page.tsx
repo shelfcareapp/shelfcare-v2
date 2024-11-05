@@ -1,10 +1,14 @@
 'use client';
 
 import Layout from 'components/common/Layout';
-import { useState, useEffect, use, useLayoutEffect } from 'react';
-import { fetchChat, sendMessage } from 'store/slices/chat-slice';
+import React, { useState, useEffect } from 'react';
+import {
+  sendMessage,
+  listenToChat,
+  setWelcomeMessageSent
+} from 'store/slices/chat-slice';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../../../firebase';
+import { auth, db } from '../../../firebase';
 import { useRouter } from 'next/navigation';
 import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { FiPaperclip } from 'react-icons/fi';
@@ -14,26 +18,50 @@ import { useAppDispatch, useAppSelector } from 'hooks/store';
 import UserDashboardLeftbar from 'components/common/UserDashboardLeftbar';
 import { useChatScroll } from 'hooks/use-chat-scroll';
 import ProtectRoute from 'components/common/ProtectedRoute';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { doc, updateDoc } from 'firebase/firestore';
 
 export default function UserEnquiryPage() {
   const [user] = useAuthState(auth);
 
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const { messages, loading } = useAppSelector((state) => state.chat);
+  const { messages, initialLoading, welcomeMessageSent } = useAppSelector(
+    (state) => state.chat
+  );
   const [message, setMessage] = useState<string>('');
   const [images, setImages] = useState<File[] | null>(null);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const chatRef = useChatScroll(messages);
   const t = useTranslations('user-dashboard');
+  const [pickupOption, setPickupOption] = useState<string | null>(null);
+  const [deliveryOption, setDeliveryOption] = useState<string | null>(null);
 
   useEffect(() => {
     if (user) {
-      dispatch(fetchChat(user.uid));
+      dispatch(listenToChat(user.uid));
     } else {
-      router.push('/sign-in');
+      router.push('/login');
     }
-  }, [user, dispatch, router]);
+  }, [user, dispatch]);
+
+  const adminWelcomeMessage = t('welcome-message');
+
+  useEffect(() => {
+    if (!welcomeMessageSent) {
+      dispatch(
+        sendMessage({
+          userId: user?.uid,
+          content: adminWelcomeMessage,
+          sender: 'admin',
+          isAutoReply: true,
+          welcomeMessageSent: true,
+          images: []
+        })
+      );
+      dispatch(setWelcomeMessageSent(true));
+    }
+  }, [welcomeMessageSent]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -53,17 +81,33 @@ export default function UserEnquiryPage() {
     }
   };
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (!message.trim() && (!images || images.length === 0)) return;
+
+    let imageUrls = [];
+    if (images) {
+      const uploadPromises = images.map((image) => {
+        const storage = getStorage();
+        const storageRef = ref(
+          storage,
+          `chat-images/${user.uid}/${Date.now()}-${image.name}`
+        );
+        return uploadBytes(storageRef, image).then((snapshot) =>
+          getDownloadURL(snapshot.ref)
+        );
+      });
+      imageUrls = await Promise.all(uploadPromises);
+    }
 
     dispatch(
       sendMessage({
         userId: user?.uid,
         content: message,
-        images: images || [],
+        images: imageUrls,
         sender: user?.uid
       })
     );
+
     setMessage('');
     setImages(null);
     setImagePreviews([]);
@@ -102,20 +146,39 @@ export default function UserEnquiryPage() {
     return null;
   };
 
-  useEffect(() => {
-    if (messages.length === 0 && user) {
-      const adminWelcomeMessage = t('welcome-message');
-      dispatch(
-        sendMessage({
-          userId: user.uid,
-          content: adminWelcomeMessage,
-          images: [],
-          sender: 'admin',
-          isAutoReply: true
-        })
-      );
+  const handleOptionSelect = (
+    option: { label: string; value: string },
+    type: 'pickup' | 'delivery'
+  ) => {
+    const [pickupTime, deliveryTime] = option.label.split(',');
+
+    if (type === 'pickup') {
+      setPickupOption(pickupTime.replace('Pickup: ', '').trim());
+    } else {
+      setDeliveryOption(deliveryTime.replace('Delivery: ', '').trim());
     }
-  }, [messages, user, dispatch, t]);
+  };
+
+  const handleConfirmSelection = async (orderId: string) => {
+    console.log('order', orderId);
+    if (!pickupOption || !deliveryOption) {
+      alert('Please select both pickup and delivery options.');
+      return;
+    }
+
+    try {
+      const orderDocRef = doc(db, 'orders', orderId);
+      await updateDoc(orderDocRef, {
+        pickupTime: pickupOption,
+        deliveryTime: deliveryOption,
+        status: 'confirmed'
+      });
+      console.log('Order confirmed successfully!');
+    } catch (error) {
+      console.error('Error updating order:', error);
+      // alert('Failed to confirm order. Please try again.');
+    }
+  };
 
   return (
     <ProtectRoute>
@@ -135,60 +198,139 @@ export default function UserEnquiryPage() {
                 <div className="flex flex-col w-full">
                   <div className="flex flex-col justify-end bg-gray-50 w-full h-screen">
                     <div className="p-4 overflow-y-auto" id="chat-container">
-                      {loading ? (
+                      {initialLoading ? (
                         <AiOutlineLoading className="animate-spin text-4xl mx-auto" />
                       ) : (
-                        <>
-                          <div className="flex flex-col">
-                            {messages.length > 0 &&
-                              messages
-                                .filter((msg) => Boolean(msg))
-                                .map((msg, index) => (
+                        <div className="flex flex-col">
+                          {messages.length > 0 &&
+                            messages
+                              .filter((msg) => Boolean(msg))
+                              .map((msg, index) => (
+                                <div
+                                  key={index}
+                                  className={`mb-4 ${
+                                    msg.sender === user?.uid
+                                      ? 'text-right'
+                                      : 'text-left'
+                                  }`}
+                                >
                                   <div
-                                    key={index}
-                                    className={`mb-4 ${
+                                    className={`inline-block p-4 rounded-lg shadow max-w-md lg:w-auto $ ${
                                       msg.sender === user?.uid
-                                        ? 'text-right'
-                                        : 'text-left'
+                                        ? 'bg-primary text-white'
+                                        : 'bg-[#FAEDE9]'
                                     }`}
                                   >
-                                    <div
-                                      className={`inline-block p-4 rounded-lg shadow max-w-md lg:w-auto $ ${
+                                    {msg.imageUrls &&
+                                      msg.imageUrls.length > 0 && (
+                                        <div className="flex flex-wrap gap-2">
+                                          {msg.imageUrls.map((url, i) => (
+                                            <img
+                                              key={i}
+                                              src={url}
+                                              alt={`Sent image ${i + 1}`}
+                                              className="mb-2 rounded-lg max-w-32 max-h-24"
+                                            />
+                                          ))}
+                                        </div>
+                                      )}
+                                    <p
+                                      className={
                                         msg.sender === user?.uid
-                                          ? 'bg-primary text-white'
-                                          : 'bg-secondary'
-                                      }`}
+                                          ? 'text-white'
+                                          : 'text-gray-900'
+                                      }
                                     >
-                                      {msg.imageUrls &&
-                                        msg.imageUrls.length > 0 && (
-                                          <div className="flex flex-wrap gap-2">
-                                            {msg.imageUrls.map((url, i) => (
-                                              <img
-                                                key={i}
-                                                src={url}
-                                                alt={`Sent image ${i + 1}`}
-                                                className="mb-2 rounded-lg max-w-32 max-h-24"
-                                              />
-                                            ))}
+                                      {msg.content}
+                                      {msg.type == 'options' ? (
+                                        <span className="mt-4">
+                                          <div className="space-y-4">
+                                            <div>
+                                              <h3 className="font-medium text-gray-700 mb-2">
+                                                Select Pickup Time:
+                                              </h3>
+                                              <div className="space-x-2">
+                                                {msg.options.map((option) => (
+                                                  <button
+                                                    key={`pickup-${option.value}`}
+                                                    onClick={() =>
+                                                      handleOptionSelect(
+                                                        option,
+                                                        'pickup'
+                                                      )
+                                                    }
+                                                    className={`px-4 py-2 rounded-md border transition-colors ${
+                                                      pickupOption ===
+                                                      option.label
+                                                        .split(',')[0]
+                                                        .replace('Pickup: ', '')
+                                                        .trim()
+                                                        ? 'bg-green-100 border-green-500'
+                                                        : 'bg-white border-gray-300 hover:bg-gray-50'
+                                                    }`}
+                                                  >
+                                                    {option.label.split(',')[0]}
+                                                  </button>
+                                                ))}
+                                              </div>
+                                            </div>
+
+                                            <div>
+                                              <h3 className="font-medium text-gray-700 mb-2">
+                                                Select Delivery Time:
+                                              </h3>
+                                              <div className="space-x-2">
+                                                {msg.options.map((option) => (
+                                                  <button
+                                                    key={`delivery-${option.value}`}
+                                                    onClick={() =>
+                                                      handleOptionSelect(
+                                                        option,
+                                                        'delivery'
+                                                      )
+                                                    }
+                                                    className={`px-4 py-2 rounded-md border transition-colors ${
+                                                      deliveryOption ===
+                                                      option.label
+                                                        .split(',')[1]
+                                                        .replace(
+                                                          'Delivery: ',
+                                                          ''
+                                                        )
+                                                        .trim()
+                                                        ? 'bg-blue-100 border-blue-500'
+                                                        : 'bg-white border-gray-300 hover:bg-gray-50'
+                                                    }`}
+                                                  >
+                                                    {option.label
+                                                      .split(',')[1]
+                                                      .trim()}
+                                                  </button>
+                                                ))}
+                                              </div>
+                                            </div>
+
+                                            <button
+                                              onClick={() =>
+                                                handleConfirmSelection(
+                                                  msg.orderId
+                                                )
+                                              }
+                                              className="mt-4 px-6 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
+                                            >
+                                              Confirm Selection
+                                            </button>
                                           </div>
-                                        )}
-                                      <p
-                                        className={
-                                          msg.sender === user?.uid
-                                            ? 'text-white'
-                                            : 'text-gray-900'
-                                        }
-                                      >
-                                        {msg.content}
-                                      </p>
-                                      <span className="text-xs text-gray-300">
-                                        {msg.time}
-                                      </span>
-                                    </div>
+                                        </span>
+                                      ) : null}
+                                    </p>
+                                    <span className="text-xs text-gray-300">
+                                      {msg.time}
+                                    </span>
                                   </div>
-                                ))}
-                          </div>
-                        </>
+                                </div>
+                              ))}
+                        </div>
                       )}
                     </div>
                   </div>
@@ -220,18 +362,9 @@ export default function UserEnquiryPage() {
 
                   <button
                     onClick={handleSendMessage}
-                    className={`ml-4 bg-primary text-white p-2 rounded-lg ${
-                      loading
-                        ? 'cursor-not-allowed opacity-50'
-                        : 'cursor-pointer'
-                    }`}
-                    disabled={loading}
+                    className="ml-4 bg-primary text-white p-2 rounded-lg cursor-pointer"
                   >
-                    {loading ? (
-                      <AiOutlineLoading className="animate-spin" />
-                    ) : (
-                      <PaperAirplaneIcon className="h-5 w-5 -rotate-45" />
-                    )}
+                    <PaperAirplaneIcon className="h-5 w-5 -rotate-45" />
                   </button>
                 </div>
               </div>

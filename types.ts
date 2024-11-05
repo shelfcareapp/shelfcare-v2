@@ -17,4 +17,5 @@ export interface Order {
   deliveryTime: string;
   totalPrice: number;
   createdAt: Timestamp;
+  paymentLink?: string;
 }

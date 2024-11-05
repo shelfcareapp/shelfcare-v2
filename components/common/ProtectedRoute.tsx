@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useLayoutEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import { auth } from '../../firebase';
 
 interface ProtectRouteProps {
@@ -10,7 +10,6 @@ interface ProtectRouteProps {
 
 export default function ProtectRoute({ children }: ProtectRouteProps) {
   const [user, loading] = useAuthState(auth);
-  console.log('user', user);
   const router = useRouter();
 
   useLayoutEffect(() => {

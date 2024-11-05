@@ -7,6 +7,8 @@ export interface Message {
   imageUrl?: string;
   isRead?: boolean;
   imageUrls?: string[];
+  isAutoReply?: boolean;
+  welcomeMessageSent?: boolean;
 }
 
 export interface Chat {
