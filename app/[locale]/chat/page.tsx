@@ -146,29 +146,32 @@ export default function UserEnquiryPage() {
     return null;
   };
 
-  const handleOptionSelect = (option: { label: string; value: string }, type: 'pickup' | 'delivery') => {
+  const handleOptionSelect = (
+    option: { label: string; value: string },
+    type: 'pickup' | 'delivery'
+  ) => {
     const [pickupTime, deliveryTime] = option.label.split(',');
-    
+
     if (type === 'pickup') {
       setPickupOption(pickupTime.replace('Pickup: ', '').trim());
     } else {
       setDeliveryOption(deliveryTime.replace('Delivery: ', '').trim());
     }
   };
-  
+
   const handleConfirmSelection = async (orderId: string) => {
-    console.log("order",orderId)
+    console.log('order', orderId);
     if (!pickupOption || !deliveryOption) {
       alert('Please select both pickup and delivery options.');
       return;
     }
-  
+
     try {
       const orderDocRef = doc(db, 'orders', orderId);
       await updateDoc(orderDocRef, {
         pickupTime: pickupOption,
         deliveryTime: deliveryOption,
-        status: 'confirmed',
+        status: 'confirmed'
       });
       console.log('Order confirmed successfully!');
     } catch (error) {
@@ -205,16 +208,18 @@ export default function UserEnquiryPage() {
                               .map((msg, index) => (
                                 <div
                                   key={index}
-                                  className={`mb-4 ${msg.sender === user?.uid
-                                    ? 'text-right'
-                                    : 'text-left'
-                                    }`}
+                                  className={`mb-4 ${
+                                    msg.sender === user?.uid
+                                      ? 'text-right'
+                                      : 'text-left'
+                                  }`}
                                 >
                                   <div
-                                    className={`inline-block p-4 rounded-lg shadow max-w-md lg:w-auto $ ${msg.sender === user?.uid
-                                      ? 'bg-primary text-white'
-                                      : 'bg-[#FAEDE9]'
-                                      }`}
+                                    className={`inline-block p-4 rounded-lg shadow max-w-md lg:w-auto $ ${
+                                      msg.sender === user?.uid
+                                        ? 'bg-primary text-white'
+                                        : 'bg-[#FAEDE9]'
+                                    }`}
                                   >
                                     {msg.imageUrls &&
                                       msg.imageUrls.length > 0 && (
@@ -237,56 +242,87 @@ export default function UserEnquiryPage() {
                                       }
                                     >
                                       {msg.content}
-                                      {msg.type == "options" ? (
-  <span className="mt-4">
-    <div className="space-y-4">
-      <div>
-        <h3 className="font-medium text-gray-700 mb-2">Select Pickup Time:</h3>
-        <div className="space-x-2">
-          {msg.options.map((option) => (
-            <button
-              key={`pickup-${option.value}`}
-              onClick={() => handleOptionSelect(option, 'pickup')}
-              className={`px-4 py-2 rounded-md border transition-colors ${
-                pickupOption === option.label.split(',')[0].replace('Pickup: ', '').trim()
-                  ? 'bg-green-100 border-green-500'
-                  : 'bg-white border-gray-300 hover:bg-gray-50'
-              }`}
-            >
-              {option.label.split(',')[0]}
-            </button>
-          ))}
-        </div>
-      </div>
+                                      {msg.type == 'options' ? (
+                                        <span className="mt-4">
+                                          <div className="space-y-4">
+                                            <div>
+                                              <h3 className="font-medium text-gray-700 mb-2">
+                                                Select Pickup Time:
+                                              </h3>
+                                              <div className="space-x-2">
+                                                {msg.options.map((option) => (
+                                                  <button
+                                                    key={`pickup-${option.value}`}
+                                                    onClick={() =>
+                                                      handleOptionSelect(
+                                                        option,
+                                                        'pickup'
+                                                      )
+                                                    }
+                                                    className={`px-4 py-2 rounded-md border transition-colors ${
+                                                      pickupOption ===
+                                                      option.label
+                                                        .split(',')[0]
+                                                        .replace('Pickup: ', '')
+                                                        .trim()
+                                                        ? 'bg-green-100 border-green-500'
+                                                        : 'bg-white border-gray-300 hover:bg-gray-50'
+                                                    }`}
+                                                  >
+                                                    {option.label.split(',')[0]}
+                                                  </button>
+                                                ))}
+                                              </div>
+                                            </div>
 
-      <div>
-        <h3 className="font-medium text-gray-700 mb-2">Select Delivery Time:</h3>
-        <div className="space-x-2">
-          {msg.options.map((option) => (
-            <button
-              key={`delivery-${option.value}`}
-              onClick={() => handleOptionSelect(option, 'delivery')}
-              className={`px-4 py-2 rounded-md border transition-colors ${
-                deliveryOption === option.label.split(',')[1].replace('Delivery: ', '').trim()
-                  ? 'bg-blue-100 border-blue-500'
-                  : 'bg-white border-gray-300 hover:bg-gray-50'
-              }`}
-            >
-              {option.label.split(',')[1].trim()}
-            </button>
-          ))}
-        </div>
-      </div>
-      
-      <button
-        onClick={() => handleConfirmSelection(msg.orderId)}
-        className="mt-4 px-6 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
-      >
-        Confirm Selection
-      </button>
-    </div>
-  </span>
-) : null}
+                                            <div>
+                                              <h3 className="font-medium text-gray-700 mb-2">
+                                                Select Delivery Time:
+                                              </h3>
+                                              <div className="space-x-2">
+                                                {msg.options.map((option) => (
+                                                  <button
+                                                    key={`delivery-${option.value}`}
+                                                    onClick={() =>
+                                                      handleOptionSelect(
+                                                        option,
+                                                        'delivery'
+                                                      )
+                                                    }
+                                                    className={`px-4 py-2 rounded-md border transition-colors ${
+                                                      deliveryOption ===
+                                                      option.label
+                                                        .split(',')[1]
+                                                        .replace(
+                                                          'Delivery: ',
+                                                          ''
+                                                        )
+                                                        .trim()
+                                                        ? 'bg-blue-100 border-blue-500'
+                                                        : 'bg-white border-gray-300 hover:bg-gray-50'
+                                                    }`}
+                                                  >
+                                                    {option.label
+                                                      .split(',')[1]
+                                                      .trim()}
+                                                  </button>
+                                                ))}
+                                              </div>
+                                            </div>
+
+                                            <button
+                                              onClick={() =>
+                                                handleConfirmSelection(
+                                                  msg.orderId
+                                                )
+                                              }
+                                              className="mt-4 px-6 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
+                                            >
+                                              Confirm Selection
+                                            </button>
+                                          </div>
+                                        </span>
+                                      ) : null}
                                     </p>
                                     <span className="text-xs text-gray-300">
                                       {msg.time}

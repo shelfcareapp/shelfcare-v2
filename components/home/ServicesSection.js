@@ -38,7 +38,6 @@ const ServicesSection = () => {
               key={index}
               className="relative overflow-hidden rounded-lg shadow-lg bg-gray-800 flex flex-col"
             >
-              {/* Image as background */}
               <Image
                 src={service.image}
                 alt={t(`home.services.${service.key}.title`)}
@@ -47,8 +46,7 @@ const ServicesSection = () => {
                 className="object-cover w-full h-96"
               />
 
-              {/* Content overlay inside the image */}
-              <div className="absolute inset-0 p-4 bg-gradient-to-t from-black/80 via-black/60 to-transparent top-[45%]">
+              <div className="absolute inset-0 p-4 bg-gradient-to-t from-black/100 via-black/80 to-transparent top-[55%]">
                 <h3 className="text-2xl font-semibold text-white">
                   {t(`home.services.${service.key}.title`)}
                 </h3>
