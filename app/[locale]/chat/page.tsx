@@ -149,8 +149,12 @@ export default function UserEnquiryPage() {
     return null;
   };
 
-  const handleOptionSelect = (option: { label: string; value: string }, type: 'pickup' | 'delivery') => {
+  const handleOptionSelect = (
+    option: { label: string; value: string },
+    type: 'pickup' | 'delivery'
+  ) => {
     const [pickupTime, deliveryTime] = option.label.split(',');
+
 
     if (type === 'pickup') {
       setPickupOption(pickupTime.replace('Pickup: ', '').trim());
@@ -158,6 +162,7 @@ export default function UserEnquiryPage() {
       setDeliveryOption(deliveryTime.replace('Delivery: ', '').trim());
     }
   };
+
 
   const handleConfirmSelection = async (orderId: string) => {
     console.log("order", orderId)
@@ -238,16 +243,18 @@ export default function UserEnquiryPage() {
                               .map((msg, index) => (
                                 <div
                                   key={index}
-                                  className={`mb-4 ${msg.sender === user?.uid
-                                    ? 'text-right'
-                                    : 'text-left'
-                                    }`}
+                                  className={`mb-4 ${
+                                    msg.sender === user?.uid
+                                      ? 'text-right'
+                                      : 'text-left'
+                                  }`}
                                 >
                                   <div
-                                    className={`inline-block p-4 rounded-lg shadow max-w-md lg:w-auto $ ${msg.sender === user?.uid
-                                      ? 'bg-primary text-white'
-                                      : 'bg-[#FAEDE9]'
-                                      }`}
+                                    className={`inline-block p-4 rounded-lg shadow max-w-md lg:w-auto $ ${
+                                      msg.sender === user?.uid
+                                        ? 'bg-primary text-white'
+                                        : 'bg-[#FAEDE9]'
+                                    }`}
                                   >
                                     {msg.imageUrls &&
                                       msg.imageUrls.length > 0 && (
