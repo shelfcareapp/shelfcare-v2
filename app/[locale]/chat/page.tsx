@@ -1,7 +1,7 @@
 'use client';
 
 import Layout from 'components/common/Layout';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   sendMessage,
   listenToChat,
@@ -20,6 +20,7 @@ import { useChatScroll } from 'hooks/use-chat-scroll';
 import ProtectRoute from 'components/common/ProtectedRoute';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { doc, updateDoc } from 'firebase/firestore';
+import { toast } from 'react-toastify';
 
 export default function UserEnquiryPage() {
   const [user] = useAuthState(auth);
@@ -36,6 +37,8 @@ export default function UserEnquiryPage() {
   const t = useTranslations('user-dashboard');
   const [pickupOption, setPickupOption] = useState<string | null>(null);
   const [deliveryOption, setDeliveryOption] = useState<string | null>(null);
+  const [isConfirming, setIsConfirming] = useState(false);
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     if (user) {
@@ -159,13 +162,22 @@ export default function UserEnquiryPage() {
     }
   };
 
+  const confirmationMessage = t('order-confirmation', {
+    pickupOption,
+    deliveryOption
+  })
+    .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
+    .replace(/\n/g, '<br />');
+
+  console.log('confirmationMessage', confirmationMessage);
+
   const handleConfirmSelection = async (orderId: string) => {
     console.log('order', orderId);
     if (!pickupOption || !deliveryOption) {
-      alert('Please select both pickup and delivery options.');
+      toast.error('Please select both pickup and delivery options.');
       return;
     }
-
+    setIsConfirming(true);
     try {
       const orderDocRef = doc(db, 'orders', orderId);
       await updateDoc(orderDocRef, {
@@ -173,11 +185,40 @@ export default function UserEnquiryPage() {
         deliveryTime: deliveryOption,
         status: 'confirmed'
       });
-      console.log('Order confirmed successfully!');
+
+      await dispatch(
+        sendMessage({
+          userId: user?.uid,
+          content: confirmationMessage,
+          images: [],
+          sender: 'Admin'
+        })
+      );
+
+      setIsConfirming(false);
+      toast.success('Order confirmed successfully');
     } catch (error) {
-      console.error('Error updating order:', error);
-      // alert('Failed to confirm order. Please try again.');
+      toast.error('Error updating order');
+      setIsConfirming(false);
     }
+  };
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const disableConfirmAndSelectAfter15Days = () => {
+    const today = new Date();
+    const lastMessage = messages[messages.length - 1];
+    const lastDate = new Date(lastMessage.time);
+    const diff = Math.abs(today.getTime() - lastDate.getTime());
+    const diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+    return diffDays >= 15;
   };
 
   return (
@@ -215,7 +256,7 @@ export default function UserEnquiryPage() {
                                   }`}
                                 >
                                   <div
-                                    className={`inline-block p-4 rounded-lg shadow max-w-md lg:w-auto $ ${
+                                    className={`inline-block p-4 rounded-lg shadow max-w-md lg:w-auto ${
                                       msg.sender === user?.uid
                                         ? 'bg-primary text-white'
                                         : 'bg-[#FAEDE9]'
@@ -241,15 +282,19 @@ export default function UserEnquiryPage() {
                                           : 'text-gray-900'
                                       }
                                     >
-                                      {msg.content}
-                                      {msg.type == 'options' ? (
+                                      <span
+                                        dangerouslySetInnerHTML={{
+                                          __html: msg.content
+                                        }}
+                                      />
+                                      {msg.type === 'options' && (
                                         <span className="mt-4">
                                           <div className="space-y-4">
                                             <div>
                                               <h3 className="font-medium text-gray-700 mb-2">
-                                                Select Pickup Time:
+                                                {t('select-pickup-time')}:
                                               </h3>
-                                              <div className="space-x-2">
+                                              <div className="flex flex-wrap gap-2">
                                                 {msg.options.map((option) => (
                                                   <button
                                                     key={`pickup-${option.value}`}
@@ -259,14 +304,15 @@ export default function UserEnquiryPage() {
                                                         'pickup'
                                                       )
                                                     }
-                                                    className={`px-4 py-2 rounded-md border transition-colors ${
+                                                    disabled={disableConfirmAndSelectAfter15Days()}
+                                                    className={`px-4 py-2 rounded-full transition-colors ${
                                                       pickupOption ===
                                                       option.label
                                                         .split(',')[0]
                                                         .replace('Pickup: ', '')
                                                         .trim()
-                                                        ? 'bg-green-100 border-green-500'
-                                                        : 'bg-white border-gray-300 hover:bg-gray-50'
+                                                        ? 'bg-green-600 text-white'
+                                                        : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
                                                     }`}
                                                   >
                                                     {option.label.split(',')[0]}
@@ -277,9 +323,9 @@ export default function UserEnquiryPage() {
 
                                             <div>
                                               <h3 className="font-medium text-gray-700 mb-2">
-                                                Select Delivery Time:
+                                                {t('select-return-time')}:
                                               </h3>
-                                              <div className="space-x-2">
+                                              <div className="flex flex-wrap gap-2">
                                                 {msg.options.map((option) => (
                                                   <button
                                                     key={`delivery-${option.value}`}
@@ -289,7 +335,7 @@ export default function UserEnquiryPage() {
                                                         'delivery'
                                                       )
                                                     }
-                                                    className={`px-4 py-2 rounded-md border transition-colors ${
+                                                    className={`px-4 py-2 rounded-full transition-colors ${
                                                       deliveryOption ===
                                                       option.label
                                                         .split(',')[1]
@@ -298,9 +344,10 @@ export default function UserEnquiryPage() {
                                                           ''
                                                         )
                                                         .trim()
-                                                        ? 'bg-blue-100 border-blue-500'
-                                                        : 'bg-white border-gray-300 hover:bg-gray-50'
+                                                        ? 'bg-blue-600 text-white'
+                                                        : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
                                                     }`}
+                                                    disabled={disableConfirmAndSelectAfter15Days()}
                                                   >
                                                     {option.label
                                                       .split(',')[1]
@@ -316,15 +363,18 @@ export default function UserEnquiryPage() {
                                                   msg.orderId
                                                 )
                                               }
-                                              className="mt-4 px-6 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
+                                              className="mt-4 px-6 py-2 bg-primary text-white rounded-lg hover:bg-brown-700 transition-colors"
+                                              disabled={disableConfirmAndSelectAfter15Days()}
                                             >
-                                              Confirm Selection
+                                              {isConfirming
+                                                ? t('Confirming...')
+                                                : t('confirm-selection')}
                                             </button>
                                           </div>
                                         </span>
-                                      ) : null}
+                                      )}
                                     </p>
-                                    <span className="text-xs text-gray-300">
+                                    <span className="text-xs text-gray-400 mt-1 block">
                                       {msg.time}
                                     </span>
                                   </div>
@@ -332,6 +382,7 @@ export default function UserEnquiryPage() {
                               ))}
                         </div>
                       )}
+                      <div ref={messagesEndRef} />
                     </div>
                   </div>
                 </div>
