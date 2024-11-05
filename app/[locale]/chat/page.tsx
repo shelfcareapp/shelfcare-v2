@@ -1,7 +1,7 @@
 'use client';
 
 import Layout from 'components/common/Layout';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   sendMessage,
   listenToChat,
@@ -20,6 +20,7 @@ import { useChatScroll } from 'hooks/use-chat-scroll';
 import ProtectRoute from 'components/common/ProtectedRoute';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { doc, updateDoc } from 'firebase/firestore';
+import { toast } from 'react-toastify';
 
 export default function UserEnquiryPage() {
   const [user] = useAuthState(auth);
@@ -36,6 +37,8 @@ export default function UserEnquiryPage() {
   const t = useTranslations('user-dashboard');
   const [pickupOption, setPickupOption] = useState<string | null>(null);
   const [deliveryOption, setDeliveryOption] = useState<string | null>(null);
+  const [isConfirming, setIsConfirming] = useState(false);
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     if (user) {
@@ -148,21 +151,21 @@ export default function UserEnquiryPage() {
 
   const handleOptionSelect = (option: { label: string; value: string }, type: 'pickup' | 'delivery') => {
     const [pickupTime, deliveryTime] = option.label.split(',');
-    
+
     if (type === 'pickup') {
       setPickupOption(pickupTime.replace('Pickup: ', '').trim());
     } else {
       setDeliveryOption(deliveryTime.replace('Delivery: ', '').trim());
     }
   };
-  
+
   const handleConfirmSelection = async (orderId: string) => {
-    console.log("order",orderId)
+    console.log("order", orderId)
     if (!pickupOption || !deliveryOption) {
       alert('Please select both pickup and delivery options.');
       return;
     }
-  
+    setIsConfirming(true)
     try {
       const orderDocRef = doc(db, 'orders', orderId);
       await updateDoc(orderDocRef, {
@@ -170,12 +173,42 @@ export default function UserEnquiryPage() {
         deliveryTime: deliveryOption,
         status: 'confirmed',
       });
+      // Get the chat document reference
+      const chatDocRef = doc(db, 'chats', user?.uid);
+
+      // Send confirmation message from admin
+      const confirmationMessage = `
+      You have chosen pickup time: ${pickupOption}. Make sure you have filled out your account info so that we have your pickup address. 
+      See you then!\n\n\n
+      You will receive a payment request once we have taken the items to the service providers and all potential questions related to the service are settled.\n\n
+      If you need to change pickup time, you can edit it in your orders before 12 hours of your chosen pickup time. If you want to add items to your order, you can do so by sending us a message with pictures. :)`;
+
+      await dispatch(
+        sendMessage({
+          userId: user?.uid,  // This matches your order creation format
+          content: confirmationMessage,
+          images: [],
+          sender: 'Admin',
+          // type: 'confirmation'
+        })
+      );
+
+      setIsConfirming(false);
       console.log('Order confirmed successfully!');
     } catch (error) {
       console.error('Error updating order:', error);
-      // alert('Failed to confirm order. Please try again.');
+      toast.error('Error updating order')
+      setIsConfirming(false);
     }
   };
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   return (
     <ProtectRoute>
@@ -238,55 +271,53 @@ export default function UserEnquiryPage() {
                                     >
                                       {msg.content}
                                       {msg.type == "options" ? (
-  <span className="mt-4">
-    <div className="space-y-4">
-      <div>
-        <h3 className="font-medium text-gray-700 mb-2">Select Pickup Time:</h3>
-        <div className="space-x-2">
-          {msg.options.map((option) => (
-            <button
-              key={`pickup-${option.value}`}
-              onClick={() => handleOptionSelect(option, 'pickup')}
-              className={`px-4 py-2 rounded-md border transition-colors ${
-                pickupOption === option.label.split(',')[0].replace('Pickup: ', '').trim()
-                  ? 'bg-green-100 border-green-500'
-                  : 'bg-white border-gray-300 hover:bg-gray-50'
-              }`}
-            >
-              {option.label.split(',')[0]}
-            </button>
-          ))}
-        </div>
-      </div>
+                                        <span className="mt-4">
+                                          <div className="space-y-4">
+                                            <div>
+                                              <h3 className="font-medium text-gray-700 mb-2">Select Pickup Time:</h3>
+                                              <div className="space-x-2">
+                                                {msg.options.map((option) => (
+                                                  <button
+                                                    key={`pickup-${option.value}`}
+                                                    onClick={() => handleOptionSelect(option, 'pickup')}
+                                                    className={`px-4 py-2 rounded-md border transition-colors ${pickupOption === option.label.split(',')[0].replace('Pickup: ', '').trim()
+                                                        ? 'bg-green-100 border-green-500'
+                                                        : 'bg-white border-gray-300 hover:bg-gray-50'
+                                                      }`}
+                                                  >
+                                                    {option.label.split(',')[0]}
+                                                  </button>
+                                                ))}
+                                              </div>
+                                            </div>
 
-      <div>
-        <h3 className="font-medium text-gray-700 mb-2">Select Delivery Time:</h3>
-        <div className="space-x-2">
-          {msg.options.map((option) => (
-            <button
-              key={`delivery-${option.value}`}
-              onClick={() => handleOptionSelect(option, 'delivery')}
-              className={`px-4 py-2 rounded-md border transition-colors ${
-                deliveryOption === option.label.split(',')[1].replace('Delivery: ', '').trim()
-                  ? 'bg-blue-100 border-blue-500'
-                  : 'bg-white border-gray-300 hover:bg-gray-50'
-              }`}
-            >
-              {option.label.split(',')[1].trim()}
-            </button>
-          ))}
-        </div>
-      </div>
-      
-      <button
-        onClick={() => handleConfirmSelection(msg.orderId)}
-        className="mt-4 px-6 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
-      >
-        Confirm Selection
-      </button>
-    </div>
-  </span>
-) : null}
+                                            <div>
+                                              <h3 className="font-medium text-gray-700 mb-2">Select Delivery Time:</h3>
+                                              <div className="space-x-2">
+                                                {msg.options.map((option) => (
+                                                  <button
+                                                    key={`delivery-${option.value}`}
+                                                    onClick={() => handleOptionSelect(option, 'delivery')}
+                                                    className={`px-4 py-2 rounded-md border transition-colors ${deliveryOption === option.label.split(',')[1].replace('Delivery: ', '').trim()
+                                                        ? 'bg-blue-100 border-blue-500'
+                                                        : 'bg-white border-gray-300 hover:bg-gray-50'
+                                                      }`}
+                                                  >
+                                                    {option.label.split(',')[1].trim()}
+                                                  </button>
+                                                ))}
+                                              </div>
+                                            </div>
+
+                                            <button
+                                              onClick={() => handleConfirmSelection(msg.orderId)}
+                                              className="mt-4 px-6 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
+                                            >
+                                              {isConfirming ? "Loading..." : "Confirm Selection"}
+                                            </button>
+                                          </div>
+                                        </span>
+                                      ) : null}
                                     </p>
                                     <span className="text-xs text-gray-300">
                                       {msg.time}
@@ -296,6 +327,7 @@ export default function UserEnquiryPage() {
                               ))}
                         </div>
                       )}
+                      <div ref={messagesEndRef} />
                     </div>
                   </div>
                 </div>
