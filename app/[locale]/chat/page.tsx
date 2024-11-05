@@ -172,18 +172,16 @@ export default function UserEnquiryPage() {
                               .map((msg, index) => (
                                 <div
                                   key={index}
-                                  className={`mb-4 ${
-                                    msg.sender === user?.uid
-                                      ? 'text-right'
-                                      : 'text-left'
-                                  }`}
+                                  className={`mb-4 ${msg.sender === user?.uid
+                                    ? 'text-right'
+                                    : 'text-left'
+                                    }`}
                                 >
                                   <div
-                                    className={`inline-block p-4 rounded-lg shadow max-w-md lg:w-auto $ ${
-                                      msg.sender === user?.uid
-                                        ? 'bg-primary text-white'
-                                        : 'bg-[#FAEDE9]'
-                                    }`}
+                                    className={`inline-block p-4 rounded-lg shadow max-w-md lg:w-auto $ ${msg.sender === user?.uid
+                                      ? 'bg-primary text-white'
+                                      : 'bg-[#FAEDE9]'
+                                      }`}
                                   >
                                     {msg.imageUrls &&
                                       msg.imageUrls.length > 0 && (
@@ -206,6 +204,38 @@ export default function UserEnquiryPage() {
                                       }
                                     >
                                       {msg.content}
+                                      {
+                                        msg.type == "options" ? (
+                                          <span>
+                                            <br />
+                                            <div>
+                                              <h3>Select Pickup Time:</h3>
+                                              {msg.options.map((option) => (
+                                                <button
+                                                  key={`pickup-${option.value}`}
+                                                  // onClick={() => handleOptionSelect(option, 'pickup')}
+                                                  style={{ backgroundColor: option.value === '2' ? 'lightgreen' : 'white' }}
+                                                >
+                                                  {option.label.split(',')[0]} {/* Display pickup part */}
+                                                </button>
+                                              ))}
+                                            </div>
+
+                                            <div>
+                                              <h3>Select Delivery Time:</h3>
+                                              {msg.options.map((option) => (
+                                                <button
+                                                  key={`delivery-${option.value}`}
+                                                  // onClick={() => handleOptionSelect(option, 'delivery')}
+                                                  style={{ backgroundColor: option.value === '1' ? 'lightblue' : 'white' }}
+                                                >
+                                                  {option.label.split(',')[1]} {/* Display delivery part */}
+                                                </button>
+                                              ))}
+                                            </div>
+                                          </span>
+                                        ) : (null)
+                                      }
                                     </p>
                                     <span className="text-xs text-gray-300">
                                       {msg.time}
