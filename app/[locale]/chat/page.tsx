@@ -155,7 +155,6 @@ export default function UserEnquiryPage() {
   ) => {
     const [pickupTime, deliveryTime] = option.label.split(',');
 
-
     if (type === 'pickup') {
       setPickupOption(pickupTime.replace('Pickup: ', '').trim());
     } else {
@@ -163,46 +162,43 @@ export default function UserEnquiryPage() {
     }
   };
 
+  const confirmationMessage = t('order-confirmation', {
+    pickupOption,
+    deliveryOption
+  })
+    .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
+    .replace(/\n/g, '<br />');
+
+  console.log('confirmationMessage', confirmationMessage);
 
   const handleConfirmSelection = async (orderId: string) => {
-    console.log("order", orderId)
+    console.log('order', orderId);
     if (!pickupOption || !deliveryOption) {
-      alert('Please select both pickup and delivery options.');
+      toast.error('Please select both pickup and delivery options.');
       return;
     }
-    setIsConfirming(true)
+    setIsConfirming(true);
     try {
       const orderDocRef = doc(db, 'orders', orderId);
       await updateDoc(orderDocRef, {
         pickupTime: pickupOption,
         deliveryTime: deliveryOption,
-        status: 'confirmed',
+        status: 'confirmed'
       });
-      // Get the chat document reference
-      const chatDocRef = doc(db, 'chats', user?.uid);
-
-      // Send confirmation message from admin
-      const confirmationMessage = `
-      You have chosen pickup time: ${pickupOption}. Make sure you have filled out your account info so that we have your pickup address. 
-      See you then!\n\n\n
-      You will receive a payment request once we have taken the items to the service providers and all potential questions related to the service are settled.\n\n
-      If you need to change pickup time, you can edit it in your orders before 12 hours of your chosen pickup time. If you want to add items to your order, you can do so by sending us a message with pictures. :)`;
 
       await dispatch(
         sendMessage({
-          userId: user?.uid,  // This matches your order creation format
+          userId: user?.uid,
           content: confirmationMessage,
           images: [],
-          sender: 'Admin',
-          // type: 'confirmation'
+          sender: 'Admin'
         })
       );
 
       setIsConfirming(false);
-      console.log('Order confirmed successfully!');
+      toast.success('Order confirmed successfully');
     } catch (error) {
-      console.error('Error updating order:', error);
-      toast.error('Error updating order')
+      toast.error('Error updating order');
       setIsConfirming(false);
     }
   };
@@ -214,6 +210,16 @@ export default function UserEnquiryPage() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  const disableConfirmAndSelectAfter15Days = () => {
+    const today = new Date();
+    const lastMessage = messages[messages.length - 1];
+    const lastDate = new Date(lastMessage.time);
+    const diff = Math.abs(today.getTime() - lastDate.getTime());
+    const diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+    return diffDays >= 15;
+  };
 
   return (
     <ProtectRoute>
@@ -250,7 +256,7 @@ export default function UserEnquiryPage() {
                                   }`}
                                 >
                                   <div
-                                    className={`inline-block p-4 rounded-lg shadow max-w-md lg:w-auto $ ${
+                                    className={`inline-block p-4 rounded-lg shadow max-w-md lg:w-auto ${
                                       msg.sender === user?.uid
                                         ? 'bg-primary text-white'
                                         : 'bg-[#FAEDE9]'
@@ -276,21 +282,38 @@ export default function UserEnquiryPage() {
                                           : 'text-gray-900'
                                       }
                                     >
-                                      {msg.content}
-                                      {msg.type == "options" ? (
+                                      <span
+                                        dangerouslySetInnerHTML={{
+                                          __html: msg.content
+                                        }}
+                                      />
+                                      {msg.type === 'options' && (
                                         <span className="mt-4">
                                           <div className="space-y-4">
                                             <div>
-                                              <h3 className="font-medium text-gray-700 mb-2">Select Pickup Time:</h3>
-                                              <div className="space-x-2">
+                                              <h3 className="font-medium text-gray-700 mb-2">
+                                                {t('select-pickup-time')}:
+                                              </h3>
+                                              <div className="flex flex-wrap gap-2">
                                                 {msg.options.map((option) => (
                                                   <button
                                                     key={`pickup-${option.value}`}
-                                                    onClick={() => handleOptionSelect(option, 'pickup')}
-                                                    className={`px-4 py-2 rounded-md border transition-colors ${pickupOption === option.label.split(',')[0].replace('Pickup: ', '').trim()
-                                                        ? 'bg-green-100 border-green-500'
-                                                        : 'bg-white border-gray-300 hover:bg-gray-50'
-                                                      }`}
+                                                    onClick={() =>
+                                                      handleOptionSelect(
+                                                        option,
+                                                        'pickup'
+                                                      )
+                                                    }
+                                                    disabled={disableConfirmAndSelectAfter15Days()}
+                                                    className={`px-4 py-2 rounded-full transition-colors ${
+                                                      pickupOption ===
+                                                      option.label
+                                                        .split(',')[0]
+                                                        .replace('Pickup: ', '')
+                                                        .trim()
+                                                        ? 'bg-green-600 text-white'
+                                                        : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                                                    }`}
                                                   >
                                                     {option.label.split(',')[0]}
                                                   </button>
@@ -299,34 +322,59 @@ export default function UserEnquiryPage() {
                                             </div>
 
                                             <div>
-                                              <h3 className="font-medium text-gray-700 mb-2">Select Delivery Time:</h3>
-                                              <div className="space-x-2">
+                                              <h3 className="font-medium text-gray-700 mb-2">
+                                                {t('select-return-time')}:
+                                              </h3>
+                                              <div className="flex flex-wrap gap-2">
                                                 {msg.options.map((option) => (
                                                   <button
                                                     key={`delivery-${option.value}`}
-                                                    onClick={() => handleOptionSelect(option, 'delivery')}
-                                                    className={`px-4 py-2 rounded-md border transition-colors ${deliveryOption === option.label.split(',')[1].replace('Delivery: ', '').trim()
-                                                        ? 'bg-blue-100 border-blue-500'
-                                                        : 'bg-white border-gray-300 hover:bg-gray-50'
-                                                      }`}
+                                                    onClick={() =>
+                                                      handleOptionSelect(
+                                                        option,
+                                                        'delivery'
+                                                      )
+                                                    }
+                                                    className={`px-4 py-2 rounded-full transition-colors ${
+                                                      deliveryOption ===
+                                                      option.label
+                                                        .split(',')[1]
+                                                        .replace(
+                                                          'Delivery: ',
+                                                          ''
+                                                        )
+                                                        .trim()
+                                                        ? 'bg-blue-600 text-white'
+                                                        : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                                                    }`}
+                                                    disabled={disableConfirmAndSelectAfter15Days()}
                                                   >
-                                                    {option.label.split(',')[1].trim()}
+                                                    {option.label
+                                                      .split(',')[1]
+                                                      .trim()}
                                                   </button>
                                                 ))}
                                               </div>
                                             </div>
 
                                             <button
-                                              onClick={() => handleConfirmSelection(msg.orderId)}
-                                              className="mt-4 px-6 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
+                                              onClick={() =>
+                                                handleConfirmSelection(
+                                                  msg.orderId
+                                                )
+                                              }
+                                              className="mt-4 px-6 py-2 bg-primary text-white rounded-lg hover:bg-brown-700 transition-colors"
+                                              disabled={disableConfirmAndSelectAfter15Days()}
                                             >
-                                              {isConfirming ? "Loading..." : "Confirm Selection"}
+                                              {isConfirming
+                                                ? t('Confirming...')
+                                                : t('confirm-selection')}
                                             </button>
                                           </div>
                                         </span>
-                                      ) : null}
+                                      )}
                                     </p>
-                                    <span className="text-xs text-gray-300">
+                                    <span className="text-xs text-gray-400 mt-1 block">
                                       {msg.time}
                                     </span>
                                   </div>
