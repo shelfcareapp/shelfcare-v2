@@ -1203,7 +1203,12 @@
     "order-history": "Tilaushistoria",
     "orders-subtitle": "Tässä näet kaikki tilauksesi ja niiden tilan.",
     "no-orders": "Ei tilauksia",
-    "welcome-message": "Tervetuloa ShelfCarelle tekemään vaatekaapin huoltoa!  \n\nLähetä tähän kuvat tuotteista, jotka haluat lähettää huoltoon. Kysymme tarvittavat kysymykset ja annamme sinulle työsuunnitelman ja huollon hinnan. Sitten pääset valitsemaan tavaroiden hakuajan.\n\nVastaamme tätä kautta myös kaikkiin kysymyksiisi.\n\nHuomioithan, että toimimme tällä hetkellä pääkaupunkiseudulla."
+    "welcome-message": "Tervetuloa ShelfCarelle tekemään vaatekaapin huoltoa!  \n\nLähetä tähän kuvat tuotteista, jotka haluat lähettää huoltoon. Kysymme tarvittavat kysymykset ja annamme sinulle työsuunnitelman ja huollon hinnan. Sitten pääset valitsemaan tavaroiden hakuajan.\n\nVastaamme tätä kautta myös kaikkiin kysymyksiisi.\n\nHuomioithan, että toimimme tällä hetkellä pääkaupunkiseudulla.",
+    "order-confirmation": "Olet valinnut noutoajan: **{pickupOption}** ja toimitusajan: **{deliveryOption}**. Varmista, että olet täyttänyt tilitietosi, jotta meillä on nouto-osoitteesi. Nähdään sitten!\n\nSaat maksupyynnön, kun olemme toimittaneet tavarat palveluntarjoajille ja kaikki palveluun liittyvät kysymykset on käsitelty.\n\nJos sinun täytyy vaihtaa noutoaikaa, voit muokata tilaustasi 12 tuntia ennen valitsemaasi noutoaikaa. Jos haluat lisätä tuotteita tilaukseesi, voit tehdä sen lähettämällä meille viestin kuvineen. 😊",
+    "confirm-selection": "Vahvista valinta",
+    "confirming": "Vahvistetaan...",
+    "select-pickup-time": "Valitse noutoaika",
+    "select-return-time": "Valitse palautusaika"
   },
   "order-history": {
     "title": "Tilaushistoria",
