@@ -39,6 +39,12 @@ export default function UserEnquiryPage() {
   const [deliveryOption, setDeliveryOption] = useState<string | null>(null);
   const [isConfirming, setIsConfirming] = useState(false);
   const messagesEndRef = useRef(null);
+  const [visiblePickupOptions, setVisiblePickupOptions] = useState(3); // Start by showing 3 options
+  const [visibleDeliveryOptions, setVisibleDeliveryOptions] = useState(3);
+
+  // Handle "See More" for pickup and delivery
+  const handleSeeMorePickup = () => setVisiblePickupOptions((prev) => prev + 3);
+  const handleSeeMoreDelivery = () => setVisibleDeliveryOptions((prev) => prev + 3);
 
   useEffect(() => {
     if (user) {
@@ -169,7 +175,7 @@ export default function UserEnquiryPage() {
     .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
     .replace(/\n/g, '<br />');
 
-  console.log('confirmationMessage', confirmationMessage);
+  // console.log('confirmationMessage', confirmationMessage);
 
   const handleConfirmSelection = async (orderId: string) => {
     console.log('order', orderId);
@@ -243,144 +249,120 @@ export default function UserEnquiryPage() {
                         <AiOutlineLoading className="animate-spin text-4xl mx-auto" />
                       ) : (
                         <div className="flex flex-col">
-                          {messages.length > 0 &&
-                            messages
-                              .filter((msg) => Boolean(msg))
-                              .map((msg, index) => (
-                                <div
-                                  key={index}
-                                  className={`mb-4 ${
-                                    msg.sender === user?.uid
-                                      ? 'text-right'
-                                      : 'text-left'
-                                  }`}
-                                >
-                                  <div
-                                    className={`inline-block p-4 rounded-lg shadow max-w-md lg:w-auto ${
-                                      msg.sender === user?.uid
-                                        ? 'bg-primary text-white'
-                                        : 'bg-[#FAEDE9]'
-                                    }`}
-                                  >
-                                    {msg.imageUrls &&
-                                      msg.imageUrls.length > 0 && (
-                                        <div className="flex flex-wrap gap-2">
-                                          {msg.imageUrls.map((url, i) => (
-                                            <img
-                                              key={i}
-                                              src={url}
-                                              alt={`Sent image ${i + 1}`}
-                                              className="mb-2 rounded-lg max-w-32 max-h-24"
-                                            />
-                                          ))}
-                                        </div>
-                                      )}
-                                    <p
-                                      className={
-                                        msg.sender === user?.uid
-                                          ? 'text-white'
-                                          : 'text-gray-900'
-                                      }
-                                    >
-                                      <span
-                                        dangerouslySetInnerHTML={{
-                                          __html: msg.content
-                                        }}
-                                      />
-                                      {msg.type === 'options' && (
-                                        <span className="mt-4">
-                                          <div className="space-y-4">
-                                            <div>
-                                              <h3 className="font-medium text-gray-700 mb-2">
-                                                {t('select-pickup-time')}:
-                                              </h3>
-                                              <div className="flex flex-wrap gap-2">
-                                                {msg.options.map((option) => (
-                                                  <button
-                                                    key={`pickup-${option.value}`}
-                                                    onClick={() =>
-                                                      handleOptionSelect(
-                                                        option,
-                                                        'pickup'
-                                                      )
-                                                    }
-                                                    disabled={disableConfirmAndSelectAfter15Days()}
-                                                    className={`px-4 py-2 rounded-full transition-colors ${
-                                                      pickupOption ===
-                                                      option.label
-                                                        .split(',')[0]
-                                                        .replace('Pickup: ', '')
-                                                        .trim()
-                                                        ? 'bg-green-600 text-white'
-                                                        : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-                                                    }`}
-                                                  >
-                                                    {option.label.split(',')[0]}
-                                                  </button>
-                                                ))}
-                                              </div>
-                                            </div>
-
-                                            <div>
-                                              <h3 className="font-medium text-gray-700 mb-2">
-                                                {t('select-return-time')}:
-                                              </h3>
-                                              <div className="flex flex-wrap gap-2">
-                                                {msg.options.map((option) => (
-                                                  <button
-                                                    key={`delivery-${option.value}`}
-                                                    onClick={() =>
-                                                      handleOptionSelect(
-                                                        option,
-                                                        'delivery'
-                                                      )
-                                                    }
-                                                    className={`px-4 py-2 rounded-full transition-colors ${
-                                                      deliveryOption ===
-                                                      option.label
-                                                        .split(',')[1]
-                                                        .replace(
-                                                          'Delivery: ',
-                                                          ''
-                                                        )
-                                                        .trim()
-                                                        ? 'bg-blue-600 text-white'
-                                                        : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-                                                    }`}
-                                                    disabled={disableConfirmAndSelectAfter15Days()}
-                                                  >
-                                                    {option.label
-                                                      .split(',')[1]
-                                                      .trim()}
-                                                  </button>
-                                                ))}
-                                              </div>
-                                            </div>
-
-                                            <button
-                                              onClick={() =>
-                                                handleConfirmSelection(
-                                                  msg.orderId
-                                                )
-                                              }
-                                              className="mt-4 px-6 py-2 bg-primary text-white rounded-lg hover:bg-brown-700 transition-colors"
-                                              disabled={disableConfirmAndSelectAfter15Days()}
-                                            >
-                                              {isConfirming
-                                                ? t('Confirming...')
-                                                : t('confirm-selection')}
-                                            </button>
-                                          </div>
-                                        </span>
-                                      )}
-                                    </p>
-                                    <span className="text-xs text-gray-400 mt-1 block">
-                                      {msg.time}
-                                    </span>
-                                  </div>
-                                </div>
-                              ))}
+      {messages.length > 0 &&
+        messages
+          .filter((msg) => Boolean(msg))
+          .map((msg, index) => (
+            <div
+              key={index}
+              className={`mb-4 ${
+                msg.sender === user?.uid ? 'text-right' : 'text-left'
+              }`}
+            >
+              <div
+                className={`inline-block p-4 rounded-lg shadow max-w-md lg:w-auto ${
+                  msg.sender === user?.uid ? 'bg-primary text-white' : 'bg-[#FAEDE9]'
+                }`}
+              >
+                {msg.imageUrls && msg.imageUrls.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {msg.imageUrls.map((url, i) => (
+                      <img
+                        key={i}
+                        src={url}
+                        alt={`Sent image ${i + 1}`}
+                        className="mb-2 rounded-lg max-w-32 max-h-24"
+                      />
+                    ))}
+                  </div>
+                )}
+                <p
+                  className={msg.sender === user?.uid ? 'text-white' : 'text-gray-900'}
+                >
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: msg.content,
+                    }}
+                  />
+                  {msg.type === 'options' && (
+                    <span className="mt-4">
+                      <div className="space-y-4">
+                        <div>
+                          <h3 className="font-medium text-gray-700 mb-2">
+                            {t('select-pickup-time')}:
+                          </h3>
+                          <div className="flex flex-wrap gap-2">
+                            {msg.options.slice(0, visiblePickupOptions).map((option) => (
+                              <button
+                                key={`pickup-${option.value}`}
+                                onClick={() => handleOptionSelect(option, 'pickup')}
+                                disabled={disableConfirmAndSelectAfter15Days()}
+                                className={`px-4 py-2 rounded-full transition-colors ${
+                                  pickupOption === option.label.split(',')[0].replace('Pickup: ', '').trim()
+                                    ? 'bg-green-600 text-white'
+                                    : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                                }`}
+                              >
+                                {option.label.split(',')[0]}
+                              </button>
+                            ))}
+                          </div>
+                          {msg.options.length > visiblePickupOptions && (
+                            <button
+                              onClick={handleSeeMorePickup}
+                              className="mt-2 text-primary underline"
+                            >
+                              See More
+                            </button>
+                          )}
                         </div>
+
+                        <div>
+                          <h3 className="font-medium text-gray-700 mb-2">
+                            {t('select-return-time')}:
+                          </h3>
+                          <div className="flex flex-wrap gap-2">
+                            {msg.options.slice(0, visibleDeliveryOptions).map((option) => (
+                              <button
+                                key={`delivery-${option.value}`}
+                                onClick={() => handleOptionSelect(option, 'delivery')}
+                                className={`px-4 py-2 rounded-full transition-colors ${
+                                  deliveryOption === option.label.split(',')[1].replace('Delivery: ', '').trim()
+                                    ? 'bg-blue-600 text-white'
+                                    : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                                }`}
+                                disabled={disableConfirmAndSelectAfter15Days()}
+                              >
+                                {option.label.split(',')[1].trim()}
+                              </button>
+                            ))}
+                          </div>
+                          {msg.options.length > visibleDeliveryOptions && (
+                            <button
+                              onClick={handleSeeMoreDelivery}
+                              className="mt-2 text-primary underline"
+                            >
+                              See More
+                            </button>
+                          )}
+                        </div>
+
+                        <button
+                          onClick={() => handleConfirmSelection(msg.orderId)}
+                          className="mt-4 px-6 py-2 bg-primary text-white rounded-lg hover:bg-brown-700 transition-colors"
+                          disabled={disableConfirmAndSelectAfter15Days()}
+                        >
+                          {isConfirming ? t('Confirming...') : t('confirm-selection')}
+                        </button>
+                      </div>
+                    </span>
+                  )}
+                </p>
+                <span className="text-xs text-gray-400 mt-1 block">{msg.time}</span>
+              </div>
+            </div>
+          ))}
+    </div>
                       )}
                       <div ref={messagesEndRef} />
                     </div>
