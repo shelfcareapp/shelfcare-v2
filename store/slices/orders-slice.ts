@@ -52,7 +52,7 @@ export const updateOrderTimes = createAsyncThunk(
     deliveryTime
   }: {
     orderId: string;
-    pickupTime: string;
+    pickupTime: Date;
     deliveryTime: string;
   }) => {
     const orderRef = doc(db, 'orders', orderId);
@@ -81,9 +81,12 @@ const ordersSlice = createSlice({
       })
       .addCase(updateOrderTimes.fulfilled, (state, action) => {
         const { orderId, pickupTime, deliveryTime } = action.payload;
-        state.orders = state.orders.map((order) =>
-          order.id === orderId ? { ...order, pickupTime, deliveryTime } : order
-        );
+        state.orders = state.orders.map((order) => {
+          if (order.id === orderId) {
+            return { ...order, pickupTime, deliveryTime };
+          }
+          return order as Order;
+        });
       });
   }
 });
