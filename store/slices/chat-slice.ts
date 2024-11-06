@@ -41,8 +41,8 @@ export const sendMessage = createAsyncThunk(
         time: new Date().toLocaleTimeString(),
         imageUrls: images,
         isRead: false,
-        isAutoReply: isAutoReply ?? false, // default to false if undefined
-        welcomeMessageSent: welcomeMessageSent ?? false // default to false if undefined
+        isAutoReply: isAutoReply ?? false,
+        welcomeMessageSent: welcomeMessageSent ?? false
       };
 
       const chatSnap = await getDoc(chatDocRef);
@@ -88,7 +88,7 @@ export const listenToChat = (userId: string) => (dispatch: any) => {
       }
       dispatch(setInitialLoading(false));
     },
-    (error) => {
+    (_error) => {
       toast.error('Error listening to chat updates');
       dispatch(setInitialLoading(false));
     }

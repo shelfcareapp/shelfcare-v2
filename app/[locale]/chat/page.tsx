@@ -40,7 +40,6 @@ export default function UserEnquiryPage() {
   const [deliveryOption, setDeliveryOption] = useState<string | null>(null);
   const [isConfirming, setIsConfirming] = useState(false);
   const messagesEndRef = useRef(null);
-  const [confirmationComplete, setConfirmationComplete] = useState(false);
   const { pickupDates, returnDates } = useTimeOptions();
 
   useEffect(() => {
@@ -181,8 +180,6 @@ export default function UserEnquiryPage() {
       setIsConfirming(false);
     } catch (error) {
       setIsConfirming(false);
-    } finally {
-      setConfirmationComplete(true);
     }
   };
 
