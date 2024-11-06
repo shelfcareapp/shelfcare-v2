@@ -20,7 +20,8 @@ import { useChatScroll } from 'hooks/use-chat-scroll';
 import ProtectRoute from 'components/common/ProtectedRoute';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { doc, updateDoc } from 'firebase/firestore';
-import { toast } from 'react-toastify';
+import { useTimeOptions } from 'hooks/useTimeOptions';
+import { getNextEightDays } from 'utils/dateUtils';
 
 export default function UserEnquiryPage() {
   const [user] = useAuthState(auth);
@@ -39,6 +40,8 @@ export default function UserEnquiryPage() {
   const [deliveryOption, setDeliveryOption] = useState<string | null>(null);
   const [isConfirming, setIsConfirming] = useState(false);
   const messagesEndRef = useRef(null);
+  const [confirmationComplete, setConfirmationComplete] = useState(false);
+  const { pickupDates, returnDates } = useTimeOptions();
 
   useEffect(() => {
     if (user) {
@@ -149,19 +152,6 @@ export default function UserEnquiryPage() {
     return null;
   };
 
-  const handleOptionSelect = (
-    option: { label: string; value: string },
-    type: 'pickup' | 'delivery'
-  ) => {
-    const [pickupTime, deliveryTime] = option.label.split(',');
-
-    if (type === 'pickup') {
-      setPickupOption(pickupTime.replace('Pickup: ', '').trim());
-    } else {
-      setDeliveryOption(deliveryTime.replace('Delivery: ', '').trim());
-    }
-  };
-
   const confirmationMessage = t('order-confirmation', {
     pickupOption,
     deliveryOption
@@ -169,14 +159,7 @@ export default function UserEnquiryPage() {
     .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
     .replace(/\n/g, '<br />');
 
-  console.log('confirmationMessage', confirmationMessage);
-
   const handleConfirmSelection = async (orderId: string) => {
-    console.log('order', orderId);
-    if (!pickupOption || !deliveryOption) {
-      toast.error('Please select both pickup and delivery options.');
-      return;
-    }
     setIsConfirming(true);
     try {
       const orderDocRef = doc(db, 'orders', orderId);
@@ -196,10 +179,10 @@ export default function UserEnquiryPage() {
       );
 
       setIsConfirming(false);
-      toast.success('Order confirmed successfully');
     } catch (error) {
-      toast.error('Error updating order');
       setIsConfirming(false);
+    } finally {
+      setConfirmationComplete(true);
     }
   };
 
@@ -211,15 +194,45 @@ export default function UserEnquiryPage() {
     scrollToBottom();
   }, [messages]);
 
-  const disableConfirmAndSelectAfter15Days = () => {
-    const today = new Date();
-    const lastMessage = messages[messages.length - 1];
-    const lastDate = new Date(lastMessage.time);
-    const diff = Math.abs(today.getTime() - lastDate.getTime());
-    const diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24));
-
-    return diffDays >= 15;
+  const renderPickupOptions = () => {
+    return (
+      <select
+        onChange={(e) => setPickupOption(e.target.value)}
+        className="w-full p-2 rounded-lg border border-gray-200"
+      >
+        <option value="">{t('select-pickup-time')}</option>
+        {pickupDates.map((date) => (
+          <option key={date} value={date}>
+            {date}
+          </option>
+        ))}
+      </select>
+    );
   };
+
+  const renderDeliveryOptions = () => {
+    const deliveryOptions = getNextEightDays(pickupOption, returnDates);
+
+    return (
+      <select
+        onChange={(e) => setDeliveryOption(e.target.value)}
+        className={`
+        w-full p-2 rounded-lg border border-gray-200
+        ${!pickupOption && 'cursor-not-allowed disabled:opacity-70'}
+        `}
+        disabled={!pickupOption}
+      >
+        <option value="">{t('select-return-time')}</option>
+        {deliveryOptions.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    );
+  };
+
+  const disableConfirmationBtn = !pickupOption || !deliveryOption;
 
   return (
     <ProtectRoute>
@@ -291,70 +304,17 @@ export default function UserEnquiryPage() {
                                         <span className="mt-4">
                                           <div className="space-y-4">
                                             <div>
-                                              <h3 className="font-medium text-gray-700 mb-2">
+                                              <span className="font-medium text-gray-700 my-2 text-sm">
                                                 {t('select-pickup-time')}:
-                                              </h3>
-                                              <div className="flex flex-wrap gap-2">
-                                                {msg.options.map((option) => (
-                                                  <button
-                                                    key={`pickup-${option.value}`}
-                                                    onClick={() =>
-                                                      handleOptionSelect(
-                                                        option,
-                                                        'pickup'
-                                                      )
-                                                    }
-                                                    disabled={disableConfirmAndSelectAfter15Days()}
-                                                    className={`px-4 py-2 rounded-full transition-colors ${
-                                                      pickupOption ===
-                                                      option.label
-                                                        .split(',')[0]
-                                                        .replace('Pickup: ', '')
-                                                        .trim()
-                                                        ? 'bg-green-600 text-white'
-                                                        : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-                                                    }`}
-                                                  >
-                                                    {option.label.split(',')[0]}
-                                                  </button>
-                                                ))}
-                                              </div>
+                                              </span>
+                                              {renderPickupOptions()}
                                             </div>
 
                                             <div>
-                                              <h3 className="font-medium text-gray-700 mb-2">
+                                              <span className="font-medium text-gray-700 my-2 text-sm">
                                                 {t('select-return-time')}:
-                                              </h3>
-                                              <div className="flex flex-wrap gap-2">
-                                                {msg.options.map((option) => (
-                                                  <button
-                                                    key={`delivery-${option.value}`}
-                                                    onClick={() =>
-                                                      handleOptionSelect(
-                                                        option,
-                                                        'delivery'
-                                                      )
-                                                    }
-                                                    className={`px-4 py-2 rounded-full transition-colors ${
-                                                      deliveryOption ===
-                                                      option.label
-                                                        .split(',')[1]
-                                                        .replace(
-                                                          'Delivery: ',
-                                                          ''
-                                                        )
-                                                        .trim()
-                                                        ? 'bg-blue-600 text-white'
-                                                        : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-                                                    }`}
-                                                    disabled={disableConfirmAndSelectAfter15Days()}
-                                                  >
-                                                    {option.label
-                                                      .split(',')[1]
-                                                      .trim()}
-                                                  </button>
-                                                ))}
-                                              </div>
+                                              </span>
+                                              {renderDeliveryOptions()}
                                             </div>
 
                                             <button
@@ -363,11 +323,16 @@ export default function UserEnquiryPage() {
                                                   msg.orderId
                                                 )
                                               }
-                                              className="mt-4 px-6 py-2 bg-primary text-white rounded-lg hover:bg-brown-700 transition-colors"
-                                              disabled={disableConfirmAndSelectAfter15Days()}
+                                              className={`mt-4 px-6 py-2 bg-primary text-white rounded-lg hover:bg-brown-700 transition-colors
+                                              ${
+                                                disableConfirmationBtn &&
+                                                'cursor-not-allowed opacity-40'
+                                              }
+                                              `}
+                                              disabled={disableConfirmationBtn}
                                             >
                                               {isConfirming
-                                                ? t('Confirming...')
+                                                ? t('confirming')
                                                 : t('confirm-selection')}
                                             </button>
                                           </div>

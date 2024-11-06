@@ -35,15 +35,15 @@ export const sendMessage = createAsyncThunk(
     try {
       const chatDocRef = doc(db, 'chats', userId);
 
-     const message: Message = {
-  sender,
-  content,
-  time: new Date().toLocaleTimeString(),
-  imageUrls: images,
-  isRead: false,
-  isAutoReply: isAutoReply ?? false, // default to false if undefined
-  welcomeMessageSent: welcomeMessageSent ?? false // default to false if undefined
-};
+      const message: Message = {
+        sender,
+        content,
+        time: new Date().toLocaleTimeString(),
+        imageUrls: images,
+        isRead: false,
+        isAutoReply: isAutoReply ?? false, // default to false if undefined
+        welcomeMessageSent: welcomeMessageSent ?? false // default to false if undefined
+      };
 
       const chatSnap = await getDoc(chatDocRef);
 
@@ -82,7 +82,6 @@ export const listenToChat = (userId: string) => (dispatch: any) => {
         const chatData = doc.data();
         dispatch(updateMessages(chatData.messages || []));
         dispatch(setWelcomeMessageSent(chatData.welcomeMessageSent || false));
-        console.log("---", chatData);
       } else {
         dispatch(updateMessages([]));
         dispatch(setWelcomeMessageSent(false));
@@ -90,7 +89,6 @@ export const listenToChat = (userId: string) => (dispatch: any) => {
       dispatch(setInitialLoading(false));
     },
     (error) => {
-      console.error('Error listening to chat:', error);
       toast.error('Error listening to chat updates');
       dispatch(setInitialLoading(false));
     }

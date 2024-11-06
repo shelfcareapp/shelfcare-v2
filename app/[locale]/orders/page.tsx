@@ -6,11 +6,15 @@ import Layout from 'components/common/Layout';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from 'hooks/store';
-import { fetchOrdersByUserId } from 'store/slices/orders-slice';
+import {
+  fetchOrdersByUserId,
+  updateOrderTimes
+} from 'store/slices/orders-slice';
 import { useTranslations } from 'next-intl';
 import { auth } from '../../../firebase';
 import { Order } from 'types';
 import { formatDateTime } from 'utils/formatDateTime';
+import { useTimeOptions } from 'hooks/useTimeOptions';
 
 const filterStatus = {
   all: 'All',
@@ -27,6 +31,10 @@ export default function OrdersPage() {
   const [itemsPerPage] = useState(5);
   const [filter, setFilter] = useState(filterStatus.all);
   const t = useTranslations('order-history');
+  const [updatedPickupDates, setUpdatedPickupDates] = useState([]);
+  const [updatedReturnDates, setUpdatedReturnDates] = useState([]);
+
+  const { pickupDates, returnDates } = useTimeOptions();
 
   useEffect(() => {
     if (user) {
@@ -52,6 +60,15 @@ export default function OrdersPage() {
   const currentOrders = filteredOrders.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  // pickup date should be modifiable 24 hours before the previous one or if not set.
+  const isPickupDateModifiable = (pickupTime: Date) => {
+    const now = new Date();
+    const previousPickupTime = new Date(pickupTime);
+    const diffInMs = previousPickupTime.getTime() - now.getTime();
+    const diffInHours = diffInMs / (1000 * 60 * 60);
+    return diffInHours > 24 || !pickupTime;
+  };
 
   return (
     <Layout>
@@ -104,6 +121,7 @@ export default function OrdersPage() {
                             )}
                           </time>
                         </div>
+
                         <div>
                           <span className="block font-medium text-gray-700">
                             {t('order-id')}
@@ -119,16 +137,48 @@ export default function OrdersPage() {
                       </div>
 
                       <div className="mt-6 grid grid-cols-3 sm:grid-cols-3 gap-6">
-                        <div>
-                          <span className="block font-medium text-gray-700 text-sm">
-                            {t('pickup-date')}
-                          </span>
-                          <time className="text-gray-500 text-sm">
-                            {order.pickupTime
-                              ? formatDateTime(order.pickupTime)
-                              : '--'}
-                          </time>
-                        </div>
+                        {isPickupDateModifiable(new Date(order.pickupTime)) ? (
+                          <div>
+                            <span className="block font-medium text-gray-700 text-sm">
+                              {t('pickup-date')}
+                            </span>
+                            <select
+                              value={order.pickupTime}
+                              onChange={(e) => {
+                                const pickupTime = new Date(e.target.value);
+                                dispatch(
+                                  updateOrderTimes({
+                                    orderId: order.id,
+                                    pickupTime,
+                                    deliveryTime: order.deliveryTime
+                                  })
+                                );
+                              }}
+                              className="block w-full mt-2 px-2 py-1 border rounded-md text-gray-500"
+                            >
+                              <option value="">—</option>
+                              {pickupDates.map((date) => (
+                                <option
+                                  key={date.date.toISOString()}
+                                  value={date.date.toISOString()}
+                                >
+                                  {formatDateTime(date.date.toISOString())}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        ) : (
+                          <div>
+                            <span className="block font-medium text-gray-700 text-sm">
+                              {t('pickup-date')}
+                            </span>
+                            <time className="text-gray-500 text-sm">
+                              {order.pickupTime
+                                ? formatDateTime(order.pickupTime)
+                                : '--'}
+                            </time>
+                          </div>
+                        )}
                         <div>
                           <span className="block font-medium text-gray-700 text-sm">
                             {t('return-date')}

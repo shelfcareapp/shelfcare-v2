@@ -24,7 +24,7 @@ const HowItWorksSection = () => {
   ];
 
   return (
-    <section className="py-16 px-0 bg-gradient-to-br from-white via-gray-50 to-white">
+    <section className="py-16 px-10 md:px-4 bg-gradient-to-br from-white via-gray-50 to-white">
       <div className="w-full mx-0">
         <h2 className="text-4xl md:text-5xl font-bold text-primary mb-8 text-center">
           {t('home.how_it_works.title')}
@@ -35,7 +35,7 @@ const HowItWorksSection = () => {
               key={index}
               className="flex justify-center w-full md:w-1/5 p-2"
             >
-              <div className="flex flex-col justify-between items-center h-full p-4 bg-white shadow-lg rounded-lg transition-transform transform hover:scale-105">
+              <div className="flex flex-col justify-between items-center h-full p-4 bg-white shadow-lg rounded-lg">
                 <div className="text-5xl font-bold text-primary mb-2 flex-shrink-0 leading-none">
                   {step.number}
                 </div>
