@@ -6,7 +6,7 @@ import { useState } from 'react';
 import AuthLayout from 'components/common/AuthLayout';
 import { toast } from 'react-toastify';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../../firebase';
+import { auth } from '../../firebase';
 
 export default function SignInPage() {
   const router = useRouter();
