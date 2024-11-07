@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import AuthLayout from 'components/common/AuthLayout';
-import { auth } from '../../../firebase';
+import { auth } from '../../firebase';
 import { toast } from 'react-toastify';
 import { sendPasswordResetEmail } from 'firebase/auth';
 

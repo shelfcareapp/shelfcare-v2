@@ -5,7 +5,7 @@ import UserDashboardLayout from 'components/common/UserDashboardLayout';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { doc, getDoc, Timestamp, updateDoc } from 'firebase/firestore';
-import { auth, db } from '../../../firebase';
+import { auth, db } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';

@@ -11,7 +11,7 @@ import {
   updateOrderTimes
 } from 'store/slices/orders-slice';
 import { useTranslations } from 'next-intl';
-import { auth } from '../../../firebase';
+import { auth } from '../../firebase';
 import { Order } from 'types';
 import { formatDateTime } from 'utils/formatDateTime';
 import { useTimeOptions } from 'hooks/useTimeOptions';

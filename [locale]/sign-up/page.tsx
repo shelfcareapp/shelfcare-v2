@@ -6,7 +6,7 @@ import AuthLayout from 'components/common/AuthLayout';
 import { toast } from 'react-toastify';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
-import { auth, db } from '../../../firebase';
+import { auth, db } from '../../firebase';
 import { useState } from 'react';
 
 export default function SignUpPage() {
