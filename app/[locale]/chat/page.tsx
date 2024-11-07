@@ -68,8 +68,6 @@ export default function UserEnquiryPage() {
     [key: string]: TimeOptions[];
   }>({});
 
-  const [yesOption, noOption] = useState<{ [key: string]: string }>({});
-
   useEffect(() => {
     if (user) {
       dispatch(listenToChat(user.uid));
@@ -375,6 +373,7 @@ export default function UserEnquiryPage() {
                                         dangerouslySetInnerHTML={{
                                           __html: msg.content
                                         }}
+                                        className="text-left"
                                       />
                                       {msg.type === 'options' && (
                                         <span className="mt-4">
