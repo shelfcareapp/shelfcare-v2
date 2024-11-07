@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { CiUser } from 'react-icons/ci';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -13,8 +13,14 @@ import LanguageSwitcher from './LanguageSwitcher';
 import { toast } from 'react-toastify';
 import { FaInstagramSquare } from 'react-icons/fa';
 import { AiFillTikTok } from 'react-icons/ai';
+import { useAppSelector, useAppDispatch } from 'hooks/store';
+import {
+  markMessageAsRead,
+  setHasNewNotification
+} from 'store/slices/chat-slice';
 
 const Header = () => {
+  const { hasNewNotification } = useAppSelector((state) => state.chat);
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const pathname = usePathname();
@@ -22,6 +28,9 @@ const Header = () => {
   const router = useRouter();
   const { user } = useSession();
   const dropdownRef = useRef(null);
+  const route = usePathname();
+  const dispatch = useAppDispatch();
+  const [not, setNot] = useState(false);
 
   const handleOrderNow = () => {
     if (!user) {
@@ -39,6 +48,22 @@ const Header = () => {
       toast.error('Failed to sign out');
     }
   };
+
+  const handleChatClick = () => {
+    dispatch(setHasNewNotification(false)); // Clear notification after click
+    router.push('/chat');
+  };
+
+  useEffect(() => {
+    const data = localStorage.getItem('not') === true;
+    setNot(data);
+    if (route == '/chat') {
+      dispatch(markMessageAsRead(user.uid));
+      localStorage.setItem('not', 'false');
+    }
+  }, [route, dispatch]);
+
+  const showNotificationBadge = hasNewNotification || not;
 
   return (
     <header className="border-b-[0.5px] sticky top-0 bg-white z-50">
@@ -69,16 +94,26 @@ const Header = () => {
 
           {user ? (
             <div className="relative" ref={dropdownRef}>
-              <button onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+              <button
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="relative p-1 border -base-100 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 transition-colors duration-200"
+              >
                 <CiUser className="text-primary" size={28} />
+                {showNotificationBadge && (
+                  <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white" />
+                )}
               </button>
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg py-2">
                   <Link
                     href="/chat"
-                    className="block px-4 py-2 text-primary hover:bg-gray-100"
+                    onClick={handleChatClick}
+                    className="relative block px-4 py-2 text-primary hover:bg-gray-100 transition-colors duration-200"
                   >
                     {t('header.new_order')}
+                    {showNotificationBadge && (
+                      <span className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white" />
+                    )}
                   </Link>
                   <Link
                     href="/orders"
@@ -119,8 +154,11 @@ const Header = () => {
         <div className="md:hidden flex items-center">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="text-primary focus:outline-none"
+            className="text-primary focus:outline-none relative p-1 transition-colors duration-200"
           >
+            {showNotificationBadge && (
+              <span className="absolute top-0 left-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white" />
+            )}
             <svg
               className="w-6 h-6"
               fill="none"

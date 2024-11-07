@@ -701,37 +701,139 @@
     },
 
     "cobbler": {
-      "title": "Cobbler services",
+      "title": "Cobbler Services",
       "groups": {
         "boots": {
           "title": "Boots",
           "services": {
-            "heel_replacement": {
-              "name": "Heel replacement",
+            "heel_replacement_small": {
+              "name": "Heel replacement, Ø less than 1cm",
               "price": "28",
+              "subOptions": {}
+            },
+            "heel_replacement_medium": {
+              "name": "Heel replacement, Ø less than 5cm",
+              "price": "34",
+              "subOptions": {}
+            },
+            "heel_replacement_large": {
+              "name": "Heel replacement, Ø more than 5cm",
+              "price": "39",
+              "subOptions": {}
+            },
+            "heel_replacement_thick": {
+              "name": "Thick heel replacement",
+              "price": "45",
+              "subOptions": {}
+            },
+            "heel_relining": {
+              "name": "Heel relining + new heel caps",
+              "price": "86",
+              "subOptions": {}
+            },
+            "heel_attachment": {
+              "name": "Heel attachment per piece",
+              "price": "32",
               "subOptions": {}
             },
             "sole_replacement": {
               "name": "Sole replacement",
               "price": "44",
               "subOptions": {
-                "vibram_sole": { "name": "Vibram sole", "price": "+10" }
+                "leather_sole": {
+                  "name": "Leather sole",
+                  "price": "+8"
+                },
+                "louboutin_sole": {
+                  "name": "Louboutin/Maison Margiela sole",
+                  "price": "+25"
+                }
               }
             },
-            "shoe_shine": {
-              "name": "Shoe Shine",
-              "price": "15",
+            "sole_replacement_boots": {
+              "name": "Sole replacement for boots",
+              "price": "46",
               "subOptions": {}
             },
-            "leather_conditioning": {
-              "name": "Leather Conditioning",
-              "price": "20",
+            "toe_piece_replacement": {
+              "name": "Toe piece replacement",
+              "price": "29",
+              "subOptions": {}
+            },
+            "tennis_shoe_resole": {
+              "name": "Tennis shoe resole",
+              "price": "109",
+              "subOptions": {}
+            },
+            "converse_resole": {
+              "name": "Converse resole",
+              "price": "138",
+              "subOptions": {}
+            },
+            "dr_martens_resole": {
+              "name": "Dr. Martens sole replacement",
+              "price": "109",
+              "subOptions": {}
+            },
+            "single_shoe_glue": {
+              "name": "Single shoe sole gluing",
+              "price": "23",
+              "subOptions": {}
+            },
+            "pair_shoe_glue": {
+              "name": "Pair of shoes sole gluing",
+              "price": "40",
+              "subOptions": {}
+            },
+            "inner_lining_repair": {
+              "name": "Inner lining repair",
+              "price": "29",
+              "subOptions": {}
+            },
+            "side_patch": {
+              "name": "Side patch",
+              "price": "37",
+              "subOptions": {}
+            },
+            "upper_patch": {
+              "name": "Upper patch",
+              "price": "23",
+              "subOptions": {}
+            },
+            "zipper_replacement_short_boots": {
+              "name": "Zipper replacement for ankle boots",
+              "price": "58",
+              "subOptions": {}
+            },
+            "zipper_replacement_tall_boots": {
+              "name": "Zipper replacement for tall boots",
+              "price": "75",
+              "subOptions": {}
+            },
+            "shoe_cleaning": {
+              "name": "Shoe cleaning and care",
+              "price": "25",
+              "subOptions": {}
+            },
+            "sneaker_cleaning": {
+              "name": "Sneaker cleaning and care",
+              "price": "75",
+              "subOptions": {}
+            },
+            "deep_leather_shoe_cleaning": {
+              "name": "Deep cleaning and care for leather shoes",
+              "price": "65",
+              "subOptions": {}
+            },
+            "premium_leather_shoe_cleaning": {
+              "name": "Premium deep cleaning for leather shoes",
+              "price": "75",
               "subOptions": {}
             }
           }
         },
         "leather_jackets": {
-          "title": "Leather jackets",
+          "title": "Leather Jackets",
           "services": {
             "shortening_of_sleeves": {
               "name": "Sleeve shortening",
@@ -739,8 +841,13 @@
               "subOptions": {}
             },
             "shortening_sleeves_moving_elastic": {
-              "name": "Sleeve shortening with relocation of welt",
+              "name": "Sleeve shortening with welt relocation",
               "price": "75",
+              "subOptions": {}
+            },
+            "shortening_sleeves_with_zipper": {
+              "name": "Sleeve shortening with zipper relocation",
+              "price": "95",
               "subOptions": {}
             },
             "narrowing_leather_jacket": {
@@ -752,20 +859,40 @@
               "name": "Zipper replacement",
               "price": "89",
               "subOptions": {
-                "metal_zipper": { "name": "Metal ipper", "price": "+8" }
+                "metal_zipper": {
+                  "name": "Metal zipper",
+                  "price": "+8"
+                },
+                "long_zipper": {
+                  "name": "Length over knee",
+                  "price": "+45"
+                }
               }
+            },
+            "motorcycle_jacket_zipper_replacement": {
+              "name": "Motorcycle jacket zipper replacement",
+              "price": "149",
+              "subOptions": {}
             },
             "changing_lining": {
               "name": "Lining replacement",
               "price": "259",
               "subOptions": {
-                "lining_silk": { "name": "Silk Lining", "price": "+30" }
+                "lining_long": {
+                  "name": "Length over knee",
+                  "price": "+70"
+                }
               }
+            },
+            "deep_cleaning": {
+              "name": "Deep cleaning for leather jacket",
+              "price": "92",
+              "subOptions": {}
             }
           }
         },
         "leather_pants": {
-          "title": "Leather pants",
+          "title": "Leather Pants",
           "services": {
             "leg_shortening": {
               "name": "Leg shortening",
@@ -781,21 +908,111 @@
               "name": "Zipper replacement (thin leather)",
               "price": "49",
               "subOptions": {
-                "metal_zipper": { "name": "Metal zipper", "price": "+8" }
+                "metal_zipper": {
+                  "name": "Metal zipper",
+                  "price": "+8"
+                }
               }
             },
             "zipper_replacement_thick_leather": {
               "name": "Zipper replacement (thick leather)",
               "price": "59",
               "subOptions": {
-                "metal_zipper": { "name": "Metal zipper", "price": "+8" }
+                "metal_zipper": {
+                  "name": "Metal zipper",
+                  "price": "+8"
+                }
               }
+            }
+          }
+        },
+        "bags": {
+          "title": "Bags",
+          "services": {
+            "zipper_replacement_short": {
+              "name": "Zipper replacement (zipper less than 30cm)",
+              "price": "50",
+              "subOptions": {
+                "leather_bag": {
+                  "name": "Leather bag",
+                  "price": "+15"
+                }
+              }
+            },
+            "zipper_replacement_long": {
+              "name": "Zipper replacement (zipper more than 30cm)",
+              "price": "79",
+              "subOptions": {
+                "leather_bag": {
+                  "name": "Leather bag",
+                  "price": "+25"
+                }
+              }
+            },
+            "inner_zipper_replacement": {
+              "name": "Inner zipper replacement for lined bag",
+              "price": "29",
+              "subOptions": {
+                "metal_zipper": {
+                  "name": "Metal zipper",
+                  "price": "+8"
+                }
+              }
+            },
+            "backpack_zipper_replacement": {
+              "name": "Backpack zipper replacement",
+              "price": "59",
+              "subOptions": {
+                "metal_zipper": {
+                  "name": "Metal zipper",
+                  "price": "+8"
+                }
+              }
+            },
+            "leather_strap_repair": {
+              "name": "Leather strap stitching repair",
+              "price": "15",
+              "subOptions": {}
+            },
+            "leather_strap_patch": {
+              "name": "Leather strap patch repair",
+              "price": "26",
+              "subOptions": {}
+            }
+          }
+        },
+        "other_cobbler_services": {
+          "title": "Other Cobbler Services",
+          "services": {
+            "button_sewing": {
+              "name": "Button sewing on leather goods",
+              "price": "9",
+              "subOptions": {}
+            },
+            "tear_repair_small": {
+              "name": "Tear repair, tear less than 5cm",
+              "price": "25",
+              "subOptions": {}
+            },
+            "tear_repair_large": {
+              "name": "Tear repair, tear more than 5cm",
+              "price": "35",
+              "subOptions": {}
+            },
+            "stitching_repair": {
+              "name": "Stitching repairs, e.g., torn seam",
+              "price": "22",
+              "subOptions": {}
+            },
+            "stain_removal_small": {
+              "name": "Stain removal, less than 20cm",
+              "price": "25",
+              "subOptions": {}
             }
           }
         }
       }
     },
-
     "laundry": {
       "title": "Laundry Services",
       "services": {
@@ -903,35 +1120,42 @@
       "section-2": {
         "heading": "Leg narrowing",
         "instructions": {
-          "instruction-1": "Fold the fabric at the leg. Measure the amount to be narrowed. Remember, the fabric is two-folded, so you need to double the measurement taken on one side. Measure the distance from the bottom of the leg to the point where you want the narrowing to begin.  --- You can also mark the narrowing with a safety pin. Mark the narrowing at the leg opening and the spot where you want the narrowing to start. --- Example: You want the narrowing to start 30cm up from the bottom of the leg, with a 6cm narrowing at the leg opening."
+          "instruction-1": "Fold the fabric at the leg. Measure the amount to be narrowed. Remember, the fabric is two-folded, so you need to double the measurement taken on one side. Measure the distance from the bottom of the leg to the point where you want the narrowing to begin. ",
+          "instruction-2": "You can also mark the narrowing with a safety pin. Mark the narrowing at the leg opening and the spot where you want the narrowing to start.",
+          "instruction-3": "Example: You want the narrowing to start 30cm up from the bottom of the leg, with a 6cm narrowing at the leg opening."
         }
       },
       "section-3": {
         "heading": "Waist narrowing for trousers, jeans and skirts",
         "instructions": {
           "instruction-1": "Fold the fabric at the waist. Measure the amount to be narrowed. Keep in mind that the fabric is two-folded, so you need to double the measurement taken on one side. Measure the distance from the waistline to the point where you want the narrowing to begin.",
-          "instruction-2": "You can also mark the narrowing with a safety pin. Mark the narrowing at waist and the spot where you want the narrowing to start. --- Example: You want to start narrowing 10cm down from the waistline, with a 4cm narrowing at the waistline."
+          "instruction-2": "You can also mark the narrowing with a safety pin. Mark the narrowing at waist and the spot where you want the narrowing to start.",
+          "instruction-3": "Example: You want to start narrowing 10cm down from the waistline, with a 4cm narrowing at the waistline."
         }
       },
       "section-4": {
         "heading": "Waist widening",
         "instructions": {
           "instruction-1": "Measure the amount of widening needed at the waist. Measure the point down from the waistline where you want the widening to start.",
-          "instruction-2": "Example: You want the widening to start 10cm down from the waistline, with a 4cm widening at the waistline. --- Make sure the inner back seam has enough extra fabric for the widening."
+          "instruction-2": "Example: You want the widening to start 10cm down from the waistline, with a 4cm widening at the waistline.",
+          "instruction-3": "Make sure the inner back seam has enough extra fabric for the widening."
         }
       },
       "section-5": {
         "heading": "Sleeve shortening",
         "instructions": {
           "instruction-1": "Fold the fabric at the elbow area. Adjust the length by folding the fabric until you find the desired length for the sleeve. Measure the amount to be shortened from the fold. Keep in mind that the fabric is two-folded, so you need to double the measurement taken on one side.",
-          "instruction-2": "Folding the fabric at the elbow area helps you to determine the right leg length. Shortening will be done at the sleeve opening. --- You can also mark the shortening with a safety pin. Mark the shortening in the same way by folding the fabric."
+          "instruction-2": "Folding the fabric at the elbow area helps you to determine the right leg length. Shortening will be done at the sleeve opening.",
+          "instruction-3": "You can also mark the shortening with a safety pin. Mark the shortening in the same way by folding the fabric."
         }
       },
       "section-6": {
         "heading": "Waist narrowing for skirts, blazers, jackets and dresses",
         "instructions": {
           "instruction-1": "Measure\n a) the distance from the hem to the point where you want the narrowing to start.\n b) the distance from the hem to the point where you want the narrowing to be at its maximum.\n c) how much you want to narrow the garment at its maximum.\n d) the distance from the hem to the point where you want the narrowing to end, or if you want the narrowing to continue to the hem, measure how much narrowing you want at the hem.",
-          "instruction-2": "You can also mark the points with safety pins as an alternative. ---- Narrowing is done following the original shape and cut. --- Example: You want to start narrowing at a point 30cm up from the hem and end narrowing at a point 10cm up from the hem. The maximum narrowing need is 4cm, and the 4cm narrowing is wanted at a point 17cm up from the hem. The shirt will be narrowed between the starting and ending points, with a maximum narrowing of 4cm at 17cm up from the hem."
+          "instruction-2": "You can also mark the points with safety pins as an alternative. ",
+          "instruction-3": "Narrowing is done following the original shape and cut.",
+          "instruction-4": "Example: You want to start narrowing at a point 30cm up from the hem and end narrowing at a point 10cm up from the hem. The maximum narrowing need is 4cm, and the 4cm narrowing is wanted at a point 17cm up from the hem. The shirt will be narrowed between the starting and ending points, with a maximum narrowing of 4cm at 17cm up from the hem."
         }
       },
       "section-7": {
@@ -1088,7 +1312,9 @@
     "confirm-selection": "Confirm selection",
     "confirming": "Confirming...",
     "select-pickup-time": "Select pickup time",
-    "select-return-time": "Select return time"
+    "select-return-time": "Select return time",
+    "yes": "Yes",
+    "no": "No"
   },
   "order-history": {
     "title": "Order History",
@@ -1103,6 +1329,7 @@
     "paid": "Paid",
     "pay-now": "Pay Now",
     "all": "All",
-    "unpaid": "Unpaid"
+    "unpaid": "Unpaid",
+    "no-orders": "No orders yet"
   }
 }

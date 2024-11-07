@@ -6,11 +6,18 @@ import Layout from 'components/common/Layout';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from 'hooks/store';
-import { fetchOrdersByUserId } from 'store/slices/orders-slice';
+import {
+  fetchOrdersByUserId,
+  updateOrderTimes
+} from 'store/slices/orders-slice';
 import { useTranslations } from 'next-intl';
 import { auth } from '../../../firebase';
 import { Order } from 'types';
 import { formatDateTime } from 'utils/formatDateTime';
+import { useTimeOptions } from 'hooks/useTimeOptions';
+import { addDays, format, isAfter } from 'date-fns';
+import { fi } from 'date-fns/locale/fi';
+import { TimeOptions } from 'types';
 
 const filterStatus = {
   all: 'All',
@@ -27,12 +34,40 @@ export default function OrdersPage() {
   const [itemsPerPage] = useState(5);
   const [filter, setFilter] = useState(filterStatus.all);
   const t = useTranslations('order-history');
+  const { pickupDates, returnDates } = useTimeOptions();
+  const [updatedReturnDates, setUpdatedReturnDates] = useState<TimeOptions[]>(
+    []
+  );
+  const [pickupOption, setPickupOption] = useState<TimeOptions | null>(null);
+  const [deliveryOption, setDeliveryOption] = useState<TimeOptions | null>(
+    null
+  );
 
   useEffect(() => {
     if (user) {
       dispatch(fetchOrdersByUserId(user.uid));
     }
   }, [user, dispatch]);
+
+  useEffect(() => {
+    if (pickupOption) {
+      const filteredDates = returnDates.filter((date) =>
+        isAfter(date.date, addDays(pickupOption.date, 6))
+      );
+      setUpdatedReturnDates(filteredDates);
+
+      if (
+        deliveryOption &&
+        !filteredDates.find(
+          (date) => date.date.toString() === deliveryOption.date.toString()
+        )
+      ) {
+        setDeliveryOption(null);
+      }
+    } else {
+      setUpdatedReturnDates(returnDates);
+    }
+  }, [pickupOption, returnDates, deliveryOption]);
 
   if (!user) {
     router.push('/sign-in');
@@ -52,6 +87,87 @@ export default function OrdersPage() {
   const currentOrders = filteredOrders.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  const renderPickupOptions = (order: Order) => (
+    <div>
+      <span className="block font-medium text-gray-700 text-sm">
+        {t('pickup-date')}
+      </span>
+      {/* {order.pickupTime ? (
+        <time className="text-gray-500 text-sm">
+          {formatDateTime(order.pickupTime)}
+        </time>
+      ) : ( */}
+      <select
+        value={
+          pickupOption?.date.toString() || order.pickupTime.date.toString()
+        }
+        onChange={(e) => {
+          const selectedDate = pickupDates.find(
+            (date) => date.date.toString() === e.target.value
+          );
+          setPickupOption(selectedDate || null);
+          dispatch(
+            updateOrderTimes({
+              orderId: order.id,
+              pickupTime: selectedDate || null,
+              deliveryTime: order.deliveryTime
+            })
+          );
+        }}
+        className="block w-full mt-2 px-2 py-1 border rounded-md text-gray-500"
+      >
+        <option value="">—</option>
+        {pickupDates.map((date) => (
+          <option key={date.date.toString()} value={date.date.toString()}>
+            {format(date.date, 'EEEEEE dd.MM.yyyy', { locale: fi })} {date.time}
+          </option>
+        ))}
+      </select>
+      {/* )} */}
+    </div>
+  );
+
+  const renderDeliveryDate = (order: Order) => (
+    <div>
+      <span className="block font-medium text-gray-700 text-sm">
+        {t('return-date')}
+      </span>
+      {/* {order.deliveryTime ? (
+        <time className="text-gray-500 text-sm">
+          {formatDateTime(order.deliveryTime)}
+        </time>
+      ) : ( */}
+      <select
+        value={
+          deliveryOption?.date.toString() || order.deliveryTime.date.toString()
+        }
+        onChange={(e) => {
+          const selectedDate = updatedReturnDates.find(
+            (date) => date.date.toString() === e.target.value
+          );
+          setDeliveryOption(selectedDate || null);
+          dispatch(
+            updateOrderTimes({
+              orderId: order.id,
+              pickupTime: order.pickupTime,
+              deliveryTime: selectedDate || null
+            })
+          );
+        }}
+        className="block w-full mt-2 px-2 py-1 border rounded-md text-gray-500"
+        disabled={!pickupOption}
+      >
+        <option value="">—</option>
+        {updatedReturnDates.map((date) => (
+          <option key={date.date.toString()} value={date.date.toString()}>
+            {format(date.date, 'EEEEEE dd.MM.yyyy', { locale: fi })} {date.time}
+          </option>
+        ))}
+      </select>
+      {/* )} */}
+    </div>
+  );
 
   return (
     <Layout>
@@ -84,6 +200,8 @@ export default function OrdersPage() {
               <div className="overflow-x-auto">
                 {loading ? (
                   <p> {t('loading-orders')}</p>
+                ) : currentOrders.length === 0 ? (
+                  <p> {t('no-orders')}</p>
                 ) : (
                   currentOrders.map((order: Order) => (
                     <div
@@ -104,6 +222,7 @@ export default function OrdersPage() {
                             )}
                           </time>
                         </div>
+
                         <div>
                           <span className="block font-medium text-gray-700">
                             {t('order-id')}
@@ -119,26 +238,8 @@ export default function OrdersPage() {
                       </div>
 
                       <div className="mt-6 grid grid-cols-3 sm:grid-cols-3 gap-6">
-                        <div>
-                          <span className="block font-medium text-gray-700 text-sm">
-                            {t('pickup-date')}
-                          </span>
-                          <time className="text-gray-500 text-sm">
-                            {order.pickupTime
-                              ? formatDateTime(order.pickupTime)
-                              : '--'}
-                          </time>
-                        </div>
-                        <div>
-                          <span className="block font-medium text-gray-700 text-sm">
-                            {t('return-date')}
-                          </span>
-                          <time className="text-gray-500  text-sm">
-                            {order.deliveryTime
-                              ? formatDateTime(order.deliveryTime)
-                              : '--'}
-                          </time>
-                        </div>
+                        {renderPickupOptions(order)}
+                        {renderDeliveryDate(order)}
                       </div>
 
                       <div className="mt-6">
@@ -171,7 +272,7 @@ export default function OrdersPage() {
                       </div>
 
                       <div className="mt-4 text-right">
-                        {order.paymentStatus === 'paid' ? (
+                        {order.paymentEnabled === true ? (
                           <span className="text-green-600 font-semibold">
                             {t('paid')}
                           </span>

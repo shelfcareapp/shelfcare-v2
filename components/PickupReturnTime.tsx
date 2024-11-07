@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { formatTxtToDates } from 'utils/formatTxtToDates';
+import { formatTxtToDates } from 'utils/dateUtils';
 import { format, isAfter } from 'date-fns';
 import { toast } from 'react-toastify';
 import { Order } from 'types';

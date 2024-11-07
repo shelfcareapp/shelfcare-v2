@@ -13,14 +13,31 @@ import { useRouter } from 'next/navigation';
 import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { FiPaperclip } from 'react-icons/fi';
 import { AiOutlineLoading } from 'react-icons/ai';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useAppDispatch, useAppSelector } from 'hooks/store';
 import UserDashboardLeftbar from 'components/common/UserDashboardLeftbar';
 import { useChatScroll } from 'hooks/use-chat-scroll';
 import ProtectRoute from 'components/common/ProtectedRoute';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { doc, updateDoc } from 'firebase/firestore';
-import { toast } from 'react-toastify';
+import { useTimeOptions } from 'hooks/useTimeOptions';
+import { addDays, format, isAfter } from 'date-fns';
+import { fi } from 'date-fns/locale';
+import { TimeOptions } from 'types';
+
+const getYesNoMessage = (locale, ans) => {
+  if (ans === 'yes') {
+    if (locale === 'en') {
+      return 'Thank you! We will proceed with the updated service plan!​';
+    }
+    return 'Kiitos! Jatkamme päivitetyn palvelusuunnitelman mukaisesti!';
+  } else {
+    if (locale === 'en') {
+      return 'Thank you! We will proceed with the original service plan!';
+    }
+    return 'Kiitos! Jatkamme alkuperäisen palvelusuunnitelman mukaisesti!';
+  }
+};
 
 export default function UserEnquiryPage() {
   const [user] = useAuthState(auth);
@@ -35,10 +52,21 @@ export default function UserEnquiryPage() {
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const chatRef = useChatScroll(messages);
   const t = useTranslations('user-dashboard');
-  const [pickupOption, setPickupOption] = useState<string | null>(null);
-  const [deliveryOption, setDeliveryOption] = useState<string | null>(null);
+  const locale = useLocale();
+
   const [isConfirming, setIsConfirming] = useState(false);
   const messagesEndRef = useRef(null);
+  const { pickupDates, returnDates } = useTimeOptions();
+
+  const [pickupOptions, setPickupOptions] = useState<{
+    [key: string]: TimeOptions | null;
+  }>({});
+  const [deliveryOptions, setDeliveryOptions] = useState<{
+    [key: string]: TimeOptions | null;
+  }>({});
+  const [updatedReturnDates, setUpdatedReturnDates] = useState<{
+    [key: string]: TimeOptions[];
+  }>({});
 
   useEffect(() => {
     if (user) {
@@ -64,7 +92,7 @@ export default function UserEnquiryPage() {
       );
       dispatch(setWelcomeMessageSent(true));
     }
-  }, [welcomeMessageSent]);
+  }, [welcomeMessageSent, user, dispatch]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -149,40 +177,28 @@ export default function UserEnquiryPage() {
     return null;
   };
 
-  const handleOptionSelect = (
-    option: { label: string; value: string },
-    type: 'pickup' | 'delivery'
-  ) => {
-    const [pickupTime, deliveryTime] = option.label.split(',');
-
-    if (type === 'pickup') {
-      setPickupOption(pickupTime.replace('Pickup: ', '').trim());
-    } else {
-      setDeliveryOption(deliveryTime.replace('Delivery: ', '').trim());
-    }
-  };
-
-  const confirmationMessage = t('order-confirmation', {
-    pickupOption,
-    deliveryOption
-  })
-    .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
-    .replace(/\n/g, '<br />');
-
-  console.log('confirmationMessage', confirmationMessage);
-
   const handleConfirmSelection = async (orderId: string) => {
-    console.log('order', orderId);
-    if (!pickupOption || !deliveryOption) {
-      toast.error('Please select both pickup and delivery options.');
-      return;
-    }
+    const confirmationMessage = t('order-confirmation', {
+      pickupOption: format(pickupOptions[orderId]?.date, 'EEEEEE dd.MM.yyyy', {
+        locale: fi
+      }),
+      deliveryOption: format(
+        deliveryOptions[orderId]?.date,
+        'EEEEEE dd.MM.yyyy',
+        {
+          locale: fi
+        }
+      )
+    })
+      .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
+      .replace(/\n/g, '<br />');
+
     setIsConfirming(true);
     try {
       const orderDocRef = doc(db, 'orders', orderId);
       await updateDoc(orderDocRef, {
-        pickupTime: pickupOption,
-        deliveryTime: deliveryOption,
+        pickupTime: pickupOptions[orderId],
+        deliveryTime: deliveryOptions[orderId],
         status: 'confirmed'
       });
 
@@ -196,9 +212,7 @@ export default function UserEnquiryPage() {
       );
 
       setIsConfirming(false);
-      toast.success('Order confirmed successfully');
     } catch (error) {
-      toast.error('Error updating order');
       setIsConfirming(false);
     }
   };
@@ -211,14 +225,87 @@ export default function UserEnquiryPage() {
     scrollToBottom();
   }, [messages]);
 
-  const disableConfirmAndSelectAfter15Days = () => {
-    const today = new Date();
-    const lastMessage = messages[messages.length - 1];
-    const lastDate = new Date(lastMessage.time);
-    const diff = Math.abs(today.getTime() - lastDate.getTime());
-    const diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24));
+  const updateReturnDatesForOrder = (
+    orderId: string,
+    selectedPickup: TimeOptions
+  ) => {
+    const filteredDates = returnDates.filter((date) =>
+      isAfter(date.date, addDays(selectedPickup.date, 6))
+    );
+    setUpdatedReturnDates((prev) => ({
+      ...prev,
+      [orderId]: filteredDates
+    }));
+    if (
+      deliveryOptions[orderId] &&
+      !filteredDates.some(
+        (date) => date.date === deliveryOptions[orderId]?.date
+      )
+    ) {
+      setDeliveryOptions((prev) => ({
+        ...prev,
+        [orderId]: null
+      }));
+    }
+  };
 
-    return diffDays >= 15;
+  const handlePickupChange = (orderId: string, dateValue: string) => {
+    const selectedPickup =
+      pickupDates.find((date) => date.date.toString() === dateValue) || null;
+    setPickupOptions((prev) => ({
+      ...prev,
+      [orderId]: selectedPickup
+    }));
+    if (selectedPickup) {
+      updateReturnDatesForOrder(orderId, selectedPickup);
+    }
+  };
+
+  const handleDeliveryChange = (orderId: string, dateValue: string) => {
+    const selectedDelivery =
+      updatedReturnDates[orderId]?.find(
+        (date) => date.date.toString() === dateValue
+      ) || null;
+    setDeliveryOptions((prev) => ({
+      ...prev,
+      [orderId]: selectedDelivery
+    }));
+  };
+
+  const renderPickupOptions = (orderId: string) => (
+    <select
+      onChange={(e) => handlePickupChange(orderId, e.target.value)}
+      value={pickupOptions[orderId]?.date.toString() || ''}
+      className="w-full p-2 rounded-lg border border-gray-200"
+    >
+      <option value="">{t('select-pickup-time')}</option>
+      {pickupDates.map((date) => (
+        <option key={date.date.toString()} value={date.date.toString()}>
+          {format(date.date, 'EEEEEE dd.MM.yyyy', { locale: fi })}
+          {date.time}
+        </option>
+      ))}
+    </select>
+  );
+
+  const renderDeliveryOptions = (orderId: string) => (
+    <select
+      onChange={(e) => handleDeliveryChange(orderId, e.target.value)}
+      value={deliveryOptions[orderId]?.date.toString() || ''}
+      className="w-full p-2 rounded-lg border border-gray-200"
+    >
+      <option value="">{t('select-return-time')}</option>
+      {(updatedReturnDates[orderId] || []).map((date) => (
+        <option key={date.date.toString()} value={date.date.toString()}>
+          {format(date.date, 'EEEEEE dd.MM.yyyy', { locale: fi })}
+          {date.time}
+        </option>
+      ))}
+    </select>
+  );
+
+  const disableConfirmationBtn = (orderId) => {
+    return !pickupOptions[orderId] || !deliveryOptions[orderId];
   };
 
   return (
@@ -286,76 +373,28 @@ export default function UserEnquiryPage() {
                                         dangerouslySetInnerHTML={{
                                           __html: msg.content
                                         }}
+                                        className="text-left"
                                       />
                                       {msg.type === 'options' && (
                                         <span className="mt-4">
                                           <div className="space-y-4">
                                             <div>
-                                              <h3 className="font-medium text-gray-700 mb-2">
+                                              <span className="font-medium text-gray-700 my-2 text-sm">
                                                 {t('select-pickup-time')}:
-                                              </h3>
-                                              <div className="flex flex-wrap gap-2">
-                                                {msg.options.map((option) => (
-                                                  <button
-                                                    key={`pickup-${option.value}`}
-                                                    onClick={() =>
-                                                      handleOptionSelect(
-                                                        option,
-                                                        'pickup'
-                                                      )
-                                                    }
-                                                    disabled={disableConfirmAndSelectAfter15Days()}
-                                                    className={`px-4 py-2 rounded-full transition-colors ${
-                                                      pickupOption ===
-                                                      option.label
-                                                        .split(',')[0]
-                                                        .replace('Pickup: ', '')
-                                                        .trim()
-                                                        ? 'bg-green-600 text-white'
-                                                        : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-                                                    }`}
-                                                  >
-                                                    {option.label.split(',')[0]}
-                                                  </button>
-                                                ))}
-                                              </div>
+                                              </span>
+                                              {renderPickupOptions(msg.orderId)}
                                             </div>
 
-                                            <div>
-                                              <h3 className="font-medium text-gray-700 mb-2">
-                                                {t('select-return-time')}:
-                                              </h3>
-                                              <div className="flex flex-wrap gap-2">
-                                                {msg.options.map((option) => (
-                                                  <button
-                                                    key={`delivery-${option.value}`}
-                                                    onClick={() =>
-                                                      handleOptionSelect(
-                                                        option,
-                                                        'delivery'
-                                                      )
-                                                    }
-                                                    className={`px-4 py-2 rounded-full transition-colors ${
-                                                      deliveryOption ===
-                                                      option.label
-                                                        .split(',')[1]
-                                                        .replace(
-                                                          'Delivery: ',
-                                                          ''
-                                                        )
-                                                        .trim()
-                                                        ? 'bg-blue-600 text-white'
-                                                        : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-                                                    }`}
-                                                    disabled={disableConfirmAndSelectAfter15Days()}
-                                                  >
-                                                    {option.label
-                                                      .split(',')[1]
-                                                      .trim()}
-                                                  </button>
-                                                ))}
+                                            {pickupOptions[msg.orderId] && (
+                                              <div>
+                                                <span className="font-medium text-gray-700 my-2 text-sm">
+                                                  {t('select-return-time')}:
+                                                </span>
+                                                {renderDeliveryOptions(
+                                                  msg.orderId
+                                                )}
                                               </div>
-                                            </div>
+                                            )}
 
                                             <button
                                               onClick={() =>
@@ -363,15 +402,66 @@ export default function UserEnquiryPage() {
                                                   msg.orderId
                                                 )
                                               }
-                                              className="mt-4 px-6 py-2 bg-primary text-white rounded-lg hover:bg-brown-700 transition-colors"
-                                              disabled={disableConfirmAndSelectAfter15Days()}
+                                              className={`mt-4 px-6 py-2 bg-primary text-white rounded-lg hover:bg-brown-700 transition-colors
+                                              ${
+                                                disableConfirmationBtn(
+                                                  msg.orderId
+                                                ) &&
+                                                'cursor-not-allowed opacity-40'
+                                              }
+                                              `}
+                                              disabled={disableConfirmationBtn(
+                                                msg.orderId
+                                              )}
                                             >
                                               {isConfirming
-                                                ? t('Confirming...')
+                                                ? t('confirming')
                                                 : t('confirm-selection')}
                                             </button>
                                           </div>
                                         </span>
+                                      )}
+                                      {msg.type === 'yesno' && (
+                                        <div className="flex items-center justify-between mt-4 w-full">
+                                          <div className="flex items-center w-full">
+                                            <button
+                                              onClick={() =>
+                                                dispatch(
+                                                  sendMessage({
+                                                    userId: user?.uid,
+                                                    content: getYesNoMessage(
+                                                      locale,
+                                                      'yes'
+                                                    ),
+                                                    images: [],
+                                                    sender: 'Admin'
+                                                  })
+                                                )
+                                              }
+                                              className="bg-[#881112] text-white px-4 py-2 rounded-lg"
+                                            >
+                                              {t('yes')}
+                                            </button>
+                                            <button
+                                              onClick={() =>
+                                                dispatch(
+                                                  sendMessage({
+                                                    userId: user?.uid,
+                                                    content: getYesNoMessage(
+                                                      locale,
+                                                      'no'
+                                                    ),
+                                                    images: [],
+                                                    sender: 'Admin'
+                                                  })
+                                                )
+                                              }
+                                              className="bg-[#881112] text-white px-4 py-2 rounded-lg ml-2"
+                                            >
+                                              {t('no')}
+                                            </button>
+                                          </div>
+                                        </div>
                                       )}
                                     </p>
                                     <span className="text-xs text-gray-400 mt-1 block">

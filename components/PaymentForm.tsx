@@ -47,7 +47,6 @@ export default function PaymentForm({ amount, orderId }: PaymentFormProps) {
       if (result.paymentIntent?.status === 'succeeded') {
         // update order status to paid
         // and redirect to success page
-        console.log('Payment succeeded');
       }
     }
   };
