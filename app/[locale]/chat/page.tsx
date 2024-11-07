@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation';
 import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { FiPaperclip } from 'react-icons/fi';
 import { AiOutlineLoading } from 'react-icons/ai';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useAppDispatch, useAppSelector } from 'hooks/store';
 import UserDashboardLeftbar from 'components/common/UserDashboardLeftbar';
 import { useChatScroll } from 'hooks/use-chat-scroll';
@@ -24,6 +24,20 @@ import { useTimeOptions } from 'hooks/useTimeOptions';
 import { addDays, format, isAfter } from 'date-fns';
 import { fi } from 'date-fns/locale';
 import { TimeOptions } from 'types';
+
+const getYesNoMessage = (locale, ans) => {
+  if (ans === 'yes') {
+    if (locale === 'en') {
+      return 'Thank you! We will proceed with the updated service plan!​';
+    }
+    return 'Kiitos! Jatkamme päivitetyn palvelusuunnitelman mukaisesti!';
+  } else {
+    if (locale === 'en') {
+      return 'Thank you! We will proceed with the original service plan!';
+    }
+    return 'Kiitos! Jatkamme alkuperäisen palvelusuunnitelman mukaisesti!';
+  }
+};
 
 export default function UserEnquiryPage() {
   const [user] = useAuthState(auth);
@@ -38,6 +52,7 @@ export default function UserEnquiryPage() {
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const chatRef = useChatScroll(messages);
   const t = useTranslations('user-dashboard');
+  const locale = useLocale();
 
   const [isConfirming, setIsConfirming] = useState(false);
   const messagesEndRef = useRef(null);
@@ -52,6 +67,8 @@ export default function UserEnquiryPage() {
   const [updatedReturnDates, setUpdatedReturnDates] = useState<{
     [key: string]: TimeOptions[];
   }>({});
+
+  const [yesOption, noOption] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
     if (user) {
@@ -404,6 +421,48 @@ export default function UserEnquiryPage() {
                                             </button>
                                           </div>
                                         </span>
+                                      )}
+                                      {msg.type === 'yesno' && (
+                                        <div className="flex items-center justify-between mt-4 w-full">
+                                          <div className="flex items-center w-full">
+                                            <button
+                                              onClick={() =>
+                                                dispatch(
+                                                  sendMessage({
+                                                    userId: user?.uid,
+                                                    content: getYesNoMessage(
+                                                      locale,
+                                                      'yes'
+                                                    ),
+                                                    images: [],
+                                                    sender: 'Admin'
+                                                  })
+                                                )
+                                              }
+                                              className="bg-[#881112] text-white px-4 py-2 rounded-lg"
+                                            >
+                                              {t('yes')}
+                                            </button>
+                                            <button
+                                              onClick={() =>
+                                                dispatch(
+                                                  sendMessage({
+                                                    userId: user?.uid,
+                                                    content: getYesNoMessage(
+                                                      locale,
+                                                      'no'
+                                                    ),
+                                                    images: [],
+                                                    sender: 'Admin'
+                                                  })
+                                                )
+                                              }
+                                              className="bg-[#881112] text-white px-4 py-2 rounded-lg ml-2"
+                                            >
+                                              {t('no')}
+                                            </button>
+                                          </div>
+                                        </div>
                                       )}
                                     </p>
                                     <span className="text-xs text-gray-400 mt-1 block">

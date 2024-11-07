@@ -18,6 +18,7 @@ export interface Order {
   totalPrice: number;
   createdAt: Timestamp;
   paymentLink?: string;
+  paymentEnabled: boolean;
 }
 
 export type TimeOptions = {

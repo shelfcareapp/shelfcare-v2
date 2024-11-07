@@ -272,7 +272,7 @@ export default function OrdersPage() {
                       </div>
 
                       <div className="mt-4 text-right">
-                        {order.paymentStatus === 'paid' ? (
+                        {order.paymentEnabled === true ? (
                           <span className="text-green-600 font-semibold">
                             {t('paid')}
                           </span>
