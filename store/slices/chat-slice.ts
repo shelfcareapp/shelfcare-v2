@@ -90,8 +90,6 @@ export const listenToChat =
             const newMessage = chatData.messages[chatData.messages.length - 1];
 
             if (!newMessage.isRead) {
-              console.log('New message received:', newMessage.content);
-
               if (Notification.permission === 'granted') {
                 new Notification(`New message from ${newMessage.sender}`, {
                   body: newMessage.content
