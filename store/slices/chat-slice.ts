@@ -70,90 +70,88 @@ export const sendMessage = createAsyncThunk(
   }
 );
 
+export const listenToChat =
+  (userId: string) => (dispatch: any, getState: any) => {
+    dispatch(setInitialLoading(true));
 
-export const listenToChat = (userId: string) => (dispatch: any, getState: any) => {
-  dispatch(setInitialLoading(true));
+    const chatDocRef = doc(db, 'chats', userId);
 
-  const chatDocRef = doc(db, 'chats', userId);
+    return onSnapshot(
+      chatDocRef,
+      (doc) => {
+        if (doc.exists()) {
+          const chatData = doc.data();
+          const previousMessages = getState().chat.messages;
 
-  return onSnapshot(
-    chatDocRef,
-    (doc) => {
-      if (doc.exists()) {
-        const chatData = doc.data();
-        const previousMessages = getState().chat.messages;
+          dispatch(updateMessages(chatData.messages || []));
+          dispatch(setWelcomeMessageSent(chatData.welcomeMessageSent || false));
 
-        dispatch(updateMessages(chatData.messages || []));
-        dispatch(setWelcomeMessageSent(chatData.welcomeMessageSent || false));
+          if (chatData.messages.length > previousMessages.length) {
+            const newMessage = chatData.messages[chatData.messages.length - 1];
 
-        if (chatData.messages.length > previousMessages.length) {
-          const newMessage = chatData.messages[chatData.messages.length - 1];
+            if (!newMessage.isRead) {
+              console.log('New message received:', newMessage.content);
 
-          if (!newMessage.isRead) {
-            console.log("New message received:", newMessage.content);
+              if (Notification.permission === 'granted') {
+                new Notification(`New message from ${newMessage.sender}`, {
+                  body: newMessage.content
+                });
+              }
 
-            if (Notification.permission === "granted") {
-              new Notification(`New message from ${newMessage.sender}`, {
-                body: newMessage.content,
-              });
+              // Set the notification flag to true to show the badge
+              dispatch(setHasNewNotification(true));
+              localStorage.setItem('not', 'true');
             }
-
-            // Set the notification flag to true to show the badge
-            dispatch(setHasNewNotification(true));
-            localStorage.setItem("not", "true")
           }
+        } else {
+          // Handle case where no chat exists for this user
+          dispatch(updateMessages([]));
+          dispatch(setWelcomeMessageSent(false));
+          dispatch(setHasNewNotification(false));
         }
-      } else {
-        // Handle case where no chat exists for this user
-        dispatch(updateMessages([]));
-        dispatch(setWelcomeMessageSent(false));
+
+        dispatch(setInitialLoading(false));
+      },
+      (_error) => {
+        toast.error('Error listening to chat updates');
+        dispatch(setInitialLoading(false));
+      }
+    );
+  };
+
+export const markMessageAsRead =
+  (userId: string) => async (dispatch: any, getState: any) => {
+    const chatDocRef = doc(db, 'chats', userId);
+    try {
+      const chatSnap = await getDoc(chatDocRef);
+      if (chatSnap.exists()) {
+        const chatData = chatSnap.data();
+        const updatedMessages = chatData.messages.map((msg: Message) => ({
+          ...msg,
+          isRead: true
+        }));
+
+        await updateDoc(chatDocRef, { messages: updatedMessages });
+        dispatch(updateMessages(updatedMessages));
         dispatch(setHasNewNotification(false));
       }
-
-      dispatch(setInitialLoading(false));
-    },
-    (_error) => {
-      toast.error('Error listening to chat updates');
-      dispatch(setInitialLoading(false));
+    } catch (error) {
+      console.error('Error marking messages as read:', error);
     }
-  );
-};
-
-
-export const markMessageAsRead = (userId: string) => async (dispatch: any, getState: any) => {
-  const chatDocRef = doc(db, 'chats', userId);
-  try {
-    const chatSnap = await getDoc(chatDocRef);
-    if (chatSnap.exists()) {
-      const chatData = chatSnap.data();
-      const updatedMessages = chatData.messages.map((msg: Message) => ({
-        ...msg,
-        isRead: true
-      }));
-
-      await updateDoc(chatDocRef, { messages: updatedMessages });
-      dispatch(updateMessages(updatedMessages));
-      dispatch(setHasNewNotification(false)); // Clear notification after reading
-    }
-  } catch (error) {
-    console.error('Error marking messages as read:', error);
-  }
-};
-
+  };
 
 // Request notification permission when the app loads
 export const requestNotificationPermission = () => {
-  if ("Notification" in window) {
+  if ('Notification' in window) {
     Notification.requestPermission().then((permission) => {
-      if (permission === "granted") {
-        console.log("Notification permission granted.");
+      if (permission === 'granted') {
+        console.log('Notification permission granted.');
       } else {
-        console.log("Notification permission denied.");
+        console.log('Notification permission denied.');
       }
     });
   }
 };
-
 
 const chatSlice = createSlice({
   name: 'chat',

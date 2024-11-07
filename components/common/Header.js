@@ -14,8 +14,10 @@ import { toast } from 'react-toastify';
 import { FaInstagramSquare } from 'react-icons/fa';
 import { AiFillTikTok } from 'react-icons/ai';
 import { useAppSelector, useAppDispatch } from 'hooks/store';
-import { markMessageAsRead, setHasNewNotification } from 'store/slices/chat-slice';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import {
+  markMessageAsRead,
+  setHasNewNotification
+} from 'store/slices/chat-slice';
 
 const Header = () => {
   const { hasNewNotification } = useAppSelector((state) => state.chat);
@@ -28,7 +30,7 @@ const Header = () => {
   const dropdownRef = useRef(null);
   const route = usePathname();
   const dispatch = useAppDispatch();
-  const [not, setNot] = useState(false)
+  const [not, setNot] = useState(false);
 
   const handleOrderNow = () => {
     if (!user) {
@@ -53,16 +55,16 @@ const Header = () => {
   };
 
   useEffect(() => {
-    const data = localStorage.getItem("not") === true
-    setNot(data)
+    const data = localStorage.getItem('not') === true;
+    setNot(data);
     if (route == '/chat') {
       dispatch(markMessageAsRead(user.uid));
-      localStorage.setItem("not", "false")
+      localStorage.setItem('not', 'false');
     }
   }, [route, dispatch]);
 
   const showNotificationBadge = hasNewNotification || not;
-  
+
   return (
     <header className="border-b-[0.5px] sticky top-0 bg-white z-50">
       <div className="container mx-auto flex justify-between items-center p-4">
@@ -71,15 +73,17 @@ const Header = () => {
         <nav className="hidden md:flex space-x-6">
           <Link
             href="/price-list"
-            className={`nav-link ${pathname === '/price-list' ? 'nav-link-active' : ''
-              }`}
+            className={`nav-link ${
+              pathname === '/price-list' ? 'nav-link-active' : ''
+            }`}
           >
             {t('header.price_list')}
           </Link>
           <Link
             href="/measurement-guide"
-            className={`nav-link ${pathname === '/measurement-guide' ? 'nav-link-active' : ''
-              }`}
+            className={`nav-link ${
+              pathname === '/measurement-guide' ? 'nav-link-active' : ''
+            }`}
           >
             {t('header.measurement_guide')}
           </Link>
@@ -97,7 +101,7 @@ const Header = () => {
                 <CiUser className="text-primary" size={28} />
                 {showNotificationBadge && (
                   <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white" />
-                ) }
+                )}
               </button>
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg py-2">
@@ -153,8 +157,8 @@ const Header = () => {
             className="text-primary focus:outline-none relative p-1 transition-colors duration-200"
           >
             {showNotificationBadge && (
-                  <span className="absolute top-0 left-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white" />
-                ) }
+              <span className="absolute top-0 left-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white" />
+            )}
             <svg
               className="w-6 h-6"
               fill="none"
@@ -175,24 +179,27 @@ const Header = () => {
 
       {isOpen && (
         <div
-          className={`bg-gray-100 absolute left-0 right-0 transition-all duration-300 ease-in-out ${isOpen
-            ? 'h-screen opacity-100'
-            : 'max-h-0 opacity-0 overflow-hidden'
-            }`}
+          className={`bg-gray-100 absolute left-0 right-0 transition-all duration-300 ease-in-out ${
+            isOpen
+              ? 'h-screen opacity-100'
+              : 'max-h-0 opacity-0 overflow-hidden'
+          }`}
         >
           <div className="flex flex-col ">
             <nav className="md:hidden border-t border-gray-200">
               <Link
                 href="/price-list"
-                className={`block px-4 py-2 text-primary nav-link ${pathname === '/price-list' ? 'nav-link-active' : ''
-                  }`}
+                className={`block px-4 py-2 text-primary nav-link ${
+                  pathname === '/price-list' ? 'nav-link-active' : ''
+                }`}
               >
                 {t('header.price_list')}
               </Link>
               <Link
                 href="/measurement-guide"
-                className={`block px-4 py-2 text-primary nav-link ${pathname === '/measurement-guide' ? 'nav-link-active' : ''
-                  }`}
+                className={`block px-4 py-2 text-primary nav-link ${
+                  pathname === '/measurement-guide' ? 'nav-link-active' : ''
+                }`}
               >
                 {t('header.measurement_guide')}
               </Link>

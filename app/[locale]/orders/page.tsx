@@ -14,7 +14,9 @@ import { useTranslations } from 'next-intl';
 import { auth } from '../../../firebase';
 import { Order } from 'types';
 import { formatDateTime } from 'utils/formatDateTime';
-import { useTimeOptions } from 'hooks/useTimeOptions';
+import { TimeOptions, useTimeOptions } from 'hooks/useTimeOptions';
+import { addDays, format, isAfter } from 'date-fns';
+import { fi } from 'date-fns/locale/fi';
 
 const filterStatus = {
   all: 'All',
@@ -31,16 +33,40 @@ export default function OrdersPage() {
   const [itemsPerPage] = useState(5);
   const [filter, setFilter] = useState(filterStatus.all);
   const t = useTranslations('order-history');
-  const [updatedPickupDates, setUpdatedPickupDates] = useState([]);
-  const [updatedReturnDates, setUpdatedReturnDates] = useState([]);
-
   const { pickupDates, returnDates } = useTimeOptions();
+  const [updatedReturnDates, setUpdatedReturnDates] = useState<TimeOptions[]>(
+    []
+  );
+  const [pickupOption, setPickupOption] = useState<TimeOptions | null>(null);
+  const [deliveryOption, setDeliveryOption] = useState<TimeOptions | null>(
+    null
+  );
 
   useEffect(() => {
     if (user) {
       dispatch(fetchOrdersByUserId(user.uid));
     }
   }, [user, dispatch]);
+
+  useEffect(() => {
+    if (pickupOption) {
+      const filteredDates = returnDates.filter((date) =>
+        isAfter(date.date, addDays(pickupOption.date, 6))
+      );
+      setUpdatedReturnDates(filteredDates);
+
+      if (
+        deliveryOption &&
+        !filteredDates.find(
+          (date) => date.date.toString() === deliveryOption.date.toString()
+        )
+      ) {
+        setDeliveryOption(null);
+      }
+    } else {
+      setUpdatedReturnDates(returnDates);
+    }
+  }, [pickupOption, returnDates, deliveryOption]);
 
   if (!user) {
     router.push('/sign-in');
@@ -61,14 +87,82 @@ export default function OrdersPage() {
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  // pickup date should be modifiable 24 hours before the previous one or if not set.
-  const isPickupDateModifiable = (pickupTime: Date) => {
-    const now = new Date();
-    const previousPickupTime = new Date(pickupTime);
-    const diffInMs = previousPickupTime.getTime() - now.getTime();
-    const diffInHours = diffInMs / (1000 * 60 * 60);
-    return diffInHours > 24 || !pickupTime;
-  };
+  const renderPickupOptions = (order: Order) => (
+    <div>
+      <span className="block font-medium text-gray-700 text-sm">
+        {t('pickup-date')}
+      </span>
+      {/* {order.pickupTime ? (
+        <time className="text-gray-500 text-sm">
+          {formatDateTime(order.pickupTime)}
+        </time>
+      ) : ( */}
+      <select
+        value={pickupOption?.date.toString() || order.pickupTime}
+        onChange={(e) => {
+          const selectedDate = pickupDates.find(
+            (date) => date.date.toString() === e.target.value
+          );
+          setPickupOption(selectedDate || null);
+          dispatch(
+            updateOrderTimes({
+              orderId: order.id,
+              pickupTime: selectedDate?.date || null,
+              deliveryTime: order.deliveryTime
+            })
+          );
+        }}
+        className="block w-full mt-2 px-2 py-1 border rounded-md text-gray-500"
+      >
+        <option value="">—</option>
+        {pickupDates.map((date) => (
+          <option key={date.date.toString()} value={date.date.toString()}>
+            {format(date.date, 'EEEEEE dd.MM.yyyy', { locale: fi })} {date.time}
+          </option>
+        ))}
+      </select>
+      {/* )} */}
+    </div>
+  );
+
+  const renderDeliveryDate = (order: Order) => (
+    <div>
+      <span className="block font-medium text-gray-700 text-sm">
+        {t('return-date')}
+      </span>
+      {/* {order.deliveryTime ? (
+        <time className="text-gray-500 text-sm">
+          {formatDateTime(order.deliveryTime)}
+        </time>
+      ) : ( */}
+      <select
+        value={deliveryOption?.date.toString() || order.deliveryTime}
+        onChange={(e) => {
+          const selectedDate = updatedReturnDates.find(
+            (date) => date.date.toString() === e.target.value
+          );
+          setDeliveryOption(selectedDate || null);
+          dispatch(
+            updateOrderTimes({
+              orderId: order.id,
+              pickupTime: order.pickupTime,
+              deliveryTime: selectedDate?.date || null
+            })
+          );
+        }}
+        className="block w-full mt-2 px-2 py-1 border rounded-md text-gray-500"
+        disabled={!pickupOption}
+      >
+        <option value="">—</option>
+        {updatedReturnDates.map((date) => (
+          <option key={date.date.toString()} value={date.date.toString()}>
+            {format(date.date, 'EEEEEE dd.MM.yyyy', { locale: fi })} {date.time}
+          </option>
+        ))}
+      </select>
+      {/* )} */}
+    </div>
+  );
 
   return (
     <Layout>
@@ -137,58 +231,8 @@ export default function OrdersPage() {
                       </div>
 
                       <div className="mt-6 grid grid-cols-3 sm:grid-cols-3 gap-6">
-                        {isPickupDateModifiable(new Date(order.pickupTime)) ? (
-                          <div>
-                            <span className="block font-medium text-gray-700 text-sm">
-                              {t('pickup-date')}
-                            </span>
-                            <select
-                              value={order.pickupTime}
-                              onChange={(e) => {
-                                const pickupTime = new Date(e.target.value);
-                                dispatch(
-                                  updateOrderTimes({
-                                    orderId: order.id,
-                                    pickupTime,
-                                    deliveryTime: order.deliveryTime
-                                  })
-                                );
-                              }}
-                              className="block w-full mt-2 px-2 py-1 border rounded-md text-gray-500"
-                            >
-                              <option value="">—</option>
-                              {pickupDates.map((date) => (
-                                <option
-                                  key={date.date.toISOString()}
-                                  value={date.date.toISOString()}
-                                >
-                                  {formatDateTime(date.date.toISOString())}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                        ) : (
-                          <div>
-                            <span className="block font-medium text-gray-700 text-sm">
-                              {t('pickup-date')}
-                            </span>
-                            <time className="text-gray-500 text-sm">
-                              {order.pickupTime
-                                ? formatDateTime(order.pickupTime)
-                                : '--'}
-                            </time>
-                          </div>
-                        )}
-                        <div>
-                          <span className="block font-medium text-gray-700 text-sm">
-                            {t('return-date')}
-                          </span>
-                          <time className="text-gray-500  text-sm">
-                            {order.deliveryTime
-                              ? formatDateTime(order.deliveryTime)
-                              : '--'}
-                          </time>
-                        </div>
+                        {renderPickupOptions(order)}
+                        {renderDeliveryDate(order)}
                       </div>
 
                       <div className="mt-6">

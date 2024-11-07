@@ -7,16 +7,20 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { classNames } from 'utils/classNames';
+import { useNotificationBadge } from 'hooks/use-notification-badge';
 
 const UserDashboardLeftbar = () => {
   const pathname = usePathname();
   const t = useTranslations('user-dashboard');
+  const { showNotificationBadge, handleChatClick } = useNotificationBadge();
 
   const secondaryNavigation = [
     {
       name: t('chats'),
       href: '/chat',
-      icon: ChatBubbleBottomCenterIcon
+      icon: ChatBubbleBottomCenterIcon,
+      onClick: handleChatClick,
+      hasBadge: showNotificationBadge
     },
     {
       name: t('orders'),
@@ -55,6 +59,9 @@ const UserDashboardLeftbar = () => {
                 />
                 {item.name}
               </Link>
+              {showNotificationBadge && (
+                <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white" />
+              )}
             </li>
           ))}
         </ul>

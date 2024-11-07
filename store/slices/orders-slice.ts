@@ -52,7 +52,7 @@ export const updateOrderTimes = createAsyncThunk(
     deliveryTime
   }: {
     orderId: string;
-    pickupTime: Date;
+    pickupTime: string;
     deliveryTime: string;
   }) => {
     const orderRef = doc(db, 'orders', orderId);
