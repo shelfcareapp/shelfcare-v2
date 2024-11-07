@@ -8,7 +8,7 @@ import {
   setWelcomeMessageSent
 } from 'store/slices/chat-slice';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, db } from '../../../firebase';
+import { auth, db } from '../../firebase';
 import { useRouter } from 'next/navigation';
 import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { FiPaperclip } from 'react-icons/fi';
