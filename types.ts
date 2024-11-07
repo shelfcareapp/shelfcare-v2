@@ -13,9 +13,14 @@ export interface Order {
   customerName: string;
   services: { [key: string]: Service };
   paymentStatus: string;
-  pickupTime: string;
-  deliveryTime: string;
+  pickupTime: TimeOptions;
+  deliveryTime: TimeOptions;
   totalPrice: number;
   createdAt: Timestamp;
   paymentLink?: string;
 }
+
+export type TimeOptions = {
+  date: string;
+  time: string;
+};

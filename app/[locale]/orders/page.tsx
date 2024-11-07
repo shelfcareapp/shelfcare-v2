@@ -14,9 +14,10 @@ import { useTranslations } from 'next-intl';
 import { auth } from '../../../firebase';
 import { Order } from 'types';
 import { formatDateTime } from 'utils/formatDateTime';
-import { TimeOptions, useTimeOptions } from 'hooks/useTimeOptions';
+import { useTimeOptions } from 'hooks/useTimeOptions';
 import { addDays, format, isAfter } from 'date-fns';
 import { fi } from 'date-fns/locale/fi';
+import { TimeOptions } from 'types';
 
 const filterStatus = {
   all: 'All',
@@ -98,7 +99,9 @@ export default function OrdersPage() {
         </time>
       ) : ( */}
       <select
-        value={pickupOption?.date.toString() || order.pickupTime}
+        value={
+          pickupOption?.date.toString() || order.pickupTime.date.toString()
+        }
         onChange={(e) => {
           const selectedDate = pickupDates.find(
             (date) => date.date.toString() === e.target.value
@@ -107,7 +110,7 @@ export default function OrdersPage() {
           dispatch(
             updateOrderTimes({
               orderId: order.id,
-              pickupTime: selectedDate?.date || null,
+              pickupTime: selectedDate || null,
               deliveryTime: order.deliveryTime
             })
           );
@@ -136,7 +139,9 @@ export default function OrdersPage() {
         </time>
       ) : ( */}
       <select
-        value={deliveryOption?.date.toString() || order.deliveryTime}
+        value={
+          deliveryOption?.date.toString() || order.deliveryTime.date.toString()
+        }
         onChange={(e) => {
           const selectedDate = updatedReturnDates.find(
             (date) => date.date.toString() === e.target.value
@@ -146,7 +151,7 @@ export default function OrdersPage() {
             updateOrderTimes({
               orderId: order.id,
               pickupTime: order.pickupTime,
-              deliveryTime: selectedDate?.date || null
+              deliveryTime: selectedDate || null
             })
           );
         }}
@@ -195,6 +200,8 @@ export default function OrdersPage() {
               <div className="overflow-x-auto">
                 {loading ? (
                   <p> {t('loading-orders')}</p>
+                ) : currentOrders.length === 0 ? (
+                  <p> {t('no-orders')}</p>
                 ) : (
                   currentOrders.map((order: Order) => (
                     <div

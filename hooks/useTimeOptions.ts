@@ -1,11 +1,7 @@
 import { isAfter } from 'date-fns';
 import { useEffect, useState } from 'react';
+import { TimeOptions } from 'types';
 import { formatTxtToDates } from 'utils/dateUtils';
-
-export type TimeOptions = {
-  date: string;
-  time: string;
-};
 
 export const useTimeOptions = () => {
   const [pickupDates, setPickupDates] = useState<TimeOptions[]>([]);

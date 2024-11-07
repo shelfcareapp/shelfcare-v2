@@ -20,9 +20,10 @@ import { useChatScroll } from 'hooks/use-chat-scroll';
 import ProtectRoute from 'components/common/ProtectedRoute';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { doc, updateDoc } from 'firebase/firestore';
-import { TimeOptions, useTimeOptions } from 'hooks/useTimeOptions';
+import { useTimeOptions } from 'hooks/useTimeOptions';
 import { addDays, format, isAfter } from 'date-fns';
 import { fi } from 'date-fns/locale';
+import { TimeOptions } from 'types';
 
 export default function UserEnquiryPage() {
   const [user] = useAuthState(auth);
@@ -37,12 +38,20 @@ export default function UserEnquiryPage() {
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const chatRef = useChatScroll(messages);
   const t = useTranslations('user-dashboard');
-  const [pickupOption, setPickupOption] = useState<TimeOptions>(null);
-  const [deliveryOption, setDeliveryOption] = useState<TimeOptions>(null);
+
   const [isConfirming, setIsConfirming] = useState(false);
   const messagesEndRef = useRef(null);
   const { pickupDates, returnDates } = useTimeOptions();
-  const [updatedReturnDates, setUpdatedReturnDates] = useState(returnDates);
+
+  const [pickupOptions, setPickupOptions] = useState<{
+    [key: string]: TimeOptions | null;
+  }>({});
+  const [deliveryOptions, setDeliveryOptions] = useState<{
+    [key: string]: TimeOptions | null;
+  }>({});
+  const [updatedReturnDates, setUpdatedReturnDates] = useState<{
+    [key: string]: TimeOptions[];
+  }>({});
 
   useEffect(() => {
     if (user) {
@@ -155,12 +164,16 @@ export default function UserEnquiryPage() {
 
   const handleConfirmSelection = async (orderId: string) => {
     const confirmationMessage = t('order-confirmation', {
-      pickupOption: format(pickupOption?.date, 'EEEEEE dd.MM.yyyy', {
+      pickupOption: format(pickupOptions[orderId]?.date, 'EEEEEE dd.MM.yyyy', {
         locale: fi
       }),
-      deliveryOption: format(deliveryOption?.date, 'EEEEEE dd.MM.yyyy', {
-        locale: fi
-      })
+      deliveryOption: format(
+        deliveryOptions[orderId]?.date,
+        'EEEEEE dd.MM.yyyy',
+        {
+          locale: fi
+        }
+      )
     })
       .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
       .replace(/\n/g, '<br />');
@@ -169,8 +182,8 @@ export default function UserEnquiryPage() {
     try {
       const orderDocRef = doc(db, 'orders', orderId);
       await updateDoc(orderDocRef, {
-        pickupTime: pickupOption,
-        deliveryTime: deliveryOption,
+        pickupTime: pickupOptions[orderId],
+        deliveryTime: deliveryOptions[orderId],
         status: 'confirmed'
       });
 
@@ -197,80 +210,88 @@ export default function UserEnquiryPage() {
     scrollToBottom();
   }, [messages]);
 
-  useEffect(() => {
-    if (pickupOption) {
-      const filteredDates = returnDates.filter((date) =>
-        isAfter(date.date, addDays(pickupOption.date, 6))
-      );
-
-      setUpdatedReturnDates(filteredDates);
-
-      if (
-        deliveryOption &&
-        !filteredDates.find(
-          (date) => date.date.toString() === deliveryOption.date.toString()
-        )
-      ) {
-        setDeliveryOption(null);
-      }
+  const updateReturnDatesForOrder = (
+    orderId: string,
+    selectedPickup: TimeOptions
+  ) => {
+    const filteredDates = returnDates.filter((date) =>
+      isAfter(date.date, addDays(selectedPickup.date, 6))
+    );
+    setUpdatedReturnDates((prev) => ({
+      ...prev,
+      [orderId]: filteredDates
+    }));
+    if (
+      deliveryOptions[orderId] &&
+      !filteredDates.some(
+        (date) => date.date === deliveryOptions[orderId]?.date
+      )
+    ) {
+      setDeliveryOptions((prev) => ({
+        ...prev,
+        [orderId]: null
+      }));
     }
-  }, [pickupOption, returnDates]);
-
-  const renderPickupOptions = () => {
-    return (
-      <select
-        onChange={(e) => {
-          setPickupOption(
-            pickupDates.find((date) => date.date.toString() === e.target.value)
-          );
-        }}
-        className="w-full p-2 rounded-lg border border-gray-200"
-      >
-        <option value="">{t('select-pickup-time')}</option>
-        {pickupDates.map((date) => (
-          <option
-            key={`${date.date.toString()}+${date.time.toString()}`}
-            value={date.date.toString()}
-          >
-            {format(date.date, 'EEEEEE dd.MM.yyyy', {
-              locale: fi
-            })}
-            {date.time}
-          </option>
-        ))}
-      </select>
-    );
   };
 
-  const renderDeliveryOptions = () => {
-    return (
-      <select
-        onChange={(e) =>
-          setDeliveryOption(
-            updatedReturnDates.find(
-              (date) => date.date.toString() === e.target.value
-            )
-          )
-        }
-        className="w-full p-2 rounded-lg border border-gray-200"
-      >
-        <option value="">{t('select-return-time')}</option>
-        {updatedReturnDates.map((date) => (
-          <option
-            key={`${date.date.toString()}+${date.time.toString()}`}
-            value={date.date.toString()}
-          >
-            {format(date.date, 'EEEEEE dd.MM.yyyy', {
-              locale: fi
-            })}
-            {date.time}
-          </option>
-        ))}
-      </select>
-    );
+  const handlePickupChange = (orderId: string, dateValue: string) => {
+    const selectedPickup =
+      pickupDates.find((date) => date.date.toString() === dateValue) || null;
+    setPickupOptions((prev) => ({
+      ...prev,
+      [orderId]: selectedPickup
+    }));
+    if (selectedPickup) {
+      updateReturnDatesForOrder(orderId, selectedPickup);
+    }
   };
 
-  const disableConfirmationBtn = !pickupOption || !deliveryOption;
+  const handleDeliveryChange = (orderId: string, dateValue: string) => {
+    const selectedDelivery =
+      updatedReturnDates[orderId]?.find(
+        (date) => date.date.toString() === dateValue
+      ) || null;
+    setDeliveryOptions((prev) => ({
+      ...prev,
+      [orderId]: selectedDelivery
+    }));
+  };
+
+  const renderPickupOptions = (orderId: string) => (
+    <select
+      onChange={(e) => handlePickupChange(orderId, e.target.value)}
+      value={pickupOptions[orderId]?.date.toString() || ''}
+      className="w-full p-2 rounded-lg border border-gray-200"
+    >
+      <option value="">{t('select-pickup-time')}</option>
+      {pickupDates.map((date) => (
+        <option key={date.date.toString()} value={date.date.toString()}>
+          {format(date.date, 'EEEEEE dd.MM.yyyy', { locale: fi })}
+          {date.time}
+        </option>
+      ))}
+    </select>
+  );
+
+  const renderDeliveryOptions = (orderId: string) => (
+    <select
+      onChange={(e) => handleDeliveryChange(orderId, e.target.value)}
+      value={deliveryOptions[orderId]?.date.toString() || ''}
+      className="w-full p-2 rounded-lg border border-gray-200"
+    >
+      <option value="">{t('select-return-time')}</option>
+      {(updatedReturnDates[orderId] || []).map((date) => (
+        <option key={date.date.toString()} value={date.date.toString()}>
+          {format(date.date, 'EEEEEE dd.MM.yyyy', { locale: fi })}
+          {date.time}
+        </option>
+      ))}
+    </select>
+  );
+
+  const disableConfirmationBtn = (orderId) => {
+    return !pickupOptions[orderId] || !deliveryOptions[orderId];
+  };
 
   return (
     <ProtectRoute>
@@ -345,15 +366,17 @@ export default function UserEnquiryPage() {
                                               <span className="font-medium text-gray-700 my-2 text-sm">
                                                 {t('select-pickup-time')}:
                                               </span>
-                                              {renderPickupOptions()}
+                                              {renderPickupOptions(msg.orderId)}
                                             </div>
 
-                                            {pickupOption && (
+                                            {pickupOptions[msg.orderId] && (
                                               <div>
                                                 <span className="font-medium text-gray-700 my-2 text-sm">
                                                   {t('select-return-time')}:
                                                 </span>
-                                                {renderDeliveryOptions()}
+                                                {renderDeliveryOptions(
+                                                  msg.orderId
+                                                )}
                                               </div>
                                             )}
 
@@ -365,11 +388,15 @@ export default function UserEnquiryPage() {
                                               }
                                               className={`mt-4 px-6 py-2 bg-primary text-white rounded-lg hover:bg-brown-700 transition-colors
                                               ${
-                                                disableConfirmationBtn &&
+                                                disableConfirmationBtn(
+                                                  msg.orderId
+                                                ) &&
                                                 'cursor-not-allowed opacity-40'
                                               }
                                               `}
-                                              disabled={disableConfirmationBtn}
+                                              disabled={disableConfirmationBtn(
+                                                msg.orderId
+                                              )}
                                             >
                                               {isConfirming
                                                 ? t('confirming')

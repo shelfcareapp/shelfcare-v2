@@ -1223,6 +1223,7 @@
     "paid": "Maksettu",
     "pay-now": "Maksa nyt",
     "all": "Kaikki",
-    "unpaid": "Maksamatta"
+    "unpaid": "Maksamatta",
+    "no-orders": "Ei tilauksia"
   }
 }

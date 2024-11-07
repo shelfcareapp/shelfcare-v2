@@ -1103,6 +1103,7 @@
     "paid": "Paid",
     "pay-now": "Pay Now",
     "all": "All",
-    "unpaid": "Unpaid"
+    "unpaid": "Unpaid",
+    "no-orders": "No orders yet"
   }
 }

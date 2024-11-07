@@ -4,6 +4,7 @@ import { db } from '../../firebase';
 import { Order } from 'types';
 
 import { Timestamp } from 'firebase/firestore';
+import { TimeOptions } from 'types';
 
 export const convertTimestampToISO = (data: any) => {
   if (data?.createdAt instanceof Timestamp) {
@@ -52,8 +53,8 @@ export const updateOrderTimes = createAsyncThunk(
     deliveryTime
   }: {
     orderId: string;
-    pickupTime: string;
-    deliveryTime: string;
+    pickupTime: TimeOptions;
+    deliveryTime: TimeOptions;
   }) => {
     const orderRef = doc(db, 'orders', orderId);
     await updateDoc(orderRef, { pickupTime, deliveryTime });
