@@ -7,7 +7,8 @@
     "new_order": "Uusi tilaus",
     "my_orders": "Omat tilaukseni",
     "my_account": "Oma tilini",
-    "sign_in": "Kirjaudu sisään"
+    "sign_in": "Kirjaudu sisään",
+    "sign_out": "Kirjaudu ulos"
   },
   "footer": {
     "for_customers": "Asiakkaille",

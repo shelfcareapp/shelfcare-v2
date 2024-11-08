@@ -7,7 +7,8 @@
     "order_now": "Order now",
     "new_order": "New order",
     "my_orders": "My orders",
-    "my_account": "My account"
+    "my_account": "My account",
+    "sign_out": "Sign out"
   },
   "footer": {
     "for_customers": "For customers",

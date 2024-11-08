@@ -50,7 +50,7 @@ const Header = () => {
   };
 
   const handleChatClick = () => {
-    dispatch(setHasNewNotification(false)); // Clear notification after click
+    dispatch(setHasNewNotification(false));
     router.push('/chat');
   };
 
@@ -133,7 +133,7 @@ const Header = () => {
                     className="block w-full font-semibold text-left px-4 py-2 text-primary hover:bg-gray-100"
                     onClick={handleSignOut}
                   >
-                    Sign Out
+                    {t('header.sign-out')}
                   </button>
                 </div>
               )}
@@ -216,13 +216,13 @@ const Header = () => {
                         href="/chat"
                         className="block px-4 py-2 text-primary hover:bg-gray-100"
                       >
-                        New Order
+                        {t('header.new_order')}
                       </Link>
                       <Link
                         href="/orders"
                         className="block px-4 py-2 text-primary hover:bg-gray-100"
                       >
-                        My Orders
+                        {t('header.my_orders')}
                       </Link>
 
                       <div className="border-t border-gray-200"></div>
@@ -230,13 +230,13 @@ const Header = () => {
                         href="/profile"
                         className="block px-4 py-2 text-primary hover:bg-gray-100"
                       >
-                        My Account
+                        {t('header.my_account')}
                       </Link>
                       <button
                         className="block w-full text-left font-semibold px-4 py-2 text-primary hover:bg-gray-100"
                         onClick={handleSignOut}
                       >
-                        Sign Out
+                        {t('header.sign-out')}
                       </button>
                     </div>
                   )}
