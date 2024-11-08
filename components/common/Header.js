@@ -133,7 +133,7 @@ const Header = () => {
                     className="block w-full font-semibold text-left px-4 py-2 text-primary hover:bg-gray-100"
                     onClick={handleSignOut}
                   >
-                    {t('header.sign-out')}
+                    {t('header.sign_out')}
                   </button>
                 </div>
               )}
@@ -236,7 +236,7 @@ const Header = () => {
                         className="block w-full text-left font-semibold px-4 py-2 text-primary hover:bg-gray-100"
                         onClick={handleSignOut}
                       >
-                        {t('header.sign-out')}
+                        {t('header.sign_out')}
                       </button>
                     </div>
                   )}
