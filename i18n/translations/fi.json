@@ -1,7 +1,7 @@
 {
   "header": {
     "price_list": "Hinnasto",
-    "how_it_works": "Kuinka se toimii",
+    "how_it_works": "Kuinka palvelu toimii?",
     "measurement_guide": "Mittausopas",
     "order_now": "Tilaa nyt",
     "new_order": "Uusi tilaus",
@@ -14,22 +14,22 @@
     "for_customers": "Asiakkaille",
     "price_list": "Hinnasto",
     "measurement_guide": "Mittausopas",
-    "how_it_works": "Kuinka se toimii",
+    "how_it_works": "Kuinka palvelu toimii?",
 
     "about_us": "Tietoa meistä",
     "contact_us": "Ota yhteyttä",
     "our_team": "Tiimimme",
 
-    "legal": "Oikeudellinen",
+    "legal": "Ehdot ja tietosuoja",
     "terms_and_conditions": "Käyttöehdot",
     "privacy_policy": "Tietosuojaseloste",
-    "copyright": "©2024 ShelfCare. Kaikki oikeudet pidätetään."
+    "copyright": "©2024 ShelfCare Oy. Kaikki oikeudet pidätetään."
   },
 
   "metadata": {
-    "title": "ShelfCare - Kestävä muoti ja vaatehuolto",
-    "description": "ShelfCare on omistautunut tekemään vaatteiden, kenkien ja asusteiden korjaus- ja huoltopalveluista helpommin saavutettavia. Integroimme nämä palvelut kuluttajien vaatehuoltorutiineihin, edistäen kestävää muodin kulutusta ja henkilökohtaista tyyliä. Laatu korvaa määrän ShelfCaressa, jossa rakkaat vaatteesi ja uniikki tyylisi ovat keskiössä.",
-    "keywords": "ShelfCare, kestävä muoti, vaatehuolto, vaatteiden korjaus, kenkien huolto, asusteiden korjaus, henkilökohtainen tyyli, laatu korvaa määrän, muodin kestävyys"
+    "title": "ShelfCare - Vaatekaapin korjaus- ja huoltopalvelut",
+    "description": "ShelfCare tekee ompelimo-, suutari- ja pesulapalveluista helppoja ja houkuttelevia. Integroimme vaatekaapin korjaus- ja huoltopalvelut kuluttajien vaatehuoltorutiineihin edistäen kestävää muodin kulutusta ja henkilökohtaista tyyliä. ShelfCaren avulla laatu korvaa määrän ja rakkaat vaatteesi ja uniikki tyylisi ovat keskiössä.",
+    "keywords": "ShelfCare, kestävä muoti, vaatehuolto, vaatteiden korjaus, kenkien huolto, asusteiden korjaus, henkilökohtainen tyyli, laatu korvaa määrän, muodin kestävyys, ompelimo, suutari, pesula, kuivapesu"
   },
 
   "language": {
@@ -44,7 +44,7 @@
       "cta": "Tilaa nyt"
     },
     "how_it_works": {
-      "title": "Miten palvelu toimii",
+      "title": "Kuinka palvelu toimii?",
       "subtitle": "Aloita näillä helpoilla vaiheilla:",
       "step1": {
         "title": "Lähetä palvelupyyntö",
