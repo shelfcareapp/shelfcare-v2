@@ -213,7 +213,7 @@ const Header = () => {
                   {isDropdownOpen && (
                     <div className="bg-white border rounded shadow-lg py-2">
                       <Link
-                        href="/new-chats"
+                        href="/chat"
                         className="block px-4 py-2 text-primary hover:bg-gray-100"
                       >
                         New Order
