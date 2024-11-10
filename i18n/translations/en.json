@@ -1,13 +1,13 @@
 {
   "header": {
     "price_list": "Price list",
-    "how_it_works": "How it works",
+    "how_it_works": "How the service works",
     "measurement_guide": "Measuring guide",
     "sign_in": "Sign in",
     "order_now": "Order now",
     "new_order": "New order",
     "my_orders": "My orders",
-    "my_account": "My account"
+    "my_account": "My account information"
   },
   "footer": {
     "for_customers": "For customers",
@@ -68,7 +68,7 @@
     "mission-vision": {
       "title": "Our mission & vision",
       "mission": "<b>Our mission</b> is to make wardrobe repair and maintenance services accessible and appealing, and establish these services as a regular activity for wardrobe care and sustainable fashion consumption.",
-      "vision": "<b>ShelfCare stands</b> for the new age of fashion industry where quality cancels out quantity. Instead of following the trends and continuous consumption, the focus is on personal style, perfectly fitting and beloved clothes which their owners want to take care of."
+      "vision": "<b>ShelfCare stands</b> for the new age of fashion industry where quality cancels out quantity. Instead of following trends and continuous consumption, focus is on personal style, perfectly fitting and beloved clothes that their owners want to take good care of."
     },
     "services": {
       "title": "Our services",
@@ -246,7 +246,7 @@
           "title": "Trousers",
           "services": {
             "trouser_leg_shortening": {
-              "name": "Trouser leg hhortening",
+              "name": "Trouser leg shortening",
               "price": "29",
               "subOptions": {
                 "hidden_stitch": { "name": "Hidden stitch", "price": "+6" },
@@ -704,7 +704,7 @@
       "title": "Cobbler Services",
       "groups": {
         "boots": {
-          "title": "Boots",
+          "title": "Shoes",
           "services": {
             "heel_replacement_small": {
               "name": "Heel replacement, Ø less than 1cm",
@@ -761,7 +761,7 @@
               "subOptions": {}
             },
             "tennis_shoe_resole": {
-              "name": "Tennis shoe resole",
+              "name": "Sneaker resole",
               "price": "109",
               "subOptions": {}
             },
@@ -930,7 +930,7 @@
           "title": "Bags",
           "services": {
             "zipper_replacement_short": {
-              "name": "Zipper replacement (zipper less than 30cm)",
+              "name": "Zipper replacement, zipper less than 30cm",
               "price": "50",
               "subOptions": {
                 "leather_bag": {
@@ -940,7 +940,7 @@
               }
             },
             "zipper_replacement_long": {
-              "name": "Zipper replacement (zipper more than 30cm)",
+              "name": "Zipper replacement, zipper more than 30cm",
               "price": "79",
               "subOptions": {
                 "leather_bag": {
@@ -982,7 +982,7 @@
           }
         },
         "other_cobbler_services": {
-          "title": "Other Cobbler Services",
+          "title": "Other cobbler services",
           "services": {
             "button_sewing": {
               "name": "Button sewing on leather goods",
@@ -1000,12 +1000,12 @@
               "subOptions": {}
             },
             "stitching_repair": {
-              "name": "Stitching repairs, e.g., torn seam",
+              "name": "Stitching repairs, e.g. torn seam",
               "price": "22",
               "subOptions": {}
             },
             "stain_removal_small": {
-              "name": "Stain removal, less than 20cm",
+              "name": "Stain removal, stain less than 20cm",
               "price": "25",
               "subOptions": {}
             }
@@ -1161,7 +1161,7 @@
       "section-7": {
         "heading": "Hem shortening for shirts, blazers and jackets",
         "instructions": {
-          "instruction-1": "Measure much shortening is needed.\nThe shortening will be done according to the original shape. Alternatively, you can mark the shortening with safety pins."
+          "instruction-1": "Measure the amount of shortening needed at the hem.\nThe shortening will be done according to the original cut at the hem. Alternatively, you can mark the shortening with safety pins."
         }
       },
       "section-8": {
