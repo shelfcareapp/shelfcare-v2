@@ -14,11 +14,7 @@ import {
   cobblerServicesKeys,
   cobblerSubOptionsKeys
 } from './cobblerKeys';
-import {
-  laundryKeys,
-  laundryServicesKeys,
-  laundrySubOptionsKeys
-} from './laundryKeys';
+import { laundryKeys, laundrySubOptionsKeys } from './laundryKeys';
 
 const PricingPage = () => {
   const t = useTranslations('pricing');
