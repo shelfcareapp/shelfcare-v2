@@ -72,7 +72,7 @@ export default function UserEnquiryPage() {
     if (user) {
       dispatch(listenToChat(user.uid));
     } else {
-      router.push('/login');
+      router.push('/sign-in');
     }
   }, [user, dispatch]);
 
