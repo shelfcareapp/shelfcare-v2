@@ -11,7 +11,7 @@ export default function Logo({ textSize }: LogoProps) {
       href="/"
       className={`${
         textSize ? textSize : 'text-3xl'
-      } font-extrabold text-primary`}
+      } font-extrabold text-secondary font-walbaum`}
     >
       <h1>ShelfCare</h1>
     </Link>

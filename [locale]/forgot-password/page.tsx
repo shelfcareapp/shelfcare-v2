@@ -14,7 +14,6 @@ export default function ForgotPasswordPage() {
       await sendPasswordResetEmail(auth, email);
       toast.success('Password reset email sent. Check your inbox.');
     } catch (error) {
-      console.error('Error sending password reset email:', error);
       toast.error('Failed to send password reset email. Please try again.');
     }
   };

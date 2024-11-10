@@ -14,10 +14,8 @@ import { toast } from 'react-toastify';
 import { FaInstagramSquare } from 'react-icons/fa';
 import { AiFillTikTok } from 'react-icons/ai';
 import { useAppSelector, useAppDispatch } from 'hooks/store';
-import {
-  markMessageAsRead,
-  setHasNewNotification
-} from 'store/slices/chat-slice';
+import { markMessageAsRead } from 'store/slices/chat-slice';
+import { useOnClickOutside } from 'usehooks-ts';
 
 const Header = () => {
   const { hasNewNotification } = useAppSelector((state) => state.chat);
@@ -49,10 +47,11 @@ const Header = () => {
     }
   };
 
-  const handleChatClick = () => {
-    dispatch(setHasNewNotification(false));
-    router.push('/chat');
+  const handleClickOutside = () => {
+    setIsDropdownOpen(false);
   };
+
+  useOnClickOutside(dropdownRef, handleClickOutside);
 
   useEffect(() => {
     const data = localStorage.getItem('not') === true;
@@ -66,14 +65,14 @@ const Header = () => {
   const showNotificationBadge = hasNewNotification || not;
 
   return (
-    <header className="border-b-[0.5px] sticky top-0 bg-white z-50">
+    <header className="border-b-[0.5px] sticky top-0 bg-primary z-50">
       <div className="container mx-auto flex justify-between items-center p-4">
         <Logo />
 
         <nav className="hidden md:flex space-x-6">
           <Link
             href="/price-list"
-            className={`nav-link ${
+            className={`nav-link !text-secondary ${
               pathname === '/price-list' ? 'nav-link-active' : ''
             }`}
           >
@@ -81,7 +80,7 @@ const Header = () => {
           </Link>
           <Link
             href="/measurement-guide"
-            className={`nav-link ${
+            className={`nav-link !text-secondary ${
               pathname === '/measurement-guide' ? 'nav-link-active' : ''
             }`}
           >
@@ -96,25 +95,15 @@ const Header = () => {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="relative p-1 border -base-100 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 transition-colors duration-200"
+                className="relative p-1 border -base-100 rounded-full hover:opacity-85 focus:outline-none focus:ring-2 focus:ring-secondary transition-colors duration-200"
               >
-                <CiUser className="text-primary" size={28} />
+                <CiUser className="text-secondary" size={28} />
                 {showNotificationBadge && (
                   <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white" />
                 )}
               </button>
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg py-2">
-                  <Link
-                    href="/chat"
-                    onClick={handleChatClick}
-                    className="relative block px-4 py-2 text-primary hover:bg-gray-100 transition-colors duration-200"
-                  >
-                    {t('header.new_order')}
-                    {showNotificationBadge && (
-                      <span className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white" />
-                    )}
-                  </Link>
+                <div className="absolute right-0 mt-2 w-60 bg-white border rounded py-2">
                   <Link
                     href="/orders"
                     className="block px-4 py-2 text-primary hover:bg-gray-100"
@@ -122,7 +111,7 @@ const Header = () => {
                     {t('header.my_orders')}
                   </Link>
 
-                  <div className="border-t border-gray-200"></div>
+                  <div className="border-secondary"></div>
                   <Link
                     href="/profile"
                     className="block px-4 py-2 text-primary hover:bg-gray-100"
@@ -146,7 +135,7 @@ const Header = () => {
               {t('header.sign_in')}
             </button>
           )}
-          <button className="btn-primary" onClick={handleOrderNow}>
+          <button className="btn-secondary" onClick={handleOrderNow}>
             {user ? t('header.new_order') : t('header.order_now')}
           </button>
         </div>
@@ -154,10 +143,10 @@ const Header = () => {
         <div className="md:hidden flex items-center">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="text-primary focus:outline-none relative p-1 transition-colors duration-200"
+            className="text-secondary focus:outline-none relative p-1 transition-colors duration-200"
           >
             {showNotificationBadge && (
-              <span className="absolute top-0 left-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white" />
+              <span className="absolute top-0 left-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-primary" />
             )}
             <svg
               className="w-6 h-6"
@@ -186,10 +175,10 @@ const Header = () => {
           }`}
         >
           <div className="flex flex-col ">
-            <nav className="md:hidden border-t border-gray-200">
+            <nav className="md:hidden border-t border-secondary">
               <Link
                 href="/price-list"
-                className={`block px-4 py-2 text-primary nav-link ${
+                className={`block px-4 py-2 text-secondary nav-link ${
                   pathname === '/price-list' ? 'nav-link-active' : ''
                 }`}
               >
@@ -197,51 +186,33 @@ const Header = () => {
               </Link>
               <Link
                 href="/measurement-guide"
-                className={`block px-4 py-2 text-primary nav-link ${
+                className={`block px-4 py-2 text-secondary nav-link ${
                   pathname === '/measurement-guide' ? 'nav-link-active' : ''
                 }`}
               >
                 {t('header.measurement_guide')}
               </Link>
+              <Link
+                href="/orders"
+                className="block px-4 py-2 text-primary hover:bg-gray-100"
+              >
+                {t('header.my_orders')}
+              </Link>
+
+              <Link
+                href="/profile"
+                className="block px-4 py-2 text-primary hover:bg-gray-100"
+              >
+                {t('header.my_account')}
+              </Link>
+              <button
+                className="block w-full text-left font-semibold px-4 py-2 text-primary hover:bg-gray-100"
+                onClick={handleSignOut}
+              >
+                {t('header.sign_out')}
+              </button>
             </nav>
             <div className="md:hidden p-2 mb-2">
-              {user && (
-                <>
-                  <button onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-                    <CiUser className="text-primary" size={28} />
-                  </button>
-                  {isDropdownOpen && (
-                    <div className="bg-white border rounded shadow-lg py-2">
-                      <Link
-                        href="/chat"
-                        className="block px-4 py-2 text-primary hover:bg-gray-100"
-                      >
-                        {t('header.new_order')}
-                      </Link>
-                      <Link
-                        href="/orders"
-                        className="block px-4 py-2 text-primary hover:bg-gray-100"
-                      >
-                        {t('header.my_orders')}
-                      </Link>
-
-                      <div className="border-t border-gray-200"></div>
-                      <Link
-                        href="/profile"
-                        className="block px-4 py-2 text-primary hover:bg-gray-100"
-                      >
-                        {t('header.my_account')}
-                      </Link>
-                      <button
-                        className="block w-full text-left font-semibold px-4 py-2 text-primary hover:bg-gray-100"
-                        onClick={handleSignOut}
-                      >
-                        {t('header.sign_out')}
-                      </button>
-                    </div>
-                  )}
-                </>
-              )}
               <div className="flex flex-col gap-3 p-2">
                 {!user && (
                   <button

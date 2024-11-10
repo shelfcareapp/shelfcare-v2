@@ -1150,12 +1150,12 @@
             "silk_suit": {
               "name": "Silkkipuku",
               "price": "+15"
-            },
-            "suit_with_vest": {
-              "name": "Puku liivillä",
-              "price": "46"
             }
           }
+        },
+        "suit_vest": {
+          "name": "Puvun liivi",
+          "price": "46"
         },
         "dress_mini": {
           "name": "Mekko, mini",
@@ -1177,6 +1177,30 @@
           "name": "Jakku / pikkutakki",
           "price": "26"
         },
+        "tie": {
+          "name": "Solmio / rusetti",
+          "price": "10"
+        },
+        "shirt": {
+          "name": "Paita",
+          "price": "10",
+          "subOptions": {
+            "silk_shirt": {
+              "name": "Villa / silkkipaita",
+              "price": "+7"
+            }
+          }
+        },
+        "scarf": {
+          "name": "Huivi",
+          "price": "10",
+          "subOptions": {
+            "silk_scarf": {
+              "name": "Villahuivi / silkkihuivi",
+              "price": "+7"
+            }
+          }
+        },
         "coat": {
           "name": "Kangastakki",
           "price": "39",
@@ -1193,13 +1217,7 @@
         },
         "winter_jacket": {
           "name": "Toppatakki",
-          "price": "27",
-          "subOptions": {
-            "length_over_knee": {
-              "name": "Pituus yli polven",
-              "price": "+10"
-            }
-          }
+          "price": "27"
         },
         "down_jacket": {
           "name": "Untuvatakki",
@@ -1212,7 +1230,7 @@
           }
         },
         "canada_goose_jacket": {
-          "name": "Canada Goose -takki",
+          "name": "Canada Goose -takit",
           "price": "59"
         }
       }
@@ -1265,9 +1283,14 @@
       "section-6": {
         "heading": "Vyötärön kavennus paidoille, jakuille, pikkutakeille ja mekoille",
         "instructions": {
-          "instruction-1": "Mittaa\na) senttimetrimäärä helmasta pisteeseen, josta haluat, että kavennus aloitetaan.\nb) senttimetrimäärä helmasta pisteeseen, jossa kavennustarve on enimmillään.\nc) senttimetrimäärä, minkä verran haluat enimmillään kaventaa vaatetta. \nd) senttimetrimäärä helmasta pisteeseen, johon haluat, että kavennus päättyy tai jos haluat kaventaa helmaan saakka, mittaa senttimetrimäärä, minkä verran haluat kaventaa vaatetta helmasta. ",
-          "instruction-2": "Voit myös vaihtoehtoisesti merkata pisteet hakaneuloilla.\nKavennus tehdään noudattaen vaatteen alkuperäistä leikkausta.",
-          "instruction-3": "Esim. Vyötärön kavennus halutaan aloittaa kohdasta, joka on 30cm paidan helmasta ylöspäin ja lopettaa kohtaan 10cm helmasta ylöspäin. Kavennustarve enimmillään on 4cm ja 4cm kavennus halutaan tehdä kohtaan, joka on 17cm paidan helmasta ylöspäin. Paita kavennetaan aloitus- ja lopetuspisteen väliltä kavennustarpeen 4cm mukaisesti niin, että enimmäiskavennus on kohdassa, joka on paidan helmasta 17cm ylöspäin."
+          "instruction-1": "Mittaa",
+          "instruction-2": "a) senttimetrimäärä helmasta pisteeseen, josta haluat, että kavennus aloitetaan.",
+          "instruction-3": "b) senttimetrimäärä helmasta pisteeseen, jossa kavennustarve on enimmillään.",
+          "instruction-4": "c) senttimetrimäärä, minkä verran haluat enimmillään kaventaa vaatetta.",
+          "instruction-5": "d) senttimetrimäärä helmasta pisteeseen, johon haluat, että kavennus päättyy tai jos haluat kaventaa helmaan saakka, mittaa senttimetrimäärä, minkä verran haluat kaventaa vaatetta helmasta.",
+          "instruction-6": "Voit myös vaihtoehtoisesti merkata pisteet hakaneuloilla.",
+          "instruction-7": "Kavennus tehdään noudattaen vaatteen alkuperäistä leikkausta.",
+          "instruction-8": "Esim. Vyötärön kavennus halutaan aloittaa kohdasta, joka on 30cm paidan helmasta ylöspäin ja lopettaa kohtaan 10cm helmasta ylöspäin. Kavennustarve enimmillään on 4cm ja 4cm kavennus halutaan tehdä kohtaan, joka on 17cm paidan helmasta ylöspäin. Paita kavennetaan aloitus- ja lopetuspisteen väliltä kavennustarpeen 4cm mukaisesti niin, että enimmäiskavennus on kohdassa, joka on paidan helmasta 17cm ylöspäin."
         }
       },
       "section-7": {
@@ -1280,7 +1303,8 @@
         "heading": "Helman lyhennys hameille, mekoille ja pitkille takeille",
         "instructions": {
           "instruction-1": "Taita kangas kaksin kerroin reiden kohdalta. Mallaa pituutta kangasta taittamalla niin, että löydät helmalle haluamasi lyhennystarpeen. Mittaa lyhennystarve taitoksesta.",
-          "instruction-2": "Huomioithan, että kangas on kaksin kerroin taitoskohdassa, jolloin yhden puolen mittaustulos pitää kertoa kahdella. Voit myös merkata lyhennyksen hakaneulalla. Merkkaa lyhennys samalla tavalla kangasta taittaen."
+          "instruction-2": "Huomioithan, että kangas on kaksin kerroin taitoskohdassa, jolloin yhden puolen mittaustulos pitää kertoa kahdella.",
+          "instruction-3": "Voit myös merkata lyhennyksen hakaneulalla. Merkkaa lyhennys samalla tavalla kangasta taittaen."
         }
       },
       "section-9": {
@@ -1298,8 +1322,9 @@
       "section-11": {
         "heading": "Hihan kavennus",
         "instructions": {
-          "instruction-1": "Taita kangas kaksin kerroin hihansuusta. Mittaa paljonko kavennustarve on. Huomioithan, että kangas on kaksin kerroin taitoskohdassa, jolloin yhden puolen mittaustulos pitää kertoa kahdella. Mittaa senttimetrimäärä hihansuusta pisteeseen, josta haluat, että kavennus aloitetaan. Voit myös merkata kavennukseen hakaneulalla. Merkkaa kavennus hihansuusta ja kohta, mistä kavennus aloitetaan.",
-          "instruction-2": "Esim. Hihan kavennus halutaan aloittaa kohdasta, joka on 30cm hihansuusta ylöspäin. Kavennus hihansuussa on 4cm."
+          "instruction-1": "Taita kangas kaksin kerroin hihansuusta. Mittaa paljonko kavennustarve on. Huomioithan, että kangas on kaksin kerroin taitoskohdassa, jolloin yhden puolen mittaustulos pitää kertoa kahdella. Mittaa senttimetrimäärä hihansuusta pisteeseen, josta haluat, että kavennus aloitetaan. ",
+          "instruction-2": "Voit myös merkata kavennukseen hakaneulalla. Merkkaa kavennus hihansuusta ja kohta, mistä kavennus aloitetaan.",
+          "instruction-3": "Esim. Hihan kavennus halutaan aloittaa kohdasta, joka on 30cm hihansuusta ylöspäin. Kavennus hihansuussa on 4cm."
         }
       },
       "section-12": {

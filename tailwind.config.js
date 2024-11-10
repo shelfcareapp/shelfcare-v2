@@ -15,7 +15,8 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Arial', 'Helvetica', 'sans-serif'],
-        baskerville: ['Baskerville', 'serif']
+        baskerville: ['Baskerville', 'serif'],
+        walbaum: ['"Walbaum Display"', 'serif']
       }
     }
   },

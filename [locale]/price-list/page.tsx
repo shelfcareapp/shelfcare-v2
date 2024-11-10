@@ -14,11 +14,7 @@ import {
   cobblerServicesKeys,
   cobblerSubOptionsKeys
 } from './cobblerKeys';
-import {
-  laundryKeys,
-  laundryServicesKeys,
-  laundrySubOptionsKeys
-} from './laundryKeys';
+import { laundryKeys, laundrySubOptionsKeys } from './laundryKeys';
 
 const PricingPage = () => {
   const t = useTranslations('pricing');
@@ -48,7 +44,7 @@ const PricingPage = () => {
       return (
         <div
           key={groupKey}
-          className="bg-white shadow-lg rounded-lg mb-6 p-4 border border-gray-200"
+          className="bg-white  rounded-lg mb-6 p-4 border border-gray-200"
         >
           <div
             className="flex justify-between items-center cursor-pointer"
@@ -109,38 +105,39 @@ const PricingPage = () => {
   };
 
   const renderLaundryContent = () => {
-    return laundryKeys.map((serviceKey) => (
-      <div
-        key={serviceKey}
-        className="bg-white shadow-lg rounded-lg mb-6 p-4 border border-gray-200"
-      >
-        <div className="flex justify-between items-center">
-          <span className="text-xl font-semibold text-primary">
-            {t(`laundry.services.${serviceKey}.name`)}
-          </span>
-          <span>{t(`laundry.services.${serviceKey}.price`)} €</span>
-        </div>
-        {laundrySubOptionsKeys[serviceKey] &&
-          laundrySubOptionsKeys[serviceKey].map((subOptionKey) => (
-            <div
-              key={subOptionKey}
-              className="flex justify-between py-1 text-gray-600 ml-4"
-            >
-              <span>
-                {t(
-                  `laundry.services.${serviceKey}.subOptions.${subOptionKey}.name`
-                )}
+    return (
+      <div className="bg-white rounded-lg mb-6 p-4 border border-gray-200">
+        {laundryKeys.map((serviceKey) => (
+          <div key={serviceKey} className="">
+            <div className="flex justify-between items-center">
+              <span className="text-xl font-semibold text-primary">
+                {t(`laundry.services.${serviceKey}.name`)}
               </span>
-              <span>
-                {t(
-                  `laundry.services.${serviceKey}.subOptions.${subOptionKey}.price`
-                )}
-                €
-              </span>
+              <span>{t(`laundry.services.${serviceKey}.price`)} €</span>
             </div>
-          ))}
+            {laundrySubOptionsKeys[serviceKey] &&
+              laundrySubOptionsKeys[serviceKey].map((subOptionKey) => (
+                <div
+                  key={subOptionKey}
+                  className="flex justify-between py-1 text-gray-600 ml-4"
+                >
+                  <span>
+                    {t(
+                      `laundry.services.${serviceKey}.subOptions.${subOptionKey}.name`
+                    )}
+                  </span>
+                  <span>
+                    {t(
+                      `laundry.services.${serviceKey}.subOptions.${subOptionKey}.price`
+                    )}
+                    €
+                  </span>
+                </div>
+              ))}
+          </div>
+        ))}
       </div>
-    ));
+    );
   };
 
   const renderActiveTabContent = () => {
@@ -178,8 +175,8 @@ const PricingPage = () => {
                 key={index}
                 className={`py-2 px-6 rounded-full font-medium transition-all ${
                   activeTab === index
-                    ? 'bg-primary text-white shadow-md transform scale-105'
-                    : 'bg-gray-200 text-primary hover:bg-primary hover:text-white hover:shadow-md'
+                    ? 'bg-primary text-white  transform scale-105'
+                    : 'bg-gray-200 text-primary hover:bg-primary hover:text-white hover:'
                 }`}
                 onClick={() => setActiveTab(index)}
               >

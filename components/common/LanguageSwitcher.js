@@ -44,7 +44,7 @@ const LanguageSwitcher = () => {
     <div ref={dropdownRef} className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center text-primary focus:outline-none"
+        className="flex items-center text-primary md:text-secondary lg:text-secondary focus:outline-none"
       >
         <CiGlobe />
         <span className="ml-1 mr-1">{value.toUpperCase()}</span>

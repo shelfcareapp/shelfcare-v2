@@ -35,11 +35,6 @@ const Footer = () => {
                   {t('footer.measurement_guide')}
                 </Link>
               </li>
-            </ul>
-          </div>
-
-          <div>
-            <ul className="space-y-2">
               <li>
                 <Link
                   href="/about#contact"
@@ -48,11 +43,6 @@ const Footer = () => {
                   {t('footer.contact_us')}
                 </Link>
               </li>
-            </ul>
-          </div>
-
-          <div>
-            <ul className="space-y-2">
               <li>
                 <Link href="/terms" className="hover:underline text-secondary">
                   {t('footer.terms_and_conditions')}
