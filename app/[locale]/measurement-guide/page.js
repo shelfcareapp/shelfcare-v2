@@ -45,7 +45,7 @@ const MeasurementGuide = () => {
                   {Object.keys(instructions).map((instKey) => (
                     <p
                       key={instKey}
-                      className="mb-2 text-gray-700 leading-relaxed"
+                      className="mb-4 text-gray-700 leading-relaxed"
                     >
                       {instructions[instKey]}
                     </p>
