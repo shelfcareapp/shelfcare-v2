@@ -477,7 +477,7 @@ export default function UserEnquiryPage() {
               </div>
 
               {/* Message input area */}
-              <div className="border-base-300 p-4">
+              <div className="border-slate-100 p-4 border-t border-[0.5px]">
                 {showImagePreviews()}
                 <div className="relative border px-4 py-2 rounded-lg">
                   <div className="flex items-center">
