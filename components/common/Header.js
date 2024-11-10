@@ -95,7 +95,7 @@ const Header = () => {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="relative p-1 border -base-100 rounded-full hover:opacity-85 focus:outline-none focus:ring-2 focus:ring-secondary transition-colors duration-200"
+                className="relative p-1 rounded-full hover:opacity-85 focus:outline-none focus:ring-2 focus:ring-secondary transition-colors duration-200"
               >
                 <CiUser className="text-secondary" size={28} />
                 {showNotificationBadge && (

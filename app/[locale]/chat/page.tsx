@@ -16,7 +16,6 @@ import { AiOutlineLoading } from 'react-icons/ai';
 import { useLocale, useTranslations } from 'next-intl';
 import { useAppDispatch, useAppSelector } from 'hooks/store';
 import UserDashboardLeftbar from 'components/common/UserDashboardLeftbar';
-import { useChatScroll } from 'hooks/use-chat-scroll';
 import ProtectRoute from 'components/common/ProtectedRoute';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { doc, updateDoc } from 'firebase/firestore';
@@ -50,12 +49,11 @@ export default function UserEnquiryPage() {
   const [message, setMessage] = useState<string>('');
   const [images, setImages] = useState<File[] | null>(null);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
-  const chatRef = useChatScroll(messages);
   const t = useTranslations('user-dashboard');
   const locale = useLocale();
+  const messageEndRef = useRef<HTMLDivElement>(null);
 
   const [isConfirming, setIsConfirming] = useState(false);
-  const messagesEndRef = useRef(null);
   const { pickupDates, returnDates } = useTimeOptions();
 
   const [pickupOptions, setPickupOptions] = useState<{
@@ -76,7 +74,9 @@ export default function UserEnquiryPage() {
     }
   }, [user, dispatch]);
 
-  const adminWelcomeMessage = t('welcome-message');
+  const adminWelcomeMessage = t('welcome-message')
+    .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
+    .replace(/\n/g, '<br />');
 
   useEffect(() => {
     if (!welcomeMessageSent) {
@@ -93,6 +93,30 @@ export default function UserEnquiryPage() {
       dispatch(setWelcomeMessageSent(true));
     }
   }, [welcomeMessageSent, user, dispatch]);
+
+  useEffect(() => {
+    if (
+      messages.length === 2 &&
+      messages[0]?.sender === 'admin' &&
+      messages[0].isAutoReply
+    ) {
+      dispatch(
+        sendMessage({
+          userId: user?.uid,
+          content: t('first-message-auto-reply'),
+          sender: 'admin',
+          isAutoReply: true,
+          images: []
+        })
+      );
+    }
+  }, [messages, dispatch, user]);
+
+  useEffect(() => {
+    if (messageEndRef.current) {
+      messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -217,14 +241,6 @@ export default function UserEnquiryPage() {
     }
   };
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
   const updateReturnDatesForOrder = (
     orderId: string,
     selectedPickup: TimeOptions
@@ -310,99 +326,84 @@ export default function UserEnquiryPage() {
 
   return (
     <ProtectRoute>
-      <Layout>
-        <div className="mx-auto max-w-7xl lg:flex h-full">
+      <Layout hideFooter={true}>
+        <div className="mx-auto max-w-7xl lg:flex h-screen">
           <UserDashboardLeftbar />
-          <main className="flex-1 flex flex-col bg-white relative h-screen">
-            <div
-              className="flex-1 flex flex-col justify-between bg-white"
-              style={{ height: 'calc(100vh - 100px)' }}
-            >
-              <div
-                className="flex-1 overflow-y-auto"
-                ref={chatRef}
-                style={{ maxHeight: 'calc(100vh - 150px)' }}
-              >
-                <div className="flex flex-col w-full">
-                  <div className="flex flex-col justify-end bg-gray-50 w-full h-screen">
-                    <div className="p-4 overflow-y-auto" id="chat-container">
-                      {initialLoading ? (
-                        <AiOutlineLoading className="animate-spin text-4xl mx-auto" />
-                      ) : (
-                        <div className="flex flex-col">
-                          {messages.length > 0 &&
-                            messages
-                              .filter((msg) => Boolean(msg))
-                              .map((msg, index) => (
-                                <div
-                                  key={index}
-                                  className={`mb-4 ${
-                                    msg.sender === user?.uid
-                                      ? 'text-right'
-                                      : 'text-left'
-                                  }`}
-                                >
-                                  <div
-                                    className={`inline-block p-4 rounded-lg shadow max-w-md lg:w-auto ${
-                                      msg.sender === user?.uid
-                                        ? 'bg-primary text-white'
-                                        : 'bg-[#FAEDE9]'
-                                    }`}
-                                  >
-                                    {msg.imageUrls &&
-                                      msg.imageUrls.length > 0 && (
-                                        <div className="flex flex-wrap gap-2">
-                                          {msg.imageUrls.map((url, i) => (
-                                            <img
-                                              key={i}
-                                              src={url}
-                                              alt={`Sent image ${i + 1}`}
-                                              className="mb-2 rounded-lg max-w-32 max-h-24"
-                                            />
-                                          ))}
+          <main className="flex-1 flex bg-white h-screen border-r">
+            <div className="flex-1 flex flex-col justify-between bg-white">
+              <div className="p-4 overflow-y-scroll">
+                {initialLoading ? (
+                  <AiOutlineLoading className="animate-spin text-4xl mx-auto" />
+                ) : (
+                  <div className="flex flex-col">
+                    {messages.length > 0 &&
+                      messages
+                        .filter((msg) => Boolean(msg))
+                        .map((msg, index) => (
+                          <div
+                            key={index}
+                            className={`mb-4 ${
+                              msg.sender === user?.uid
+                                ? 'text-right'
+                                : 'text-left'
+                            }`}
+                          >
+                            <div
+                              className={`inline-block p-4 rounded-lg shadow max-w-72 md:max-w-xl lg:max-w-xl ${
+                                msg.sender === user?.uid
+                                  ? 'bg-primary text-white'
+                                  : 'bg-[#FAEDE9]'
+                              }`}
+                            >
+                              {msg.imageUrls && msg.imageUrls.length > 0 && (
+                                <div className="flex flex-wrap gap-2">
+                                  {msg.imageUrls.map((url, i) => (
+                                    <img
+                                      key={i}
+                                      src={url}
+                                      alt={`Sent image ${i + 1}`}
+                                      className="mb-2 rounded-lg max-w-32 max-h-24"
+                                    />
+                                  ))}
+                                </div>
+                              )}
+                              <p
+                                className={
+                                  msg.sender === user?.uid
+                                    ? 'text-white'
+                                    : 'text-gray-900'
+                                }
+                              >
+                                <span
+                                  dangerouslySetInnerHTML={{
+                                    __html: msg.content
+                                  }}
+                                  className="text-left"
+                                />
+                                {msg.type === 'options' && (
+                                  <span className="mt-4">
+                                    <div className="space-y-4">
+                                      <div>
+                                        <span className="font-medium text-gray-700 my-2 text-sm">
+                                          {t('select-pickup-time')}:
+                                        </span>
+                                        {renderPickupOptions(msg.orderId)}
+                                      </div>
+
+                                      {pickupOptions[msg.orderId] && (
+                                        <div>
+                                          <span className="font-medium text-gray-700 my-2 text-sm">
+                                            {t('select-return-time')}:
+                                          </span>
+                                          {renderDeliveryOptions(msg.orderId)}
                                         </div>
                                       )}
-                                    <p
-                                      className={
-                                        msg.sender === user?.uid
-                                          ? 'text-white'
-                                          : 'text-gray-900'
-                                      }
-                                    >
-                                      <span
-                                        dangerouslySetInnerHTML={{
-                                          __html: msg.content
-                                        }}
-                                        className="text-left"
-                                      />
-                                      {msg.type === 'options' && (
-                                        <span className="mt-4">
-                                          <div className="space-y-4">
-                                            <div>
-                                              <span className="font-medium text-gray-700 my-2 text-sm">
-                                                {t('select-pickup-time')}:
-                                              </span>
-                                              {renderPickupOptions(msg.orderId)}
-                                            </div>
 
-                                            {pickupOptions[msg.orderId] && (
-                                              <div>
-                                                <span className="font-medium text-gray-700 my-2 text-sm">
-                                                  {t('select-return-time')}:
-                                                </span>
-                                                {renderDeliveryOptions(
-                                                  msg.orderId
-                                                )}
-                                              </div>
-                                            )}
-
-                                            <button
-                                              onClick={() =>
-                                                handleConfirmSelection(
-                                                  msg.orderId
-                                                )
-                                              }
-                                              className={`mt-4 px-6 py-2 bg-primary text-white rounded-lg hover:bg-brown-700 transition-colors
+                                      <button
+                                        onClick={() =>
+                                          handleConfirmSelection(msg.orderId)
+                                        }
+                                        className={`mt-4 px-6 py-2 bg-primary text-white rounded-lg hover:bg-brown-700 transition-colors
                                               ${
                                                 disableConfirmationBtn(
                                                   msg.orderId
@@ -410,103 +411,102 @@ export default function UserEnquiryPage() {
                                                 'cursor-not-allowed opacity-40'
                                               }
                                               `}
-                                              disabled={disableConfirmationBtn(
-                                                msg.orderId
-                                              )}
-                                            >
-                                              {isConfirming
-                                                ? t('confirming')
-                                                : t('confirm-selection')}
-                                            </button>
-                                          </div>
-                                        </span>
-                                      )}
-                                      {msg.type === 'yesno' && (
-                                        <div className="flex items-center justify-between mt-4 w-full">
-                                          <div className="flex items-center w-full">
-                                            <button
-                                              onClick={() =>
-                                                dispatch(
-                                                  sendMessage({
-                                                    userId: user?.uid,
-                                                    content: getYesNoMessage(
-                                                      locale,
-                                                      'yes'
-                                                    ),
-                                                    images: [],
-                                                    sender: 'Admin'
-                                                  })
-                                                )
-                                              }
-                                              className="bg-[#881112] text-white px-4 py-2 rounded-lg"
-                                            >
-                                              {t('yes')}
-                                            </button>
-                                            <button
-                                              onClick={() =>
-                                                dispatch(
-                                                  sendMessage({
-                                                    userId: user?.uid,
-                                                    content: getYesNoMessage(
-                                                      locale,
-                                                      'no'
-                                                    ),
-                                                    images: [],
-                                                    sender: 'Admin'
-                                                  })
-                                                )
-                                              }
-                                              className="bg-[#881112] text-white px-4 py-2 rounded-lg ml-2"
-                                            >
-                                              {t('no')}
-                                            </button>
-                                          </div>
-                                        </div>
-                                      )}
-                                    </p>
-                                    <span className="text-xs text-gray-400 mt-1 block">
-                                      {msg.time}
-                                    </span>
+                                        disabled={disableConfirmationBtn(
+                                          msg.orderId
+                                        )}
+                                      >
+                                        {isConfirming
+                                          ? t('confirming')
+                                          : t('confirm-selection')}
+                                      </button>
+                                    </div>
+                                  </span>
+                                )}
+                                {msg.type === 'yesno' && (
+                                  <div className="flex items-center justify-between mt-4 w-full">
+                                    <div className="flex items-center w-full">
+                                      <button
+                                        onClick={() =>
+                                          dispatch(
+                                            sendMessage({
+                                              userId: user?.uid,
+                                              content: getYesNoMessage(
+                                                locale,
+                                                'yes'
+                                              ),
+                                              images: [],
+                                              sender: 'Admin'
+                                            })
+                                          )
+                                        }
+                                        className="bg-[#881112] text-white px-4 py-2 rounded-lg"
+                                      >
+                                        {t('yes')}
+                                      </button>
+                                      <button
+                                        onClick={() =>
+                                          dispatch(
+                                            sendMessage({
+                                              userId: user?.uid,
+                                              content: getYesNoMessage(
+                                                locale,
+                                                'no'
+                                              ),
+                                              images: [],
+                                              sender: 'Admin'
+                                            })
+                                          )
+                                        }
+                                        className="bg-[#881112] text-white px-4 py-2 rounded-lg ml-2"
+                                      >
+                                        {t('no')}
+                                      </button>
+                                    </div>
                                   </div>
-                                </div>
-                              ))}
-                        </div>
-                      )}
-                      <div ref={messagesEndRef} />
-                    </div>
+                                )}
+                              </p>
+                              <span className="text-xs text-gray-400 mt-1 block">
+                                {msg.time}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                    <div ref={messageEndRef} />
                   </div>
-                </div>
+                )}
               </div>
+
               {/* Message input area */}
-              <div className="sticky bottom-0 p-4 bg-white shadow flex flex-col z-10">
+              <div className="border-base-300 p-4">
                 {showImagePreviews()}
+                <div className="relative border px-4 py-2 rounded-lg">
+                  <div className="flex items-center">
+                    <label htmlFor="file-upload" className="cursor-pointer">
+                      <FiPaperclip className="text-gray-500 mx-2" />
+                    </label>
+                    <input
+                      type="file"
+                      id="file-upload"
+                      className="hidden"
+                      onChange={handleFileChange}
+                    />
 
-                <div className="flex items-center">
-                  <label htmlFor="file-upload" className="cursor-pointer">
-                    <FiPaperclip className="text-gray-500 mr-2" />
-                  </label>
-                  <input
-                    type="file"
-                    id="file-upload"
-                    className="hidden"
-                    onChange={handleFileChange}
-                  />
+                    <input
+                      type="text"
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      placeholder={t('type-message')}
+                      className="flex-1 bg-inherit p-2 rounded-lg outline-none"
+                      onKeyDown={handleSendOnEnter}
+                    />
 
-                  <input
-                    type="text"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder={t('type-message')}
-                    className="flex-1 bg-gray-100 p-2 rounded-lg outline-none"
-                    onKeyDown={handleSendOnEnter}
-                  />
-
-                  <button
-                    onClick={handleSendMessage}
-                    className="ml-4 bg-primary text-white p-2 rounded-lg cursor-pointer"
-                  >
-                    <PaperAirplaneIcon className="h-5 w-5 -rotate-45" />
-                  </button>
+                    <button
+                      onClick={handleSendMessage}
+                      className="ml-4 bg-primary text-white p-2 rounded-lg cursor-pointer"
+                    >
+                      <PaperAirplaneIcon className="h-5 w-5 -rotate-45" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

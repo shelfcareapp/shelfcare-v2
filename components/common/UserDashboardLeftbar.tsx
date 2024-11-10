@@ -31,7 +31,7 @@ const UserDashboardLeftbar = () => {
   ];
 
   return (
-    <aside className="flex-none w-full lg:w-64 border-b border-gray-900/5 border-l border-r ">
+    <aside className="flex-none w-full lg:w-64 border-b border-gray-900/5 border-l border-r sticky top-0 bg-white">
       <nav className="px-4 sm:px-6 lg:px-0 h-full">
         <ul
           role="list"

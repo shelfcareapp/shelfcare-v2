@@ -1,15 +1,36 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-function useChatScroll<T>(dep: T): React.MutableRefObject<HTMLDivElement> {
-  const ref = useRef<HTMLDivElement>(null);
+const useChatScroll = (messages) => {
+  const chatRef = useRef<HTMLDivElement>(null);
+  const [isAutoScrollEnabled, setIsAutoScrollEnabled] = useState(true);
+
+  const handleScroll = () => {
+    if (chatRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = chatRef.current;
+      const isAtBottom = scrollHeight - scrollTop === clientHeight;
+      setIsAutoScrollEnabled(isAtBottom);
+    }
+  };
 
   useEffect(() => {
-    if (ref.current) {
-      ref.current.scrollTop = ref.current.scrollHeight;
+    if (isAutoScrollEnabled && chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
-  }, [dep]);
+  }, [messages, isAutoScrollEnabled]);
 
-  return ref;
-}
+  useEffect(() => {
+    const chatContainer = chatRef.current;
+    if (chatContainer) {
+      chatContainer.addEventListener('scroll', handleScroll);
+    }
+    return () => {
+      if (chatContainer) {
+        chatContainer.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, []);
 
-export { useChatScroll };
+  return chatRef;
+};
+
+export default useChatScroll;
