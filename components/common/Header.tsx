@@ -54,7 +54,7 @@ const Header = () => {
   useOnClickOutside(dropdownRef, handleClickOutside);
 
   useEffect(() => {
-    const data = localStorage.getItem('not') === true;
+    const data = localStorage.getItem('not') === 'true';
     setNot(data);
     if (route == '/chat') {
       dispatch(markMessageAsRead(user.uid));
@@ -129,7 +129,7 @@ const Header = () => {
             </div>
           ) : (
             <button
-              className="btn-secondary"
+              className="text-secondary px-4 py-2 border border-secondary rounded-lg hover:opacity-85 focus:outline-none focus:ring-2 focus:ring-secondary transition-colors duration-200"
               onClick={() => router.push('/sign-in')}
             >
               {t('header.sign_in')}

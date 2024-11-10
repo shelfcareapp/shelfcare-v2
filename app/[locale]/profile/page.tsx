@@ -7,8 +7,9 @@ import { toast } from 'react-toastify';
 import { doc, getDoc, Timestamp, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { confirmPasswordReset } from 'firebase/auth';
 
 type ProfileData = {
   name: string;
@@ -20,20 +21,13 @@ type ProfileData = {
   doorInfo: string;
   birthday: string | null;
 };
-function convertTimestampToDate(timestamp) {
-  const { seconds } = timestamp;
-  const date = new Date(seconds * 1000); // Convert seconds to milliseconds
-  const year = date.getUTCFullYear();
-  const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Months are zero-indexed
-  const day = String(date.getUTCDate()).padStart(2, '0');
-
-  return `${year}-${month}-${day}`;
-}
 
 export default function ProfilePage() {
   const [user] = useAuthState(auth);
   const router = useRouter();
   const t = useTranslations('user-dashboard');
+  const searchParams = useSearchParams();
+  const oobCode = searchParams.get('oobCode');
 
   const [profileData, setProfileData] = useState<ProfileData>({
     name: user.displayName || '',
@@ -45,6 +39,8 @@ export default function ProfilePage() {
     doorInfo: '',
     birthday: ''
   });
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const [loading, setLoading] = useState(false);
 
@@ -125,6 +121,34 @@ export default function ProfilePage() {
     } catch (err) {
       console.error('Error updating profile:', err);
       toast.error('Failed to update profile.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePasswordReset = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!oobCode) {
+      toast.error('Invalid or missing password reset code.');
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      toast.error('Passwords do not match.');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await confirmPasswordReset(auth, oobCode, newPassword);
+      toast.success('Password has been reset successfully.');
+      setNewPassword('');
+      setConfirmPassword('');
+      router.push('/sign-in');
+    } catch (error) {
+      console.error('Error resetting password:', error);
+      toast.error('Failed to reset password.');
     } finally {
       setLoading(false);
     }
@@ -276,6 +300,58 @@ export default function ProfilePage() {
                 } text-white px-4 py-2 rounded-md`}
               >
                 {loading ? t('saving') : t('save-changes')}
+              </button>
+            </div>
+          </form>
+
+          <form
+            onSubmit={handlePasswordReset}
+            className="mt-8 space-y-8 border-t pt-8"
+          >
+            <h3 className="text-md font-semibold mb-4">
+              {t('change-password')}
+            </h3>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <div>
+                <label className="block text-sm font-medium text-gray-400">
+                  {t('new-password')}
+                </label>
+                <input
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  className="mt-2 block w-full border-gray-300 rounded-md shadow-sm p-2"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-400">
+                  {t('confirm-password')}
+                </label>
+                <input
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className={`mt-2 block w-full border-gray-300 rounded-md shadow-sm p-2 ${
+                    newPassword !== confirmPassword && confirmPassword !== ''
+                      ? 'border-red-500'
+                      : ''
+                  }`}
+                  required
+                />
+              </div>
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                disabled={loading}
+                className={`${
+                  loading ? 'bg-secondary' : 'bg-primary'
+                } text-white px-4 py-2 rounded-md`}
+              >
+                {loading ? t('saving') : t('change-password')}
               </button>
             </div>
           </form>

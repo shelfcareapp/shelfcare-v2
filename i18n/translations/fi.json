@@ -1447,7 +1447,10 @@
     "select-return-time": "Valitse palautusaika",
     "yes": "Kyllä",
     "no": "Ei",
-    "first-message-auto-reply": "Kiitos viestistäsi! Vastaamme sinulle hetken kuluttua!"
+    "first-message-auto-reply": "Kiitos viestistäsi! Vastaamme sinulle hetken kuluttua!",
+    "change-password": "Vaihda salasana",
+    "new-password": "Uusi salasana",
+    "confirm-password": "Vahvista salasana"
   },
   "order-history": {
     "title": "Tilaushistoria",

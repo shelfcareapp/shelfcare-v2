@@ -7,6 +7,7 @@ import AuthLayout from 'components/common/AuthLayout';
 import { toast } from 'react-toastify';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../../firebase';
+import { useLocale } from 'next-intl';
 
 export default function SignInPage() {
   const router = useRouter();
@@ -15,6 +16,7 @@ export default function SignInPage() {
     password: ''
   });
   const [loading, setLoading] = useState(false);
+  const locale = useLocale();
 
   const handleFormChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -31,7 +33,9 @@ export default function SignInPage() {
 
       router.push('/chat');
     } catch (error) {
-      toast.error('Sign in failed. Please try again.');
+      toast.error(
+        locale === 'fi' ? 'Kirjautuminen epäonnistui' : 'Sign in failed'
+      );
     } finally {
       setLoading(false);
     }
@@ -40,10 +44,12 @@ export default function SignInPage() {
   return (
     <AuthLayout>
       <h2 className="mt-8 text-3xl font-semibold tracking-tight text-primary-dark">
-        Sign in to your account
+        {locale === 'fi' ? 'Kirjaudu sisään' : 'Sign in'}
       </h2>
       <p className="mt-2 text-sm text-gray-500">
-        Sign in to access your account and enjoy our services.
+        {locale === 'fi'
+          ? 'Kirjaudu sisään käyttääksesi palveluitamme'
+          : 'Sign in to use our services'}
       </p>
 
       <div className="mt-10">
@@ -53,7 +59,7 @@ export default function SignInPage() {
               htmlFor="email"
               className="block text-sm font-medium text-gray-900"
             >
-              E-mail
+              {locale === 'fi' ? 'Sähköposti' : 'Email'}
             </label>
             <div className="mt-2">
               <input
@@ -73,7 +79,7 @@ export default function SignInPage() {
               htmlFor="password"
               className="block text-sm font-medium text-gray-900"
             >
-              Password
+              {locale === 'fi' ? 'Salasana' : 'Password'}
             </label>
             <div className="mt-2">
               <input
@@ -93,7 +99,7 @@ export default function SignInPage() {
               type="submit"
               className="w-full flex justify-center py-3 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-secondary bg-primary hover:opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
             >
-              Sign in
+              {locale === 'fi' ? 'Kirjaudu sisään' : 'Sign in'}
               {loading && (
                 <span className="ml-2">
                   {/* Loading spinner (optional) */}
@@ -107,12 +113,14 @@ export default function SignInPage() {
 
       <div className="mt-6 text-center">
         <p className="text-sm text-gray-600">
-          Don’t have an account?{' '}
+          {locale === 'fi'
+            ? 'Eikö sinulla ole tiliä?'
+            : "Don't have an account?"}{' '}
           <a
             href="/sign-up"
             className="font-semibold text-primary hover:text-primary-dark"
           >
-            Sign up
+            {locale === 'fi' ? 'Rekisteröidy' : 'Sign up'}
           </a>
         </p>
       </div>
@@ -123,7 +131,9 @@ export default function SignInPage() {
             href="/forgot-password"
             className="font-semibold text-primary hover:text-primary-dark"
           >
-            Forgot your password?
+            {locale === 'fi'
+              ? 'Unohditko salasanasi?'
+              : 'Forgot your password?'}
           </a>
         </p>
       </div>

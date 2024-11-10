@@ -8,6 +8,7 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../../../firebase';
 import { useState } from 'react';
+import { useLocale } from 'next-intl';
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -17,6 +18,7 @@ export default function SignUpPage() {
     name: ''
   });
   const [loading, setLoading] = useState(false);
+  const locale = useLocale();
 
   const handleFormChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -38,31 +40,34 @@ export default function SignUpPage() {
 
       await updateProfile(user, { displayName: name });
 
-      // Add user to Firestore with isAdmin: false
       await setDoc(doc(db, 'users', user.uid), {
         uid: user.uid,
         name: name,
         email: user.email,
-        isAdmin: false, // Setting isAdmin to false for all new users
+        isAdmin: false,
         createdAt: new Date()
       });
 
       setFormData({ email: '', password: '', name: '' });
 
-      router.push('/'); // Redirect to homepage after successful signup
+      router.push('/');
     } catch (error) {
-      console.error('Error during signup:', error);
-
       if (error.code === 'auth/email-already-in-use') {
         toast.error(
-          'This email is already in use. Please use a different email.'
+          locale === 'fi'
+            ? 'Sähköpostiosoite on jo käytössä'
+            : 'Email is already in use'
         );
       } else if (error.code === 'auth/weak-password') {
         toast.error(
-          'The password is too weak. Please enter a stronger password.'
+          locale === 'fi'
+            ? 'Salasanan tulee olla vähintään 6 merkkiä pitkä'
+            : 'Password should be at least 6 characters long'
         );
       } else {
-        toast.error('Sign up failed. Please try again.');
+        toast.error(
+          locale === 'fi' ? 'Rekisteröinti epäonnistui' : 'Sign up failed'
+        );
       }
     } finally {
       setLoading(false);
@@ -72,10 +77,12 @@ export default function SignUpPage() {
   return (
     <AuthLayout>
       <h2 className="mt-8 text-3xl font-semibold tracking-tight text-primary-dark">
-        Create your account
+        {locale === 'fi' ? 'Rekisteröidy' : 'Sign up'}
       </h2>
       <p className="mt-2 text-sm text-gray-500">
-        Sign up to access your account and enjoy our services.
+        {locale === 'fi'
+          ? 'Rekisteröidy käyttääksesi palveluitamme'
+          : 'Sign up to use our services '}
       </p>
 
       <div className="mt-10">
@@ -85,7 +92,7 @@ export default function SignUpPage() {
               htmlFor="name"
               className="block text-sm font-medium text-gray-900"
             >
-              Name
+              {locale === 'fi' ? 'Nimi' : 'Name'}
             </label>
             <div className="mt-2">
               <input
@@ -105,7 +112,7 @@ export default function SignUpPage() {
               htmlFor="email"
               className="block text-sm font-medium text-gray-900"
             >
-              E-mail
+              {locale === 'fi' ? 'Sähköposti' : 'Email'}
             </label>
             <div className="mt-2">
               <input
@@ -125,7 +132,7 @@ export default function SignUpPage() {
               htmlFor="password"
               className="block text-sm font-medium text-gray-900"
             >
-              Password
+              {locale === 'fi' ? 'Salasana' : 'Password'}
             </label>
             <div className="mt-2">
               <input
@@ -145,7 +152,7 @@ export default function SignUpPage() {
               type="submit"
               className="w-full flex justify-center py-3 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-secondary bg-primary hover:opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
             >
-              Sign up
+              {locale === 'fi' ? 'Rekisteröidy' : 'Sign up'}
               {loading && (
                 <span className="ml-2">
                   <AiOutlineLoading className="animate-spin" />
@@ -158,12 +165,14 @@ export default function SignUpPage() {
 
       <div className="mt-6 text-center">
         <p className="text-sm text-gray-600">
-          Already have an account?{' '}
+          {locale === 'fi'
+            ? 'Onko sinulla jo tili?'
+            : 'Already have an account?'}{' '}
           <a
             href="/sign-in"
             className="font-semibold text-primary hover:text-primary-dark"
           >
-            Sign in
+            {locale === 'fi' ? 'Kirjaudu sisään' : 'Sign in'}
           </a>
         </p>
       </div>

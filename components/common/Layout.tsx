@@ -1,7 +1,12 @@
 import Header from 'components/common/Header';
 import Footer from 'components/common/Footer';
 
-function Layout({ children, hideFooter }) {
+interface LayoutProps {
+  children: React.ReactNode;
+  hideFooter?: boolean;
+}
+
+function Layout({ children, hideFooter }: LayoutProps) {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />

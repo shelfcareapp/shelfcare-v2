@@ -58,10 +58,10 @@ const UserDashboardLeftbar = () => {
                   )}
                 />
                 {item.name}
+                {item.hasBadge && showNotificationBadge && (
+                  <span className="block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white" />
+                )}
               </Link>
-              {showNotificationBadge && (
-                <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white" />
-              )}
             </li>
           ))}
         </ul>

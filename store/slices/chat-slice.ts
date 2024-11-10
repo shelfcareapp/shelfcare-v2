@@ -63,8 +63,6 @@ export const sendMessage = createAsyncThunk(
 
       return null;
     } catch (error) {
-      console.error('Error sending message', error);
-      toast.error('Error sending message');
       return rejectWithValue('Error sending message');
     }
   }
@@ -111,7 +109,6 @@ export const listenToChat =
         dispatch(setInitialLoading(false));
       },
       (_error) => {
-        toast.error('Error listening to chat updates');
         dispatch(setInitialLoading(false));
       }
     );
