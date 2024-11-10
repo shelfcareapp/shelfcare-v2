@@ -189,7 +189,7 @@ export default function OrdersPage() {
                     filter === status
                       ? 'bg-primary text-white'
                       : 'bg-gray-200 text-gray-700'
-                  } px-4 py-2 rounded-md shadow-md hover:bg-primary hover:text-white transition`}
+                  } px-4 py-2 rounded-md hover:bg-primary hover:text-white transition`}
                 >
                   {t(`${status.toLowerCase()}`)}
                 </button>
@@ -206,7 +206,7 @@ export default function OrdersPage() {
                   currentOrders.map((order: Order) => (
                     <div
                       key={order.id}
-                      className="mb-8 rounded-lg border border-gray-200 bg-white p-6 shadow-lg hover:shadow-xl transition"
+                      className="mb-8 rounded-lg border border-gray-200 bg-white p-6"
                     >
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-sm">
                         <div>
@@ -271,7 +271,7 @@ export default function OrdersPage() {
                         </table>
                       </div>
 
-                      <div className="mt-4 text-right">
+                      {/* <div className="mt-4 text-right">
                         {order.paymentEnabled === true ? (
                           <span className="text-green-600 font-semibold">
                             {t('paid')}
@@ -286,7 +286,7 @@ export default function OrdersPage() {
                             {t('pay-now')}
                           </button>
                         )}
-                      </div>
+                      </div> */}
                     </div>
                   ))
                 )}
