@@ -1379,7 +1379,8 @@
     "first-message-auto-reply": "Thank you messaging us! We'll get back to you as soon as possible.",
     "change-password": "Change password",
     "new-password": "New password",
-    "confirm-password": "Confirm password"
+    "confirm-password": "Confirm password",
+    "current-password": "Current password"
   },
   "order-history": {
     "title": "Order History",

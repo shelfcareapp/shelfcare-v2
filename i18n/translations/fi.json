@@ -1450,7 +1450,8 @@
     "first-message-auto-reply": "Kiitos viestistäsi! Vastaamme sinulle hetken kuluttua!",
     "change-password": "Vaihda salasana",
     "new-password": "Uusi salasana",
-    "confirm-password": "Vahvista salasana"
+    "confirm-password": "Vahvista salasana",
+    "current-password": "Nykyinen salasana"
   },
   "order-history": {
     "title": "Tilaushistoria",

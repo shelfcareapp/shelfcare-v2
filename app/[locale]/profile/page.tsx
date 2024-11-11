@@ -2,14 +2,20 @@
 
 import Layout from 'components/common/Layout';
 import UserDashboardLayout from 'components/common/UserDashboardLayout';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { doc, getDoc, Timestamp, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../../../firebase';
+import { useRouter } from 'next/navigation';
+import { useLocale, useTranslations } from 'next-intl';
+import {
+  updatePassword,
+  signOut,
+  EmailAuthProvider,
+  reauthenticateWithCredential
+} from 'firebase/auth';
+import { debounce } from 'lodash';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useTranslations } from 'next-intl';
-import { confirmPasswordReset } from 'firebase/auth';
 
 type ProfileData = {
   name: string;
@@ -19,30 +25,31 @@ type ProfileData = {
   city: string;
   postalCode: string;
   doorInfo: string;
-  birthday: string | null;
 };
 
 export default function ProfilePage() {
-  const [user] = useAuthState(auth);
   const router = useRouter();
   const t = useTranslations('user-dashboard');
-  const searchParams = useSearchParams();
-  const oobCode = searchParams.get('oobCode');
+  const locale = useLocale();
+  const [user] = useAuthState(auth);
 
   const [profileData, setProfileData] = useState<ProfileData>({
-    name: user.displayName || '',
-    email: user.email || '',
-    phone: user.phoneNumber || '',
+    name: user?.displayName || '',
+    email: user?.email || '',
+    phone: user?.phoneNumber || '',
     address: '',
     city: '',
     postalCode: '',
-    doorInfo: '',
-    birthday: ''
+    doorInfo: ''
   });
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [newPasswordError, setNewPasswordError] = useState(false);
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState('');
 
   const [loading, setLoading] = useState(false);
+  const [passwordChangeLoading, setPasswordChangeLoading] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -52,6 +59,22 @@ export default function ProfilePage() {
     }
   }, [user]);
 
+  const validatePasswords = useCallback(
+    debounce(() => {
+      setNewPasswordError(newPassword.length > 0 && newPassword.length < 8);
+      setConfirmPasswordError(
+        confirmPassword !== newPassword ||
+          (confirmPassword.length > 0 && confirmPassword.length < 8)
+      );
+    }, 500),
+    [newPassword, confirmPassword]
+  );
+
+  useEffect(() => {
+    validatePasswords();
+    return validatePasswords.cancel;
+  }, [newPassword, confirmPassword, validatePasswords]);
+
   const fetchUserData = async () => {
     try {
       setLoading(true);
@@ -60,13 +83,9 @@ export default function ProfilePage() {
 
       if (userDoc.exists()) {
         const userData = userDoc.data() as ProfileData;
-        const date = userData.birthday;
-
-        const birthday = date ? date : '';
 
         setProfileData({
-          ...userData,
-          birthday
+          ...userData
         });
       }
     } catch (error) {
@@ -88,22 +107,10 @@ export default function ProfilePage() {
     setLoading(true);
 
     try {
-      const {
-        name,
-        email,
-        phone,
-        address,
-        city,
-        postalCode,
-        doorInfo,
-        birthday
-      } = profileData;
+      const { name, email, phone, address, city, postalCode, doorInfo } =
+        profileData;
 
       const userDocRef = doc(db, 'users', user.uid);
-
-      const birthdayTimestamp = birthday
-        ? Timestamp.fromDate(new Date(birthday))
-        : null;
 
       await updateDoc(userDocRef, {
         name,
@@ -113,7 +120,6 @@ export default function ProfilePage() {
         city,
         postalCode,
         doorInfo,
-        birthday: birthdayTimestamp,
         updatedAt: Timestamp.now()
       });
 
@@ -126,32 +132,55 @@ export default function ProfilePage() {
     }
   };
 
-  const handlePasswordReset = async (e: React.FormEvent) => {
+  const handlePasswordReset = async (e) => {
     e.preventDefault();
 
-    if (!oobCode) {
-      toast.error('Invalid or missing password reset code.');
-      return;
-    }
+    setPasswordChangeLoading(true);
 
-    if (newPassword !== confirmPassword) {
-      toast.error('Passwords do not match.');
-      return;
-    }
-
-    setLoading(true);
     try {
-      await confirmPasswordReset(auth, oobCode, newPassword);
-      toast.success('Password has been reset successfully.');
-      setNewPassword('');
-      setConfirmPassword('');
+      if (newPassword !== confirmPassword) {
+        toast.error('Passwords do not match.');
+        setPasswordChangeLoading(false);
+        return;
+      }
+
+      const credential = EmailAuthProvider.credential(
+        user.email,
+        currentPassword
+      );
+
+      await reauthenticateWithCredential(user, credential);
+
+      await updatePassword(user, newPassword);
+
+      toast.success(
+        locale === 'fi'
+          ? 'Salasana vaihdettu onnistuneesti'
+          : 'Password changed successfully'
+      );
+
+      await signOut(auth);
       router.push('/sign-in');
     } catch (error) {
-      console.error('Error resetting password:', error);
-      toast.error('Failed to reset password.');
+      console.error('Error changing password:', error);
+
+      toast.error(
+        locale === 'fi'
+          ? 'Salasanan vaihto epäonnistui'
+          : 'Failed to change password'
+      );
     } finally {
-      setLoading(false);
+      setPasswordChangeLoading(false);
     }
+  };
+
+  const disableConfirmButton = () => {
+    return (
+      newPasswordError ||
+      confirmPasswordError ||
+      newPassword.length === 0 ||
+      confirmPassword.length === 0
+    );
   };
 
   return (
@@ -296,8 +325,8 @@ export default function ProfilePage() {
                 type="submit"
                 disabled={loading}
                 className={`${
-                  loading ? 'bg-secondary' : 'bg-primary'
-                } text-white px-4 py-2 rounded-md`}
+                  loading && 'opacity-40'
+                } text-white px-4 py-2 rounded-md bg-primary`}
               >
                 {loading ? t('saving') : t('save-changes')}
               </button>
@@ -314,15 +343,39 @@ export default function ProfilePage() {
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div>
                 <label className="block text-sm font-medium text-gray-400">
+                  {t('current-password')}
+                </label>
+                <input
+                  type="password"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  className="mt-2 block w-full rounded-md shadow-sm p-2 border-gray-300"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-400">
                   {t('new-password')}
                 </label>
                 <input
                   type="password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  className="mt-2 block w-full border-gray-300 rounded-md shadow-sm p-2"
+                  className={`mt-2 block w-full rounded-md shadow-sm p-2 ${
+                    newPasswordError
+                      ? 'border border-red-500'
+                      : 'border-gray-300'
+                  }`}
                   required
                 />
+                {newPasswordError && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {locale === 'fi'
+                      ? 'Salasanan tulee olla vähintään 8 merkkiä pitkä.'
+                      : 'Password must be at least 8 characters.'}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -333,25 +386,42 @@ export default function ProfilePage() {
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className={`mt-2 block w-full border-gray-300 rounded-md shadow-sm p-2 ${
-                    newPassword !== confirmPassword && confirmPassword !== ''
-                      ? 'border-red-500'
-                      : ''
+                  className={`mt-2 block w-full rounded-md shadow-sm p-2 ${
+                    confirmPasswordError
+                      ? 'border border-red-500'
+                      : 'border-gray-300'
                   }`}
                   required
                 />
+                {confirmPasswordError && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {confirmPassword.length < 8
+                      ? locale === 'fi'
+                        ? 'Salasanan tulee olla vähintään 8 merkkiä pitkä.'
+                        : 'Password must be at least 8 characters.'
+                      : locale === 'fi'
+                      ? 'Salasanat eivät täsmää.'
+                      : 'Passwords do not match.'}
+                  </p>
+                )}
               </div>
             </div>
 
             <div>
               <button
                 type="submit"
-                disabled={loading}
+                disabled={passwordChangeLoading || disableConfirmButton()}
                 className={`${
-                  loading ? 'bg-secondary' : 'bg-primary'
-                } text-white px-4 py-2 rounded-md`}
+                  passwordChangeLoading && 'opacity-40'
+                } text-white px-4 py-2 rounded-md bg-primary
+                ${
+                  disableConfirmButton()
+                    ? 'cursor-not-allowed opacity-40'
+                    : 'cursor-pointer'
+                }
+                `}
               >
-                {loading ? t('saving') : t('change-password')}
+                {passwordChangeLoading ? t('saving') : t('change-password')}
               </button>
             </div>
           </form>
