@@ -20,7 +20,7 @@ import ProtectRoute from 'components/common/ProtectedRoute';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { doc, updateDoc } from 'firebase/firestore';
 import { useTimeOptions } from 'hooks/useTimeOptions';
-import { addDays, format, isAfter } from 'date-fns';
+import { addDays, format, isAfter, set } from 'date-fns';
 import { fi } from 'date-fns/locale';
 import { TimeOptions } from 'types';
 
@@ -49,6 +49,7 @@ export default function UserEnquiryPage() {
   const [message, setMessage] = useState<string>('');
   const [images, setImages] = useState<File[] | null>(null);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const [sending, setSending] = useState<boolean>(false);
   const t = useTranslations('user-dashboard');
   const locale = useLocale();
   const messageEndRef = useRef<HTMLDivElement>(null);
@@ -79,7 +80,7 @@ export default function UserEnquiryPage() {
     .replace(/\n/g, '<br />');
 
   useEffect(() => {
-    if (!welcomeMessageSent) {
+    if (!welcomeMessageSent || messages.length === 0 || messages.length === 1) {
       dispatch(
         sendMessage({
           userId: user?.uid,
@@ -138,6 +139,7 @@ export default function UserEnquiryPage() {
 
   const handleSendMessage = async () => {
     if (!message.trim() && (!images || images.length === 0)) return;
+    setSending(true);
 
     let imageUrls = [];
     if (images) {
@@ -166,6 +168,7 @@ export default function UserEnquiryPage() {
     setMessage('');
     setImages(null);
     setImagePreviews([]);
+    setSending(false);
   };
 
   const handleSendOnEnter = (e) => {
@@ -502,7 +505,10 @@ export default function UserEnquiryPage() {
 
                     <button
                       onClick={handleSendMessage}
-                      className="ml-4 bg-primary text-white p-2 rounded-lg cursor-pointer"
+                      className={`ml-4 bg-primary text-white p-2 rounded-lg cursor-pointer
+                       ${sending && 'opacity-50 cursor-not-allowed'}
+                      `}
+                      disabled={sending}
                     >
                       <PaperAirplaneIcon className="h-5 w-5 -rotate-45" />
                     </button>

@@ -192,25 +192,30 @@ const Header = () => {
               >
                 {t('header.measurement_guide')}
               </Link>
-              <Link
-                href="/orders"
-                className="block px-4 py-2 text-primary hover:bg-gray-100"
-              >
-                {t('header.my_orders')}
-              </Link>
-
-              <Link
-                href="/profile"
-                className="block px-4 py-2 text-primary hover:bg-gray-100"
-              >
-                {t('header.my_account')}
-              </Link>
-              <button
-                className="block w-full text-left font-semibold px-4 py-2 text-primary hover:bg-gray-100"
-                onClick={handleSignOut}
-              >
-                {t('header.sign_out')}
-              </button>
+              {user && (
+                <Link
+                  href="/orders"
+                  className="block px-4 py-2 text-primary hover:bg-gray-100"
+                >
+                  {t('header.my_orders')}
+                </Link>
+              )}
+              {user && (
+                <Link
+                  href="/profile"
+                  className="block px-4 py-2 text-primary hover:bg-gray-100"
+                >
+                  {t('header.my_account')}
+                </Link>
+              )}
+              {user && (
+                <button
+                  className="block w-full text-left font-semibold px-4 py-2 text-primary hover:bg-gray-100"
+                  onClick={handleSignOut}
+                >
+                  {t('header.sign_out')}
+                </button>
+              )}
             </nav>
             <div className="md:hidden p-2 mb-2">
               <div className="flex flex-col gap-3 p-2">
