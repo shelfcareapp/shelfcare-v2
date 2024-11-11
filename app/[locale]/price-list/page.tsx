@@ -50,7 +50,9 @@ const PricingPage = () => {
             className="flex justify-between items-center cursor-pointer"
             onClick={() => toggleGroup(groupKey)}
           >
-            <p className="text-lg font-semibold text-primary">{groupTitle}</p>
+            <p className="text-base font-semibold text-primary ">
+              {groupTitle}
+            </p>
             {isExpanded ? (
               <FaChevronUp className="text-primary" />
             ) : (
@@ -108,7 +110,7 @@ const PricingPage = () => {
     return (
       <div className="w-full bg-white p-6 border border-gray-200">
         {laundryKeys.map((serviceKey) => (
-          <div key={serviceKey} className=" mb-6 ">
+          <div key={serviceKey} className="mb-2">
             <div className="flex justify-between items-center">
               <span className="text-sm">
                 {t(`laundry.services.${serviceKey}.name`)}

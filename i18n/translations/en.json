@@ -54,7 +54,7 @@
       },
       "step3": {
         "title": "Enjoy your ShelfCared items",
-        "description": "We deliver the items back to you at your chosen return time."
+        "description": "We deliver the items back to you at your chosen delivery time."
       },
       "step4": {
         "title": "",
@@ -160,11 +160,11 @@
     },
     "transport": {
       "heading": "4. Logistics",
-      "content": "We offer a pickup and return service to the address provided by the customer. We charge a €10 logistics and service fee at the time of order. Pickup and return times are agreed upon with the customer. We reserve the right to charge an additional fee due to customer's failure to be present at pickup or return. The order is confirmed once the customer selects a pickup time for the order."
+      "content": "We offer a pickup and delivery service to the address provided by the customer. We charge a €10 logistics and service fee at the time of order. Pickup and delivery times are agreed upon with the customer. We reserve the right to charge an additional fee due to customer's failure to be present at pickup or return. The order is confirmed once the customer selects a pickup time for the order."
     },
     "handling": {
       "heading": "5. Product handling and quality",
-      "content": "We commit to handling the customer's products properly and professionally. If the customer is not satisfied with the quality of the service, they must notify us in writing within 7 days of the return of the products. We strive to correct any deficiencies or errors at no additional cost to the customer if the error is due to us. Please note that our services are based on the information you provide. If you are not satisfied with the outcome and the service has been carried out according to the infromation you have provided, we can agree separately on additional corrections and the cost of such corrections. "
+      "content": "We commit to handling the customer's products properly and professionally. If the customer is not satisfied with the quality of the service, they must notify us in writing within 7 days of the return of the products. We strive to correct any deficiencies or errors at no additional cost to the customer if the error is due to us. Please note that our services are based on the information you provide. If you are not satisfied with the outcome and the service has been carried out according to the information you have provided, we can agree separately on additional corrections and the cost of such corrections. "
     },
     "liability": {
       "heading": "6. Limitation of liability",
@@ -1311,14 +1311,14 @@
   },
   "order": {
     "title": "Place Your Order",
-    "subtitle": "Choose pickup and return time, fill in order information and your contact information. You don't have to pack the items - we bring the bags for it.",
+    "subtitle": "Choose pickup and delivery time, fill in order information and your contact information. You don't have to pack the items - we bring the bags for it.",
     "subtitle-2": "Check out the price list <link1>here</link1> and the measurement guide <link2>here</link2>. €10 service and logistics fee is added to all orders. You will receive an invoice via email after pickup.",
     "pickupDateLabel": "When do we pick up the goods?",
     "selectPickupDate": "Select pickup date",
-    "selectReturnDate": "Select return date",
-    "returnDateLabel": "When do we return the items back to you?",
-    "returnPickupDateDescription": "Services are performed within 7 days - the first option for return date is a week after the pickup.",
-    "returnPickupDate": "Select return date",
+    "selectReturnDate": "Select delivery date",
+    "returnDateLabel": "When do we retdeliveryurn the items back to you?",
+    "returnPickupDateDescription": "Services are performed within 7 days - the first option for delivery date is a week after the pickup.",
+    "returnPickupDate": "Select delivery date",
     "orderDetailsLabel": "Order Details",
     "orderImages": "Upload images of the items(Optional)",
     "orderImageInstruction": "Upload images showing the specific areas that need adjustments.",
@@ -1370,10 +1370,10 @@
     "order-subtitle": "Check the status of recent orders and manage pickup and delivery time slots.",
     "no-orders": "No previous orders",
     "welcome-message": "Welcome to do some ShelfCare!\n\nSend us pictures of the items you want to be fixed or maintained. We will ask all necessary questions and give you a service plan including prices. Then you will be provided with pickup options.\n\nWe are here also to answer any questions, so let's chat!​\n\nPlease, note that we are operating in Helsinki metropolitan area at the moment.",
-    "order-confirmation": "You have chosen pickup time: **{pickupOption}** ja palautussajan: **{deliveryOption}**. Make sure you have filled out your account info so that we have your address. See you then! \n\nIf you need to change pickup or return time, you can go to your orders and edit the pickup and return times 24 hours before. \n\nIf you want to add items to your order, you can do so by sending us a message with pictures. :)",
+    "order-confirmation": "You have chosen pickup time: **{pickupOption}** - **{pickupTime}** and delivery time: **{deliveryOption}** - **{deliveryTime}**. Make sure you have filled out your account info so that we have your address. See you then! \n\nIf you want to add items to your order, you can do so by sending us a message with pictures. :)",
     "confirming": "Confirming...",
     "select-pickup-time": "Select pickup time",
-    "select-return-time": "Select return time",
+    "select-return-time": "Select delivery time",
     "yes": "Yes",
     "no": "No",
     "first-message-auto-reply": "Thank you messaging us! We'll get back to you as soon as possible.",
@@ -1389,7 +1389,7 @@
     "order-id": "Order ID",
     "total-amount": "Total Amount",
     "pickup-date": "Pickup Date",
-    "return-date": "Return Date",
+    "return-date": "Delivery Date",
     "adjustments": "Adjustments",
     "service-type": "Service Type",
     "paid": "Paid",

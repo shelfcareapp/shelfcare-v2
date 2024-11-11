@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { CiUser } from 'react-icons/ci';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { useSession } from 'components/common/SessionContext';
@@ -29,6 +29,7 @@ const Header = () => {
   const route = usePathname();
   const dispatch = useAppDispatch();
   const [not, setNot] = useState(false);
+  const locale = useLocale();
 
   const handleOrderNow = () => {
     if (!user) {
@@ -98,9 +99,6 @@ const Header = () => {
                 className="relative p-1 rounded-full hover:opacity-85 focus:outline-none focus:ring-2 focus:ring-secondary transition-colors duration-200"
               >
                 <CiUser className="text-secondary" size={28} />
-                {showNotificationBadge && (
-                  <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white" />
-                )}
               </button>
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-60 bg-white border rounded py-2">
@@ -135,8 +133,13 @@ const Header = () => {
               {t('header.sign_in')}
             </button>
           )}
-          <button className="btn-secondary" onClick={handleOrderNow}>
-            {user ? t('header.new_order') : t('header.order_now')}
+          <button className="btn-secondary relative" onClick={handleOrderNow}>
+            <span>{locale === 'fi' ? 'Tilaa' : 'Order'}</span>
+            {showNotificationBadge && (
+              <div className="absolute top-0 right-0 h-4 w-4 p-2 rounded-full bg-red-500 flex items-center justify-center">
+                <span className="text-white text-xs">1</span>
+              </div>
+            )}
           </button>
         </div>
 
@@ -145,9 +148,6 @@ const Header = () => {
             onClick={() => setIsOpen(!isOpen)}
             className="text-secondary focus:outline-none relative p-1 transition-colors duration-200"
           >
-            {showNotificationBadge && (
-              <span className="absolute top-0 left-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-primary" />
-            )}
             <svg
               className="w-6 h-6"
               fill="none"
@@ -227,8 +227,16 @@ const Header = () => {
                     {t('header.sign_in')}
                   </button>
                 )}
-                <button className="btn-primary" onClick={handleOrderNow}>
-                  {user ? t('header.new_order') : t('header.order_now')}
+                <button
+                  className="btn-primary relative"
+                  onClick={handleOrderNow}
+                >
+                  <span>{locale === 'fi' ? 'Tilaa' : 'Order'}</span>
+                  {showNotificationBadge && (
+                    <div className="absolute top-0 right-0 h-4 w-4 p-2 rounded-full bg-red-500 flex items-center justify-center m-1">
+                      <span className="text-white text-xs">1</span>
+                    </div>
+                  )}
                 </button>
 
                 <div className="w-full flex items-center justify-center gap-4 mt-4 mb-4 text-center">

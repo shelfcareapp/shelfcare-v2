@@ -1440,7 +1440,7 @@
     "orders-subtitle": "Tässä näet kaikki tilauksesi ja niiden tilan. Pystyt myös muokkaamaan valitsemiasi nouto- ja palautusaikoja.",
     "no-orders": "Ei aikaisempia tilauksia",
     "welcome-message": "Tervetuloa ShelfCarelle tekemään vaatekaapin huoltoa!  \n\nLähetä tähän kuvat tuotteista, jotka haluat lähettää huoltoon. Kysymme tarvittavat kysymykset ja annamme sinulle työsuunnitelman ja huollon hinnan. Sitten pääset valitsemaan tavaroiden nouto- ja palautusajan.\n\nVastaamme tätä kautta myös kaikkiin kysymyksiisi.\n\nHuomioithan, että toimimme tällä hetkellä pääkaupunkiseudulla.",
-    "order-confirmation": "Olet valinnut noutoajan: **{pickupOption}** ja palautussajan: **{deliveryOption}**. Varmista, että olet täyttänyt tilitietosi, jotta meillä on nouto-osoitteesi. Nähdään pian! \n\nSaat laskun sähköpostiisi, kun olemme toimittaneet tavarat palveluntarjoajille ja mahdolliset palveluun liittyvät kysymykset on käsitelty.\n\nJos sinun täytyy vaihtaa nouto- tai palautusaikaa, voit muokata tilaustasi 24 tuntia ennen sovittua aikaa. \n\nJos haluat lisätä tuotteita tilaukseesi, voit lähettää meille viestillä tiedot kuvineen.:)",
+    "order-confirmation": "Olet valinnut noutoajan: **{pickupOption}** - **{pickupTime}** ja palautusajan: **{deliveryOption}** - **{deliveryTime}**. Varmista, että olet täyttänyt tilitietosi, jotta meillä on nouto-osoitteesi. Nähdään pian! \n\nJos haluat lisätä tuotteita tilaukseesi, voit lähettää meille viestillä tiedot kuvineen.:)",
     "confirm-selection": "Vahvista valinta",
     "confirming": "Vahvistetaan...",
     "select-pickup-time": "Valitse noutoaika",

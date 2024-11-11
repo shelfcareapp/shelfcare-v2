@@ -7,7 +7,8 @@
 }
 
 body {
-  font-family: 'Montserrat';
+  font-family: 'Montserrat', ui-sans-serif, system-ui, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', Segoe UI Symbol, 'Noto Color Emoji';
   background-color: #fff;
   padding: 0;
   margin: 0;
@@ -25,7 +26,7 @@ h6 {
 p,
 ul,
 li {
-  /* font-family: 'Montserrat', system-ui; */
+  font-family: 'Montserrat', system-ui, sans-serif;
   font-size: 14px;
   color: theme('colors.primaryDark');
 }

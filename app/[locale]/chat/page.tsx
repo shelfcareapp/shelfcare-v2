@@ -20,7 +20,7 @@ import ProtectRoute from 'components/common/ProtectedRoute';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { doc, updateDoc } from 'firebase/firestore';
 import { useTimeOptions } from 'hooks/useTimeOptions';
-import { addDays, format, isAfter, set } from 'date-fns';
+import { addDays, format, isAfter } from 'date-fns';
 import { fi } from 'date-fns/locale';
 import { TimeOptions } from 'types';
 
@@ -206,16 +206,10 @@ export default function UserEnquiryPage() {
 
   const handleConfirmSelection = async (orderId: string) => {
     const confirmationMessage = t('order-confirmation', {
-      pickupOption: format(pickupOptions[orderId]?.date, 'EEEEEE dd.MM.yyyy', {
-        locale: fi
-      }),
-      deliveryOption: format(
-        deliveryOptions[orderId]?.date,
-        'EEEEEE dd.MM.yyyy',
-        {
-          locale: fi
-        }
-      )
+      pickupOption: format(pickupOptions[orderId]?.date, 'dd.MM.yyyy'),
+      deliveryOption: format(deliveryOptions[orderId]?.date, 'dd.MM.yyyy'),
+      pickupTime: format(pickupOptions[orderId]?.date, 'HH:mm'),
+      deliveryTime: format(deliveryOptions[orderId]?.date, 'HH:mm')
     })
       .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
       .replace(/\n/g, '<br />');
@@ -298,10 +292,12 @@ export default function UserEnquiryPage() {
       className="w-full p-2 rounded-lg border border-gray-200"
     >
       <option value="">{t('select-pickup-time')}</option>
-      {pickupDates.map((date) => (
-        <option key={date.date.toString()} value={date.date.toString()}>
-          {format(date.date, 'EEEEEE dd.MM.yyyy', { locale: fi })}
-          {date.time}
+      {pickupDates.map((date, index) => (
+        <option
+          key={`${date.date.toString()}-${index}`}
+          value={date.date.toString()}
+        >
+          {format(date.date, 'EEEEEE dd.MM.yyyy', { locale: fi })} {date.time}
         </option>
       ))}
     </select>
@@ -314,10 +310,12 @@ export default function UserEnquiryPage() {
       className="w-full p-2 rounded-lg border border-gray-200"
     >
       <option value="">{t('select-return-time')}</option>
-      {(updatedReturnDates[orderId] || []).map((date) => (
-        <option key={date.date.toString()} value={date.date.toString()}>
-          {format(date.date, 'EEEEEE dd.MM.yyyy', { locale: fi })}
-          {date.time}
+      {(updatedReturnDates[orderId] || []).map((date, index) => (
+        <option
+          key={`${date.date.toString()}-${index}`}
+          value={date.date.toString()}
+        >
+          {format(date.date, 'EEEEEE dd.MM.yyyy', { locale: fi })} {date.time}
         </option>
       ))}
     </select>
@@ -336,7 +334,7 @@ export default function UserEnquiryPage() {
             <div className="flex-1 flex flex-col justify-between bg-white">
               <div className="p-4 overflow-y-scroll">
                 {initialLoading ? (
-                  <AiOutlineLoading className="animate-spin text-4xl mx-auto" />
+                  <AiOutlineLoading className="animate-spin text-2xl mx-auto" />
                 ) : (
                   <div className="flex flex-col">
                     {messages.length > 0 &&
@@ -345,7 +343,7 @@ export default function UserEnquiryPage() {
                         .map((msg, index) => (
                           <div
                             key={index}
-                            className={`mb-4 ${
+                            className={`mb-4 text-xs ${
                               msg.sender === user?.uid
                                 ? 'text-right'
                                 : 'text-left'
@@ -371,23 +369,25 @@ export default function UserEnquiryPage() {
                                 </div>
                               )}
                               <p
-                                className={
+                                className={`${
                                   msg.sender === user?.uid
                                     ? 'text-white'
                                     : 'text-gray-900'
                                 }
+                                    text-xs
+                                    `}
                               >
                                 <span
                                   dangerouslySetInnerHTML={{
                                     __html: msg.content
                                   }}
-                                  className="text-left"
+                                  className="text-left text-xs"
                                 />
                                 {msg.type === 'options' && (
                                   <span className="mt-4">
                                     <div className="space-y-4">
-                                      <div>
-                                        <span className="font-medium text-gray-700 my-2 text-sm">
+                                      <div className="mt-2">
+                                        <span className="font-medium text-gray-700 my-2 text-xs">
                                           {t('select-pickup-time')}:
                                         </span>
                                         {renderPickupOptions(msg.orderId)}
@@ -395,12 +395,18 @@ export default function UserEnquiryPage() {
 
                                       {pickupOptions[msg.orderId] && (
                                         <div>
-                                          <span className="font-medium text-gray-700 my-2 text-sm">
+                                          <span className="font-medium text-gray-700 my-2 text-xs">
                                             {t('select-return-time')}:
                                           </span>
                                           {renderDeliveryOptions(msg.orderId)}
                                         </div>
                                       )}
+
+                                      <span className="text-xs mt-1 block">
+                                        {locale === 'fi'
+                                          ? 'Voit muokata valittuja nouto- ja palautusaikoja 24 tuntia ennen sovittua aikaa. '
+                                          : 'You can edit the selected pickup and delivery times 24 hours before.'}
+                                      </span>
 
                                       <button
                                         onClick={() =>
