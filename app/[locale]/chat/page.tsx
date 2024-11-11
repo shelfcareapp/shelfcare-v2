@@ -330,7 +330,7 @@ export default function UserEnquiryPage() {
       <Layout hideFooter={true}>
         <div className="mx-auto max-w-7xl lg:flex h-screen">
           <UserDashboardLeftbar />
-          <main className="flex-1 flex bg-white h-screen border-r">
+          <main className="flex-1 flex bg-white h-screen border-r chat">
             <div className="flex-1 flex flex-col justify-between bg-white">
               <div className="p-4 overflow-y-scroll">
                 {initialLoading ? (
@@ -350,7 +350,7 @@ export default function UserEnquiryPage() {
                             }`}
                           >
                             <div
-                              className={`inline-block p-4 rounded-lg shadow max-w-72 md:max-w-xl lg:max-w-xl ${
+                              className={`inline-block p-4 rounded-lg shadow max-w-72 md:max-w-xl lg:max-w-xl !text-xs ${
                                 msg.sender === user?.uid
                                   ? 'bg-primary text-white'
                                   : 'bg-[#FAEDE9]'
@@ -368,7 +368,7 @@ export default function UserEnquiryPage() {
                                   ))}
                                 </div>
                               )}
-                              <p
+                              <span
                                 className={`${
                                   msg.sender === user?.uid
                                     ? 'text-white'
@@ -473,7 +473,7 @@ export default function UserEnquiryPage() {
                                     </div>
                                   </div>
                                 )}
-                              </p>
+                              </span>
                               <span className="text-xs text-gray-400 mt-1 block">
                                 {msg.time}
                               </span>
