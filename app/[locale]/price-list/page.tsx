@@ -50,7 +50,7 @@ const PricingPage = () => {
             className="flex justify-between items-center cursor-pointer"
             onClick={() => toggleGroup(groupKey)}
           >
-            <h3 className="text-xl font-semibold text-primary">{groupTitle}</h3>
+            <h3 className="text-lg font-semibold text-primary">{groupTitle}</h3>
             {isExpanded ? (
               <FaChevronUp className="text-primary" />
             ) : (
@@ -58,7 +58,7 @@ const PricingPage = () => {
             )}
           </div>
           <div
-            className={`mt-4 transition-max-height duration-500 ease-in-out overflow-hidden ${
+            className={`transition-max-height duration-500 ease-in-out overflow-hidden ${
               isExpanded ? 'max-h-screen' : 'max-h-0'
             }`}
           >
