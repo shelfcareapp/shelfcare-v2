@@ -80,7 +80,7 @@ export default function UserEnquiryPage() {
     .replace(/\n/g, '<br />');
 
   useEffect(() => {
-    if (!welcomeMessageSent || messages.length === 0 || messages.length === 1) {
+    if (!welcomeMessageSent) {
       dispatch(
         sendMessage({
           userId: user?.uid,
