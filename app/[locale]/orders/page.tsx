@@ -10,14 +10,14 @@ import {
   fetchOrdersByUserId,
   updateOrderTimes
 } from 'store/slices/orders-slice';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { auth } from '../../../firebase';
 import { Order } from 'types';
 import { formatDateTime } from 'utils/formatDateTime';
 import { useTimeOptions } from 'hooks/useTimeOptions';
-import { addDays, format, isAfter } from 'date-fns';
+import { addDays, format, isAfter, parseISO } from 'date-fns';
 import { fi } from 'date-fns/locale/fi';
-import { TimeOptions } from 'types';
+import { toast } from 'react-toastify';
 
 const filterStatus = {
   all: 'All',
@@ -29,19 +29,16 @@ export default function OrdersPage() {
   const [user] = useAuthState(auth);
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const locale = useLocale();
   const { orders, loading } = useAppSelector((state) => state.orders);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
-  const [filter, setFilter] = useState(filterStatus.all);
+  const [filter] = useState(filterStatus.all);
   const t = useTranslations('order-history');
   const { pickupDates, returnDates } = useTimeOptions();
-  const [updatedReturnDates, setUpdatedReturnDates] = useState<TimeOptions[]>(
-    []
-  );
-  const [pickupOption, setPickupOption] = useState<TimeOptions | null>(null);
-  const [deliveryOption, setDeliveryOption] = useState<TimeOptions | null>(
-    null
-  );
+  const [pickupOptions, setPickupOptions] = useState({});
+  const [deliveryOptions, setDeliveryOptions] = useState({});
+  const [updatedReturnDates, setUpdatedReturnDates] = useState({});
 
   useEffect(() => {
     if (user) {
@@ -50,24 +47,106 @@ export default function OrdersPage() {
   }, [user, dispatch]);
 
   useEffect(() => {
-    if (pickupOption) {
-      const filteredDates = returnDates.filter((date) =>
-        isAfter(date.date, addDays(pickupOption.date, 6))
-      );
-      setUpdatedReturnDates(filteredDates);
+    const defaultPickupOptions = {};
+    const defaultDeliveryOptions = {};
+    orders.forEach((order) => {
+      defaultPickupOptions[order.id] = order.pickupTime || null;
+      defaultDeliveryOptions[order.id] = order.deliveryTime || null;
+    });
+    setPickupOptions(defaultPickupOptions);
+    setDeliveryOptions(defaultDeliveryOptions);
+  }, [orders]);
 
-      if (
-        deliveryOption &&
-        !filteredDates.find(
-          (date) => date.date.toString() === deliveryOption.date.toString()
-        )
-      ) {
-        setDeliveryOption(null);
-      }
-    } else {
-      setUpdatedReturnDates(returnDates);
+  const handlePickupChange = (orderId, dateValue) => {
+    const selectedPickup =
+      pickupDates.find((date) => date.date === dateValue) || null;
+    setPickupOptions((prev) => ({
+      ...prev,
+      [orderId]: selectedPickup
+    }));
+    if (selectedPickup) updateReturnDatesForOrder(orderId, selectedPickup);
+  };
+
+  const handleDeliveryChange = (orderId, dateValue) => {
+    const selectedDelivery =
+      updatedReturnDates[orderId].find((date) => date.date === dateValue) ||
+      null;
+    setDeliveryOptions((prev) => ({
+      ...prev,
+      [orderId]: selectedDelivery
+    }));
+  };
+
+  const updateReturnDatesForOrder = (orderId, selectedPickup) => {
+    const filteredDates = returnDates.filter((date) =>
+      isAfter(new Date(date.date), addDays(new Date(selectedPickup.date), 6))
+    );
+    setUpdatedReturnDates((prev) => ({
+      ...prev,
+      [orderId]: filteredDates
+    }));
+    if (
+      deliveryOptions[orderId] &&
+      !filteredDates.some(
+        (date) => date.date === deliveryOptions[orderId]?.date
+      )
+    ) {
+      setDeliveryOptions((prev) => ({
+        ...prev,
+        [orderId]: null
+      }));
     }
-  }, [pickupOption, returnDates, deliveryOption]);
+  };
+
+  const renderPickupOptions = (order: Order) => {
+    const orderId = order.id;
+    const defaultValue =
+      order.pickupTime.date !== ''
+        ? `${format(order?.pickupTime?.date, 'dd.MM.yyyy', {
+            locale: fi
+          })} ${order?.pickupTime?.time}`
+        : '--';
+
+    return (
+      <select
+        onChange={(e) => handlePickupChange(orderId, e.target.value)}
+        value={pickupOptions[orderId]?.date.toString() || defaultValue}
+        className="w-full p-2 rounded-lg border border-gray-200"
+      >
+        <option value="">{defaultValue} </option>
+        {pickupDates.map((date, index) => (
+          <option key={index} value={date.date.toString()}>
+            {format(date.date, 'EEEEEE dd.MM.yyyy', { locale: fi })} {date.time}
+          </option>
+        ))}
+      </select>
+    );
+  };
+
+  const renderDeliveryOptions = (order: Order) => {
+    const orderId = order.id;
+    const defaultValue =
+      order?.deliveryTime?.date !== ''
+        ? `${format(order?.deliveryTime?.date, 'dd.MM.yyyy', {
+            locale: fi
+          })} ${order?.deliveryTime?.time}`
+        : '--';
+
+    return (
+      <select
+        onChange={(e) => handleDeliveryChange(orderId, e.target.value)}
+        value={deliveryOptions[orderId]?.date.toString() || defaultValue}
+        className="w-full p-2 rounded-lg border border-gray-200"
+      >
+        <option value="">{defaultValue}</option>
+        {updatedReturnDates[orderId]?.map((date, index) => (
+          <option key={index} value={date.date.toString()}>
+            {format(date.date, 'EEEEEE dd.MM.yyyy', { locale: fi })} {date.time}
+          </option>
+        ))}
+      </select>
+    );
+  };
 
   if (!user) {
     router.push('/sign-in');
@@ -88,87 +167,6 @@ export default function OrdersPage() {
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  const renderPickupOptions = (order: Order) => (
-    <div>
-      <span className="block font-medium text-gray-700 text-sm">
-        {t('pickup-date')}
-      </span>
-      {/* {order.pickupTime ? (
-        <time className="text-gray-500 text-sm">
-          {formatDateTime(order.pickupTime)}
-        </time>
-      ) : ( */}
-      <select
-        value={
-          pickupOption?.date.toString() || order.pickupTime.date.toString()
-        }
-        onChange={(e) => {
-          const selectedDate = pickupDates.find(
-            (date) => date.date.toString() === e.target.value
-          );
-          setPickupOption(selectedDate || null);
-          dispatch(
-            updateOrderTimes({
-              orderId: order.id,
-              pickupTime: selectedDate || null,
-              deliveryTime: order.deliveryTime
-            })
-          );
-        }}
-        className="block w-full mt-2 px-2 py-1 border rounded-md text-gray-500"
-      >
-        <option value="">—</option>
-        {pickupDates.map((date) => (
-          <option key={date.date.toString()} value={date.date.toString()}>
-            {format(date.date, 'EEEEEE dd.MM.yyyy', { locale: fi })} {date.time}
-          </option>
-        ))}
-      </select>
-      {/* )} */}
-    </div>
-  );
-
-  const renderDeliveryDate = (order: Order) => (
-    <div>
-      <span className="block font-medium text-gray-700 text-sm">
-        {t('return-date')}
-      </span>
-      {/* {order.deliveryTime ? (
-        <time className="text-gray-500 text-sm">
-          {formatDateTime(order.deliveryTime)}
-        </time>
-      ) : ( */}
-      <select
-        value={
-          deliveryOption?.date.toString() || order.deliveryTime.date.toString()
-        }
-        onChange={(e) => {
-          const selectedDate = updatedReturnDates.find(
-            (date) => date.date.toString() === e.target.value
-          );
-          setDeliveryOption(selectedDate || null);
-          dispatch(
-            updateOrderTimes({
-              orderId: order.id,
-              pickupTime: order.pickupTime,
-              deliveryTime: selectedDate || null
-            })
-          );
-        }}
-        className="block w-full mt-2 px-2 py-1 border rounded-md text-gray-500"
-        disabled={!pickupOption}
-      >
-        <option value="">—</option>
-        {updatedReturnDates.map((date) => (
-          <option key={date.date.toString()} value={date.date.toString()}>
-            {format(date.date, 'EEEEEE dd.MM.yyyy', { locale: fi })} {date.time}
-          </option>
-        ))}
-      </select>
-      {/* )} */}
-    </div>
-  );
-
   return (
     <Layout>
       <UserDashboardLayout>
@@ -180,7 +178,7 @@ export default function OrdersPage() {
               </h1>
             </div>
 
-            <div className="flex items-center gap-4 mb-6">
+            {/* <div className="flex items-center gap-4 mb-6">
               {Object.values(filterStatus).map((status) => (
                 <button
                   key={status}
@@ -194,7 +192,7 @@ export default function OrdersPage() {
                   {t(`${status.toLowerCase()}`)}
                 </button>
               ))}
-            </div>
+            </div> */}
 
             <div className="mt-10">
               <div className="overflow-x-auto">
@@ -239,7 +237,34 @@ export default function OrdersPage() {
 
                       <div className="mt-6 grid grid-cols-3 sm:grid-cols-3 gap-6">
                         {renderPickupOptions(order)}
-                        {renderDeliveryDate(order)}
+                        {renderDeliveryOptions(order)}
+                        <div>
+                          <button
+                            onClick={() => {
+                              dispatch(
+                                updateOrderTimes({
+                                  orderId: order.id,
+                                  pickupTime: pickupOptions[order.id] || {
+                                    date: '',
+                                    time: ''
+                                  },
+                                  deliveryTime: deliveryOptions[order.id] || {
+                                    date: '',
+                                    time: ''
+                                  }
+                                })
+                              );
+                              toast.success(
+                                locale === 'fi'
+                                  ? 'Aikavaraus on päivitetty onnistuneesti!'
+                                  : 'Time reservation has been updated successfully!'
+                              );
+                            }}
+                            className="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-dark transition"
+                          >
+                            {locale === 'fi' ? 'Tallenna' : 'Save'}
+                          </button>
+                        </div>
                       </div>
 
                       <div className="mt-6">
