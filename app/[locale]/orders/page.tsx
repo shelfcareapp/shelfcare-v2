@@ -25,6 +25,19 @@ const filterStatus = {
   unpaid: 'Unpaid'
 };
 
+const convertNameToFinnish = (name, locale) => {
+  if (locale === 'fi') {
+    switch (name) {
+      case 'tailoring':
+        return 'ompelimo';
+      case 'cobbler':
+        return 'suutari';
+      case 'laundry':
+        return 'pesula';
+    }
+  }
+};
+
 export default function OrdersPage() {
   const [user] = useAuthState(auth);
   const router = useRouter();
@@ -287,7 +300,10 @@ export default function OrdersPage() {
                                 <tr key={index}>
                                   <td className="py-2">{service.name}</td>
                                   <td className="py-2">
-                                    {service.parent || '—'}
+                                    {convertNameToFinnish(
+                                      service.parent,
+                                      locale
+                                    ) || '—'}
                                   </td>
                                 </tr>
                               )
