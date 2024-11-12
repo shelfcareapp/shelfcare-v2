@@ -54,7 +54,9 @@ export default function UserEnquiryPage() {
   const locale = useLocale();
   const messageEndRef = useRef<HTMLDivElement>(null);
 
-  const [isConfirming, setIsConfirming] = useState(false);
+  const [isConfirming, setIsConfirming] = useState<{
+    [key: string]: boolean;
+  }>({});
   const { pickupDates, returnDates } = useTimeOptions();
 
   const [pickupOptions, setPickupOptions] = useState<{
@@ -206,15 +208,18 @@ export default function UserEnquiryPage() {
 
   const handleConfirmSelection = async (orderId: string) => {
     const confirmationMessage = t('order-confirmation', {
-      pickupOption: format(pickupOptions[orderId]?.date, 'dd.MM.yyyy'),
-      deliveryOption: format(deliveryOptions[orderId]?.date, 'dd.MM.yyyy'),
-      pickupTime: format(pickupOptions[orderId]?.date, 'HH:mm'),
-      deliveryTime: format(deliveryOptions[orderId]?.date, 'HH:mm')
+      pickupOption: pickupOptions[orderId]?.date,
+      deliveryOption: deliveryOptions[orderId]?.date,
+      pickupTime: pickupOptions[orderId]?.time,
+      deliveryTime: deliveryOptions[orderId]?.time
     })
       .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
       .replace(/\n/g, '<br />');
 
-    setIsConfirming(true);
+    setIsConfirming({
+      ...isConfirming,
+      [orderId]: true
+    });
     try {
       const orderDocRef = doc(db, 'orders', orderId);
       await updateDoc(orderDocRef, {
@@ -232,9 +237,16 @@ export default function UserEnquiryPage() {
         })
       );
 
-      setIsConfirming(false);
+      setIsConfirming({
+        ...isConfirming,
+        [orderId]: false
+      });
     } catch (error) {
-      setIsConfirming(false);
+      console.error('Error confirming order:', error);
+      setIsConfirming({
+        ...isConfirming,
+        [orderId]: false
+      });
     }
   };
 
@@ -424,7 +436,7 @@ export default function UserEnquiryPage() {
                                           msg.orderId
                                         )}
                                       >
-                                        {isConfirming
+                                        {isConfirming[msg.orderId]
                                           ? t('confirming')
                                           : t('confirm-selection')}
                                       </button>

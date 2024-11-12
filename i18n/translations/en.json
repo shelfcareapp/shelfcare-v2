@@ -1372,6 +1372,7 @@
     "welcome-message": "Welcome to do some ShelfCare!\n\nSend us pictures of the items you want to be fixed or maintained. We will ask all necessary questions and give you a service plan including prices. Then you will be provided with pickup options.\n\nWe are here also to answer any questions, so let's chat!​\n\nPlease, note that we are operating in Helsinki metropolitan area at the moment.",
     "order-confirmation": "You have chosen pickup time: **{pickupOption}** - **{pickupTime}** and delivery time: **{deliveryOption}** - **{deliveryTime}**. Make sure you have filled out your account info so that we have your address. See you then! \n\nIf you want to add items to your order, you can do so by sending us a message with pictures. :)",
     "confirming": "Confirming...",
+    "confirm-selection": "Confirm selection",
     "select-pickup-time": "Select pickup time",
     "select-return-time": "Select delivery time",
     "yes": "Yes",
