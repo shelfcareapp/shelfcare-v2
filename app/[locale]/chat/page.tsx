@@ -1,3 +1,5 @@
+'use client';
+
 import Layout from 'components/common/Layout';
 import React, { useState, useEffect, useRef } from 'react';
 import {
