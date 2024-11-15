@@ -5,6 +5,7 @@ import ToastProvider from 'components/common/ToastProvider';
 import { SessionProvider } from 'components/common/SessionContext';
 import StoreProvider from 'contexts/StoreProvider';
 import { LocaleProvider } from 'contexts/LocaleContext';
+import GoogleAnalytics from 'components/GoogleAnalytics';
 
 export const metadata = {
   title: 'ShelfCare - Sustainable Fashion and Wardrobe Care',
@@ -41,6 +42,7 @@ async function RootLayout({ children }) {
       <body>
         <SessionProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
+            <GoogleAnalytics />
             <LocaleProvider locale={locale}>
               <StoreProvider>
                 <ToastProvider>
