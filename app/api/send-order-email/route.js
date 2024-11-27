@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import { NextResponse } from 'next/server';
-import { config } from '../../../../config';
+import { config } from '../../../config';
 
 const formatDate = (formDate) => {
   const formattedDate = new Date(formDate.date);

@@ -21,8 +21,9 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { doc, updateDoc } from 'firebase/firestore';
 import { useTimeOptions } from 'hooks/useTimeOptions';
 import { addDays, format, isAfter } from 'date-fns';
-import { fi } from 'date-fns/locale';
+import { de, fi } from 'date-fns/locale';
 import { TimeOptions } from 'types';
+import { useDebounceCallback } from 'usehooks-ts';
 
 const getYesNoMessage = (locale, ans) => {
   if (ans === 'yes') {
@@ -139,6 +140,24 @@ export default function UserEnquiryPage() {
     }
   };
 
+  const debouncedSendEmail = useDebounceCallback(async () => {
+    try {
+      await fetch(`/${locale}/api/send-new-message-notification`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userEmail: user?.email,
+          message,
+          userName: user?.displayName
+        })
+      });
+    } catch (error) {
+      console.log('Error sending email:', error);
+    }
+  }, 5000);
+
   const handleSendMessage = async () => {
     if (!message.trim() && (!images || images.length === 0)) return;
     setSending(true);
@@ -166,6 +185,8 @@ export default function UserEnquiryPage() {
         sender: user?.uid
       })
     );
+
+    debouncedSendEmail();
 
     setMessage('');
     setImages(null);
